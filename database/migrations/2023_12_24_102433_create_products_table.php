@@ -21,8 +21,8 @@ return new class extends Migration
             $table->text('desciption')->nullable();
             $table->enum('type', ['digital', 'physical','service'])->default('physical'); // 
             $table->double('supply_price')->default(0);
-            $table->double('max_retail_price')->default(0);
-            $table->double('max_retail_price')->default(0);
+            $table->double('price')->default(0);
+            $table->double('discount')->default(0);
         
             $table->timestamps();
         });
