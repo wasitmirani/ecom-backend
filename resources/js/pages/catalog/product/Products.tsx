@@ -63,7 +63,7 @@ const Products: React.FC = ()=>{
                                                 <ul className="nav nav-tabs-custom card-header-tabs border-bottom-0" role="tablist">
                                                     <li className="nav-item">
                                                         <Link className="nav-link active fw-semibold" data-bs-toggle="tab" to="#productnav-all" role="tab">
-                                                            All <span className="badge bg-danger-subtle text-danger align-middle rounded-pill ms-1">{products?.data?.length ?? 0}</span>
+                                                            All <span className="badge bg-danger-subtle text-danger align-middle rounded-pill ms-1">{products?.total ?? 0}</span>
                                                         </Link>
                                                     </li>
                                                  
@@ -98,24 +98,21 @@ const Products: React.FC = ()=>{
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                <tr>
+                                                {products?.data?.map((product: any) => (
+                                                          <tr key={product.id}>
                                                      
-                                                        <td><Link to="#" className="fw-medium">#VZ2106</Link></td>
-                                                        <td>10 Nov, 07:20</td>
-                                                        <td className="text-success"><i className="ri-checkbox-circle-line fs-17 align-middle"></i> Paid</td>
-                                                        <td>
-                                                            <div className="d-flex gap-2 align-items-center">
-                                                                <div className="flex-shrink-0">
-                                                                    <img src="/assets/images/users/avatar-1.jpg" alt="" className="avatar-xs rounded-circle"/>
-                                                                </div>
-                                                                <div className="flex-grow-1">
-                                                                    Jason schuller
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                        <td>Splashify</td>
-                                                        
-                                                    </tr>
+                                                          <td><Link to="#" className="fw-medium">
+                                                            {product.name}</Link></td>
+                                                          <td>{product.sku ?? 'N/A'}</td>
+                                                          <td>Rs.{product.price ?? 0}</td>
+                                                          <td>{product.created_at ?? 'N/A'}</td>
+                                                          <td>
+                                                             
+                                                          </td>
+                                                         
+                                                      </tr>
+                                                  ))}
+                                              
                                                 </tbody>
                                                 <tfoot className="table-light">
                                                   

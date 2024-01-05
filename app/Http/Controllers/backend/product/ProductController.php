@@ -21,7 +21,7 @@ class ProductController extends Controller
             $products = $products->where('name', 'like', '%' . $query . '%');
         }
         $products = $products
-            ->with(['productImages', 'category', 'subcategory'])
+            ->with([ 'category', 'user'])
             ->paginate(perPage());
 
         $categories = Category::select('id','name')->orderBy('name','ASC')->get();
