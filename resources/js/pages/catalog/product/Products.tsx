@@ -4,12 +4,14 @@ import { Link } from 'react-router-dom';
 import Helper  from '@/utils/helpers';
 import { BreadcrumbComponent } from '@/components/BreadCrumbComponent';
 import {axios_request} from "@/bootstrap";
+import { toast } from 'react-toastify';
 const helper= new Helper();
 
 const Products: React.FC = ()=>{
     const [products, setProducts] = useState<any>([]);
 
     const getProducts=()=>{
+        toast("Wow so easy!");
         axios_request.get('/product').then((res)=>{
             setProducts(res.data.results.products);
 
