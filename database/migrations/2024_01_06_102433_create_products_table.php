@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('uuid');
             $table->foreignId('user_id')->constrained('users');
-            $table->foreignId('company_id')->constrained('companies');
+            $table->foreignId('category_id')->nullable()->constrained('categories');
             $table->string('name');
             $table->string('slug');
             $table->text('desciption')->nullable();

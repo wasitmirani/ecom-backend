@@ -2,6 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\backend\product\ProductController;
+use App\Http\Controllers\backend\product\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,7 +25,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 
+Route::prefix('/app')->group(function () {
 
+    Route::resource('product', ProductController::class);
+    Route::get('/categories-list', [CategoryController::class,'categoriesList']);
+
+});
 
 
 

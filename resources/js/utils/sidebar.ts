@@ -62,10 +62,9 @@ class Sidebar {
                 [
                 
                     this.setSubMenu('Products ', '/products', 'somePermission'),
-                    this.setSubMenu('Orders', '/orders', 'somePermission'),
-                    this.setSubMenu('Units', '/catalog/units', 'somePermission'),
+
                  
-                    this.setSubMenu('Bundles', '/catalog/bundles', 'somePermission'),
+               
 
                 ],
             ),
