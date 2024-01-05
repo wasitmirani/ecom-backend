@@ -10,7 +10,7 @@ function perPage(){
 }
 
 function responseJsonSuccess($msg="success",$data=[]){ 
-    return response()->json(['message' =>$msg,'status'=>true,$data],200);
+    return response()->json(['message' =>$msg,'status'=>true,'results'=>$data],200);
 }
 
 function genUUID(){

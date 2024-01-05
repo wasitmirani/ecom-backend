@@ -1,21 +1,31 @@
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Helper  from '@/utils/helpers';
 import { BreadcrumbComponent } from '@/components/BreadCrumbComponent';
-import axios from 'axios';
+import {axios_request} from "@/bootstrap";
 const helper= new Helper();
 
 const Products: React.FC = ()=>{
     const [products, setProducts] = useState<any>([]);
 
     const getProducts=()=>{
-        axios.get('/products').then((res)=>{
-            setProducts(res.data.products);
-            
+        axios_request.get('/product').then((res)=>{
+            setProducts(res.data.results.products);
+
         });
     }
 
+    useEffect(() => {
+        // Fetch products only when the component mounts
+        getProducts();
+    
+        // Cleanup function to cancel ongoing tasks (if any) when the component unmounts
+        return () => {
+          // Cancel any ongoing Axios requests here if you are using Axios cancel tokens
+        };
+      }, []); // Empty dependency array ensures the effect runs only once
+    
     return (
         <>  
           <BreadcrumbComponent active_name="Products" links={[{name:"Products",link:"/products"}]}/>
@@ -53,7 +63,7 @@ const Products: React.FC = ()=>{
                                                 <ul className="nav nav-tabs-custom card-header-tabs border-bottom-0" role="tablist">
                                                     <li className="nav-item">
                                                         <Link className="nav-link active fw-semibold" data-bs-toggle="tab" to="#productnav-all" role="tab">
-                                                            All <span className="badge bg-danger-subtle text-danger align-middle rounded-pill ms-1">12</span>
+                                                            All <span className="badge bg-danger-subtle text-danger align-middle rounded-pill ms-1">{products?.data?.length ?? 0}</span>
                                                         </Link>
                                                     </li>
                                                  
@@ -104,7 +114,7 @@ const Products: React.FC = ()=>{
                                                             </div>
                                                         </td>
                                                         <td>Splashify</td>
-                                                        <td>$350.87</td>
+                                                        
                                                     </tr>
                                                 </tbody>
                                                 <tfoot className="table-light">
