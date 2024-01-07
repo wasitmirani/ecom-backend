@@ -47,21 +47,23 @@ class ProductController extends Controller
         $request->validate([
             'category_id' => 'nullable|exists:categories,id',
             'name' => 'required|string',
+            'sku'=>'required|unique:products',
             'description' => 'nullable|string',
             'type' => 'in:digital,physical,service',
             'price' => 'required|numeric',
             'discount' => 'numeric',
         ]);
-
+  
         $product = Product::create([
             'uuid' => genUUID(),
             'category_id'=>$request->category_id,
             'user_id'=>$request->user()->id,
+            'slug'=>setSlug($request->name),
             'sku'=>$request->sku,
             'description' =>$request->description,
             'price' =>$request->price,
             'name'=>$request->name,
-            'discount' =>$request->discount,
+            'discount' =>$request->discount ?? 0,
 
         ]);
 

@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('category_id')->nullable()->constrained('categories');
             $table->string('name');
             $table->string('slug');
-            $table->text('desciption')->nullable();
+            $table->text('description')->nullable();
             $table->enum('type', ['digital', 'physical','service'])->default('physical'); // 
             $table->double('supply_price')->default(0);
             $table->double('price')->default(0);

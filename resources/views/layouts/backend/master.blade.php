@@ -28,8 +28,6 @@
     <body >
         <div id="root"></div>
 
-             <!--=== JS Link ===-->
-            <!-- JAVASCRIPT -->
                 <script src="{{ asset('/assets/libs/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 
 
@@ -62,5 +60,23 @@
               </script>
                   @vitereactrefresh()
                   @vite(['resources/js/index.tsx'])
+
+                  <script>
+                    let config_app={
+                        'app_name':"{{config('app_name')}}",
+                        "app_logo":"{{config('app.logo')}}",
+                    };
+                    @auth
+                       window.user = {!! json_encode(Auth::user()->load(['roles']), true) !!};
+                      let permissions = {!! json_encode(Auth::user()->getPermissionsViaRoles()->pluck('name'), true) !!};
+                    @else
+                      let user = [];
+                       let permissions = [];
+                   @endauth
+                   localStorage.removeItem('permissions');
+                   localStorage.setItem('permissions', JSON.stringify(permissions))
+                   localStorage.removeItem('user');
+                   localStorage.setItem('user', JSON.stringify(user))
+                </script>    
     </body>
 </html>

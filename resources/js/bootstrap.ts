@@ -6,13 +6,23 @@
 
 import axios from 'axios';
 window.axios = axios;
-let token = null;
+let token = "";
 let prefix = "/api/";
-// if(user){
-//     token= user ? user?.token : null;
-//     prefix=prefix+"app";
-// }
-prefix=prefix+"app";
+let user=null;
+try {
+    // Attempt to parse user from localStorage
+    const userString = localStorage.getItem('user');
+    
+    if (userString) {
+      user = JSON.parse(userString);
+      token = user?.token || null;
+      prefix = user ? `${prefix}app` : prefix;
+    }
+  } catch (error) {
+    console.error("Error parsing user from localStorage:", error);
+    // Handle the error, possibly redirect the user to login or take appropriate action
+  }
+
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 window.axios.defaults.headers.common['Authorization'] = `Bearer ` + token;
