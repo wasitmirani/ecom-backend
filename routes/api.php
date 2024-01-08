@@ -19,7 +19,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
-// Route::get('/products',)
+
+Route::prefix('users')->group(function () {
+    Route::resource('user', UserController::class);
+});
+
+
+
+
 
 
 
