@@ -15,14 +15,14 @@ return new class extends Migration
             $table->id();
             $table->string('uuid');
             $table->foreignId('user_id')->constrained('users');
-            $table->foreignId('company_id')->constrained('companies');
+            $table->foreignId('category_id')->nullable()->constrained('categories');
             $table->string('name');
             $table->string('slug');
             $table->text('desciption')->nullable();
             $table->enum('type', ['digital', 'physical','service'])->default('physical'); // 
             $table->double('supply_price')->default(0);
-            $table->double('max_retail_price')->default(0);
-            $table->double('max_retail_price')->default(0);
+            $table->double('price')->default(0);
+            $table->double('discount')->default(0);
         
             $table->timestamps();
         });

@@ -2,6 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\backend\product\ProductController;
+use App\Http\Controllers\backend\product\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,7 +32,12 @@ Route::prefix('users')->group(function () {
 
 
 
+Route::prefix('/app')->group(function () {
 
+    Route::resource('product', ProductController::class);
+    Route::get('/categories-list', [CategoryController::class,'categoriesList']);
+
+});
 
 
 
