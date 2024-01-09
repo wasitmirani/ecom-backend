@@ -38,7 +38,7 @@ Route::prefix('/app')->group(function () {
     Route::resource('product', ProductController::class);
     Route::get('/categories-list', [CategoryController::class,'categoriesList']);
     Route::get('/orders',[OrderController::class,'orders']);
-    Route::get('/order')
+    Route::get('/order/{uuid}',[OrderController::class,'orderDetails']);
 
 });
 

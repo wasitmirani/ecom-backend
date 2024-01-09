@@ -14,11 +14,16 @@ class OrderController extends Controller
         if (empty($query)) {
             $orders = $orders->where('name', 'like', '%' . $query . '%');
         }
-        $orders = $orders
-            ->with([ 'items', 'user'])
-            ->paginate(perPage());
+        $orders = $orders->with([ 'items', 'user'])->paginate(perPage());
 
         return response()->json(['orders' => $orders]);
+    }
+
+    public function orderDetails(Request $request){
+        $order=Order::where('uuid',$request->uuid)->with('user','items')->first();
+
+        return response()->json(['order' => $order]);
+
     }
 
 

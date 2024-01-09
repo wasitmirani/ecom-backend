@@ -1,6 +1,19 @@
-import React from 'react';
+import { axios_request } from '@/bootstrap';
+import React, { useEffect, useState } from 'react';
 
 const Order : React.FC = (()=>{
+
+    const [orders,setOrders] = useState({});
+
+    const getOrders = ()=>{
+            axios_request.get('/orders').then((res)=>{
+                    setOrders(res.data.orders);
+            });
+    }
+
+    useEffect(()=>{
+        getOrders();
+    });
     return (
         <>
             <div className="row">
@@ -15,7 +28,7 @@ const Order : React.FC = (()=>{
                                             <div className="d-flex gap-1 flex-wrap">
                                                 <button type="button" className="btn btn-success add-btn" data-bs-toggle="modal" id="create-btn" data-bs-target="#showModal"><i className="ri-add-line align-bottom me-1"></i> Create Order</button>
                                                 <button type="button" className="btn btn-info"><i className="ri-file-download-line align-bottom me-1"></i> Import</button>
-                                                <button className="btn btn-soft-danger" id="remove-actions" onclick="deleteMultiple()"><i className="ri-delete-bin-2-line"></i></button>
+                                                <button className="btn btn-soft-danger" id="remove-actions"><i className="ri-delete-bin-2-line"></i></button>
                                             </div>
                                         </div>
                                     </div>
@@ -38,13 +51,13 @@ const Order : React.FC = (()=>{
 
                                             <div className="col-xxl-2 col-sm-4">
                                                 <div>
-                                                    <div className="choices" data-type="select-one" tabindex="0" role="listbox" aria-haspopup="true" aria-expanded="false"><div className="choices__inner"><select className="form-control choices__input" data-choices="" data-choices-search-false="" name="choices-single-default" id="idStatus" hidden="" tabindex="-1" data-choice="active"><option value="all" data-custom-properties="[object Object]">All</option></select><div className="choices__list choices__list--single"><div className="choices__item choices__item--selectable" data-item="" data-id="1" data-value="all" data-custom-properties="[object Object]" aria-selected="true">All</div></div></div><div className="choices__list choices__list--dropdown" aria-expanded="false"><div className="choices__list" role="listbox"><div id="choices--idStatus-item-choice-8" className="choices__item choices__item--choice choices__placeholder choices__item--selectable is-highlighted" role="option" data-choice="" data-id="8" data-value="" data-select-text="Press to select" data-choice-selectable="" aria-selected="true">Status</div><div id="choices--idStatus-item-choice-1" className="choices__item choices__item--choice is-selected choices__item--selectable" role="option" data-choice="" data-id="1" data-value="all" data-select-text="Press to select" data-choice-selectable="">All</div><div id="choices--idStatus-item-choice-2" className="choices__item choices__item--choice choices__item--selectable" role="option" data-choice="" data-id="2" data-value="Cancelled" data-select-text="Press to select" data-choice-selectable="">Cancelled</div><div id="choices--idStatus-item-choice-3" className="choices__item choices__item--choice choices__item--selectable" role="option" data-choice="" data-id="3" data-value="Delivered" data-select-text="Press to select" data-choice-selectable="">Delivered</div><div id="choices--idStatus-item-choice-4" className="choices__item choices__item--choice choices__item--selectable" role="option" data-choice="" data-id="4" data-value="Inprogress" data-select-text="Press to select" data-choice-selectable="">Inprogress</div><div id="choices--idStatus-item-choice-5" className="choices__item choices__item--choice choices__item--selectable" role="option" data-choice="" data-id="5" data-value="Pending" data-select-text="Press to select" data-choice-selectable="">Pending</div><div id="choices--idStatus-item-choice-6" className="choices__item choices__item--choice choices__item--selectable" role="option" data-choice="" data-id="6" data-value="Pickups" data-select-text="Press to select" data-choice-selectable="">Pickups</div><div id="choices--idStatus-item-choice-7" className="choices__item choices__item--choice choices__item--selectable" role="option" data-choice="" data-id="7" data-value="Returns" data-select-text="Press to select" data-choice-selectable="">Returns</div></div></div></div>
+                                                    <div className="choices" data-type="select-one" role="listbox" aria-haspopup="true" aria-expanded="false"><div className="choices__inner"><select className="form-control choices__input" data-choices="" data-choices-search-false="" name="choices-single-default" id="idStatus"  data-choice="active"><option value="all" data-custom-properties="[object Object]">All</option></select><div className="choices__list choices__list--single"><div className="choices__item choices__item--selectable" data-item="" data-id="1" data-value="all" data-custom-properties="[object Object]" aria-selected="true">All</div></div></div><div className="choices__list choices__list--dropdown" aria-expanded="false"><div className="choices__list" role="listbox"><div id="choices--idStatus-item-choice-8" className="choices__item choices__item--choice choices__placeholder choices__item--selectable is-highlighted" role="option" data-choice="" data-id="8" data-value="" data-select-text="Press to select" data-choice-selectable="" aria-selected="true">Status</div><div id="choices--idStatus-item-choice-1" className="choices__item choices__item--choice is-selected choices__item--selectable" role="option" data-choice="" data-id="1" data-value="all" data-select-text="Press to select" data-choice-selectable="">All</div><div id="choices--idStatus-item-choice-2" className="choices__item choices__item--choice choices__item--selectable" role="option" data-choice="" data-id="2" data-value="Cancelled" data-select-text="Press to select" data-choice-selectable="">Cancelled</div><div id="choices--idStatus-item-choice-3" className="choices__item choices__item--choice choices__item--selectable" role="option" data-choice="" data-id="3" data-value="Delivered" data-select-text="Press to select" data-choice-selectable="">Delivered</div><div id="choices--idStatus-item-choice-4" className="choices__item choices__item--choice choices__item--selectable" role="option" data-choice="" data-id="4" data-value="Inprogress" data-select-text="Press to select" data-choice-selectable="">Inprogress</div><div id="choices--idStatus-item-choice-5" className="choices__item choices__item--choice choices__item--selectable" role="option" data-choice="" data-id="5" data-value="Pending" data-select-text="Press to select" data-choice-selectable="">Pending</div><div id="choices--idStatus-item-choice-6" className="choices__item choices__item--choice choices__item--selectable" role="option" data-choice="" data-id="6" data-value="Pickups" data-select-text="Press to select" data-choice-selectable="">Pickups</div><div id="choices--idStatus-item-choice-7" className="choices__item choices__item--choice choices__item--selectable" role="option" data-choice="" data-id="7" data-value="Returns" data-select-text="Press to select" data-choice-selectable="">Returns</div></div></div></div>
                                                 </div>
                                             </div>
-                                            <!--end col-->
+
                                             <div className="col-xxl-2 col-sm-4">
                                                 <div>
-                                                    <div className="choices" data-type="select-one"  role="listbox" aria-haspopup="true" aria-expanded="false"><div className="choices__inner"><select className="form-control choices__input" data-choices="" data-choices-search-false="" name="choices-single-default" id="idPayment" hidden="" tabindex="-1" data-choice="active"><option value="all" data-custom-properties="[object Object]">All</option></select><div className="choices__list choices__list--single"><div className="choices__item choices__item--selectable" data-item="" data-id="1" data-value="all" data-custom-properties="[object Object]" aria-selected="true">All</div></div></div><div className="choices__list choices__list--dropdown" aria-expanded="false"><div className="choices__list" role="listbox"><div id="choices--idPayment-item-choice-5" className="choices__item choices__item--choice choices__placeholder choices__item--selectable is-highlighted" role="option" data-choice="" data-id="5" data-value="" data-select-text="Press to select" data-choice-selectable="" aria-selected="true">Select Payment</div><div id="choices--idPayment-item-choice-1" className="choices__item choices__item--choice is-selected choices__item--selectable" role="option" data-choice="" data-id="1" data-value="all" data-select-text="Press to select" data-choice-selectable="">All</div><div id="choices--idPayment-item-choice-2" className="choices__item choices__item--choice choices__item--selectable" role="option" data-choice="" data-id="2" data-value="COD" data-select-text="Press to select" data-choice-selectable="">COD</div><div id="choices--idPayment-item-choice-3" className="choices__item choices__item--choice choices__item--selectable" role="option" data-choice="" data-id="3" data-value="Mastercard" data-select-text="Press to select" data-choice-selectable="">Mastercard</div><div id="choices--idPayment-item-choice-4" className="choices__item choices__item--choice choices__item--selectable" role="option" data-choice="" data-id="4" data-value="Paypal" data-select-text="Press to select" data-choice-selectable="">Paypal</div><div id="choices--idPayment-item-choice-6" className="choices__item choices__item--choice choices__item--selectable" role="option" data-choice="" data-id="6" data-value="Visa" data-select-text="Press to select" data-choice-selectable="">Visa</div></div></div></div>
+                                                    <div className="choices" data-type="select-one"  role="listbox" aria-haspopup="true" aria-expanded="false"><div className="choices__inner"><select className="form-control choices__input" data-choices="" data-choices-search-false="" name="choices-single-default" id="idPayment"  data-choice="active"><option value="all" data-custom-properties="[object Object]">All</option></select><div className="choices__list choices__list--single"><div className="choices__item choices__item--selectable" data-item="" data-id="1" data-value="all" data-custom-properties="[object Object]" aria-selected="true">All</div></div></div><div className="choices__list choices__list--dropdown" aria-expanded="false"><div className="choices__list" role="listbox"><div id="choices--idPayment-item-choice-5" className="choices__item choices__item--choice choices__placeholder choices__item--selectable is-highlighted" role="option" data-choice="" data-id="5" data-value="" data-select-text="Press to select" data-choice-selectable="" aria-selected="true">Select Payment</div><div id="choices--idPayment-item-choice-1" className="choices__item choices__item--choice is-selected choices__item--selectable" role="option" data-choice="" data-id="1" data-value="all" data-select-text="Press to select" data-choice-selectable="">All</div><div id="choices--idPayment-item-choice-2" className="choices__item choices__item--choice choices__item--selectable" role="option" data-choice="" data-id="2" data-value="COD" data-select-text="Press to select" data-choice-selectable="">COD</div><div id="choices--idPayment-item-choice-3" className="choices__item choices__item--choice choices__item--selectable" role="option" data-choice="" data-id="3" data-value="Mastercard" data-select-text="Press to select" data-choice-selectable="">Mastercard</div><div id="choices--idPayment-item-choice-4" className="choices__item choices__item--choice choices__item--selectable" role="option" data-choice="" data-id="4" data-value="Paypal" data-select-text="Press to select" data-choice-selectable="">Paypal</div><div id="choices--idPayment-item-choice-6" className="choices__item choices__item--choice choices__item--selectable" role="option" data-choice="" data-id="6" data-value="Visa" data-select-text="Press to select" data-choice-selectable="">Visa</div></div></div></div>
                                                 </div>
                                             </div>
 
@@ -69,22 +82,22 @@ const Order : React.FC = (()=>{
                                                 </a>
                                             </li>
                                             <li className="nav-item" role="presentation">
-                                                <a className="nav-link py-3 Delivered" data-bs-toggle="tab" id="Delivered" href="#delivered" role="tab" aria-selected="false" tabindex="-1">
+                                                <a className="nav-link py-3 Delivered" data-bs-toggle="tab" id="Delivered" href="#delivered" role="tab" aria-selected="false" >
                                                     <i className="ri-checkbox-circle-line me-1 align-bottom"></i> Delivered
                                                 </a>
                                             </li>
                                             <li className="nav-item" role="presentation">
-                                                <a className="nav-link py-3 Pickups" data-bs-toggle="tab" id="Pickups" href="#pickups" role="tab" aria-selected="false" tabindex="-1">
+                                                <a className="nav-link py-3 Pickups" data-bs-toggle="tab" id="Pickups" href="#pickups" role="tab" aria-selected="false" >
                                                     <i className="ri-truck-line me-1 align-bottom"></i> Pickups <span className="badge bg-danger align-middle ms-1">2</span>
                                                 </a>
                                             </li>
                                             <li className="nav-item" role="presentation">
-                                                <a className="nav-link py-3 Returns" data-bs-toggle="tab" id="Returns" href="#returns" role="tab" aria-selected="false" tabindex="-1">
+                                                <a className="nav-link py-3 Returns" data-bs-toggle="tab" id="Returns" href="#returns" role="tab" aria-selected="false" >
                                                     <i className="ri-arrow-left-right-fill me-1 align-bottom"></i> Returns
                                                 </a>
                                             </li>
                                             <li className="nav-item" role="presentation">
-                                                <a className="nav-link py-3 Cancelled" data-bs-toggle="tab" id="Cancelled" href="#cancelled" role="tab" aria-selected="false" tabindex="-1">
+                                                <a className="nav-link py-3 Cancelled" data-bs-toggle="tab" id="Cancelled" href="#cancelled" role="tab" aria-selected="false" >
                                                     <i className="ri-close-circle-line me-1 align-bottom"></i> Cancelled
                                                 </a>
                                             </li>
@@ -145,7 +158,7 @@ const Order : React.FC = (()=>{
                                                     </tr><tr>
                                                         <th scope="row">
                                                             <div className="form-check">
-                                                                <input className="form-check-input" type="checkbox" name="checkAll" value="option1">
+                                                                <input className="form-check-input" type="checkbox" name="checkAll" value="option1"/>
                                                             </div>
                                                         </th>
                                                         <td className="id"><a href="apps-ecommerce-order-details.html" className="fw-medium link-primary">#VZ11</a></td>
@@ -177,7 +190,7 @@ const Order : React.FC = (()=>{
                                                     </tr><tr>
                                                         <th scope="row">
                                                             <div className="form-check">
-                                                                <input className="form-check-input" type="checkbox" name="checkAll" value="option1">
+                                                                <input className="form-check-input" type="checkbox" name="checkAll" value="option1"/>
                                                             </div>
                                                         </th>
                                                         <td className="id"><a href="apps-ecommerce-order-details.html" className="fw-medium link-primary">#VZ10</a></td>
@@ -209,7 +222,7 @@ const Order : React.FC = (()=>{
                                                     </tr><tr>
                                                         <th scope="row">
                                                             <div className="form-check">
-                                                                <input className="form-check-input" type="checkbox" name="checkAll" value="option1">
+                                                                <input className="form-check-input" type="checkbox" name="checkAll" value="option1"/>
                                                             </div>
                                                         </th>
                                                         <td className="id"><a href="apps-ecommerce-order-details.html" className="fw-medium link-primary">#VZ9</a></td>
@@ -241,7 +254,7 @@ const Order : React.FC = (()=>{
                                                     </tr><tr>
                                                         <th scope="row">
                                                             <div className="form-check">
-                                                                <input className="form-check-input" type="checkbox" name="checkAll" value="option1">
+                                                                <input className="form-check-input" type="checkbox" name="checkAll" value="option1"/>
                                                             </div>
                                                         </th>
                                                         <td className="id"><a href="apps-ecommerce-order-details.html" className="fw-medium link-primary">#VZ8</a></td>
@@ -273,7 +286,7 @@ const Order : React.FC = (()=>{
                                                     </tr><tr>
                                                         <th scope="row">
                                                             <div className="form-check">
-                                                                <input className="form-check-input" type="checkbox" name="checkAll" value="option1">
+                                                                <input className="form-check-input" type="checkbox" name="checkAll" value="option1"/>
                                                             </div>
                                                         </th>
                                                         <td className="id"><a href="apps-ecommerce-order-details.html" className="fw-medium link-primary">#VZ7</a></td>
@@ -305,7 +318,7 @@ const Order : React.FC = (()=>{
                                                     </tr><tr>
                                                         <th scope="row">
                                                             <div className="form-check">
-                                                                <input className="form-check-input" type="checkbox" name="checkAll" value="option1">
+                                                                <input className="form-check-input" type="checkbox" name="checkAll" value="option1"/>
                                                             </div>
                                                         </th>
                                                         <td className="id"><a href="apps-ecommerce-order-details.html" className="fw-medium link-primary">#VZ6</a></td>
@@ -337,7 +350,7 @@ const Order : React.FC = (()=>{
                                                     </tr><tr>
                                                         <th scope="row">
                                                             <div className="form-check">
-                                                                <input className="form-check-input" type="checkbox" name="checkAll" value="option1">
+                                                                <input className="form-check-input" type="checkbox" name="checkAll" value="option1"/>
                                                             </div>
                                                         </th>
                                                         <td className="id"><a href="apps-ecommerce-order-details.html" className="fw-medium link-primary">#VZ5</a></td>
@@ -368,16 +381,15 @@ const Order : React.FC = (()=>{
                                                         </td>
                                                     </tr></tbody>
                                             </table>
-                                            <div className="noresult" style="display: none">
+                                            <div className="noresult" >
                                                 <div className="text-center">
-                                                    <lord-icon src="https://cdn.lordicon.com/msoeawqm.json" trigger="loop" colors="primary:#405189,secondary:#0ab39c" style="width:75px;height:75px"></lord-icon>
                                                     <h5 className="mt-2">Sorry! No Result Found</h5>
                                                     <p className="text-muted">We've searched more than 150+ Orders We did not find any orders for you search.</p>
                                                 </div>
                                             </div>
                                         </div>
                                         <div className="d-flex justify-content-end">
-                                            <div className="pagination-wrap hstack gap-2" style="display: flex;">
+                                            <div className="pagination-wrap hstack gap-2" >
                                                 <a className="page-item pagination-prev disabled" href="#">
                                                     Previous
                                                 </a>
@@ -388,48 +400,56 @@ const Order : React.FC = (()=>{
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="modal fade" id="showModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div className="modal fade" id="showModal"  aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div className="modal-dialog modal-dialog-centered">
                                             <div className="modal-content">
                                                 <div className="modal-header bg-light p-3">
                                                     <h5 className="modal-title" id="exampleModalLabel">&nbsp;</h5>
                                                     <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
                                                 </div>
-                                                <form className="tablelist-form" autocomplete="off">
+                                                <form className="tablelist-form" >
                                                     <div className="modal-body">
-                                                        <input type="hidden" id="id-field">
+                                                        <input type="hidden" id="id-field" />
 
                                                         <div className="mb-3" id="modal-id">
-                                                            <label for="orderId" className="form-label">ID</label>
-                                                            <input type="text" id="orderId" className="form-control" placeholder="ID" readonly="">
+                                                            <label  className="form-label">ID</label>
+                                                            <input type="text" id="orderId" className="form-control" placeholder="ID"  />
                                                         </div>
 
                                                         <div className="mb-3">
-                                                            <label for="customername-field" className="form-label">Customer Name</label>
-                                                            <input type="text" id="customername-field" className="form-control" placeholder="Enter name" required="">
+                                                            <label  className="form-label">Customer Name</label>
+                                                            <input type="text" id="customername-field" className="form-control" placeholder="Enter name" />
                                                         </div>
 
                                                         <div className="mb-3">
-                                                            <label for="productname-field" className="form-label">Product</label>
-                                                            <div className="choices" data-type="select-one" tabindex="0" role="combobox" aria-autocomplete="list" aria-haspopup="true" aria-expanded="false"><div className="choices__inner"><select className="form-control choices__input" data-trigger="" name="productname-field" id="productname-field" required="" hidden="" tabindex="-1" data-choice="active"><option value="" data-custom-properties="[object Object]">Product</option></select><div className="choices__list choices__list--single"><div className="choices__item choices__placeholder choices__item--selectable" data-item="" data-id="1" data-value="" data-custom-properties="[object Object]" aria-selected="true">Product</div></div></div><div className="choices__list choices__list--dropdown" aria-expanded="false"><input type="search" name="search_terms" className="choices__input choices__input--cloned" autocomplete="off" autocapitalize="off" spellcheck="false" role="textbox" aria-autocomplete="list" aria-label="Product" placeholder=""><div className="choices__list" role="listbox"><div id="choices--productname-field-item-choice-11" className="choices__item choices__item--choice is-selected choices__placeholder choices__item--selectable is-highlighted" role="option" data-choice="" data-id="11" data-value="" data-select-text="Press to select" data-choice-selectable="" aria-selected="true">Product</div><div id="choices--productname-field-item-choice-1" className="choices__item choices__item--choice choices__item--selectable" role="option" data-choice="" data-id="1" data-value="350 ml Glass Grocery Container" data-select-text="Press to select" data-choice-selectable="">350 ml Glass Grocery Container</div><div id="choices--productname-field-item-choice-2" className="choices__item choices__item--choice choices__item--selectable" role="option" data-choice="" data-id="2" data-value="Adidas Sneakers" data-select-text="Press to select" data-choice-selectable="">Adidas Sneakers</div><div id="choices--productname-field-item-choice-3" className="choices__item choices__item--choice choices__item--selectable" role="option" data-choice="" data-id="3" data-value="American egale outfitters Shirt" data-select-text="Press to select" data-choice-selectable="">American egale outfitters Shirt</div><div id="choices--productname-field-item-choice-4" className="choices__item choices__item--choice choices__item--selectable" role="option" data-choice="" data-id="4" data-value="Apple iPhone 12" data-select-text="Press to select" data-choice-selectable="">Apple iPhone 12</div><div id="choices--productname-field-item-choice-5" className="choices__item choices__item--choice choices__item--selectable" role="option" data-choice="" data-id="5" data-value="classNameic Short Sleeve Shirt" data-select-text="Press to select" data-choice-selectable="">classNameic Short Sleeve Shirt</div><div id="choices--productname-field-item-choice-6" className="choices__item choices__item--choice choices__item--selectable" role="option" data-choice="" data-id="6" data-value="Funky Prints T-shirt" data-select-text="Press to select" data-choice-selectable="">Funky Prints T-shirt</div><div id="choices--productname-field-item-choice-7" className="choices__item choices__item--choice choices__item--selectable" role="option" data-choice="" data-id="7" data-value="Galaxy Watch4" data-select-text="Press to select" data-choice-selectable="">Galaxy Watch4</div><div id="choices--productname-field-item-choice-8" className="choices__item choices__item--choice choices__item--selectable" role="option" data-choice="" data-id="8" data-value="Half Sleeve T-Shirts (Blue)" data-select-text="Press to select" data-choice-selectable="">Half Sleeve T-Shirts (Blue)</div><div id="choices--productname-field-item-choice-9" className="choices__item choices__item--choice choices__item--selectable" role="option" data-choice="" data-id="9" data-value="Noise Evolve Smartwatch" data-select-text="Press to select" data-choice-selectable="">Noise Evolve Smartwatch</div><div id="choices--productname-field-item-choice-10" className="choices__item choices__item--choice choices__item--selectable" role="option" data-choice="" data-id="10" data-value="Oxford Button-Down Shirt" data-select-text="Press to select" data-choice-selectable="">Oxford Button-Down Shirt</div><div id="choices--productname-field-item-choice-12" className="choices__item choices__item--choice choices__item--selectable" role="option" data-choice="" data-id="12" data-value="Puma Tshirt" data-select-text="Press to select" data-choice-selectable="">Puma Tshirt</div><div id="choices--productname-field-item-choice-13" className="choices__item choices__item--choice choices__item--selectable" role="option" data-choice="" data-id="13" data-value="USB Flash Drive Personalized with 3D Print" data-select-text="Press to select" data-choice-selectable="">USB Flash Drive Personalized with 3D Print</div></div></div></div>
+                                                            <label  className="form-label">Product</label>
+                                                            <div className="choices" data-type="select-one" role="combobox" aria-autocomplete="list" aria-haspopup="true" aria-expanded="false"><div className="choices__inner"><select className="form-control choices__input" data-trigger="" name="productname-field" id="productname-field"  data-choice="active"><option value="" data-custom-properties="[object Object]">Product</option></select><div className="choices__list choices__list--single"><div className="choices__item choices__placeholder choices__item--selectable" data-item="" data-id="1" data-value="" data-custom-properties="[object Object]" aria-selected="true">Product</div></div></div><div className="choices__list choices__list--dropdown" aria-expanded="false"><input type="search" name="search_terms" className="choices__input choices__input--cloned"   role="textbox" aria-autocomplete="list" aria-label="Product" placeholder=""><div className="choices__list" role="listbox"><div id="choices--productname-field-item-choice-11" className="choices__item choices__item--choice is-selected choices__placeholder choices__item--selectable is-highlighted" role="option" data-choice="" data-id="11" data-value="" data-select-text="Press to select" data-choice-selectable="" aria-selected="true">Product</div><div id="choices--productname-field-item-choice-1" className="choices__item choices__item--choice choices__item--selectable" role="option" data-choice="" data-id="1" data-value="350 ml Glass Grocery Container" data-select-text="Press to select" data-choice-selectable="">350 ml Glass Grocery Container</div><div id="choices--productname-field-item-choice-2" className="choices__item choices__item--choice choices__item--selectable" role="option" data-choice="" data-id="2" data-value="Adidas Sneakers" data-select-text="Press to select" data-choice-selectable="">Adidas Sneakers</div><div id="choices--productname-field-item-choice-3" className="choices__item choices__item--choice choices__item--selectable" role="option" data-choice="" data-id="3" data-value="American egale outfitters Shirt" data-select-text="Press to select" data-choice-selectable="">American egale outfitters Shirt</div><div id="choices--productname-field-item-choice-4" className="choices__item choices__item--choice choices__item--selectable" role="option" data-choice="" data-id="4" data-value="Apple iPhone 12" data-select-text="Press to select" data-choice-selectable="">Apple iPhone 12</div><div id="choices--productname-field-item-choice-5" className="choices__item choices__item--choice choices__item--selectable" role="option" data-choice="" data-id="5" data-value="classNameic Short Sleeve Shirt" data-select-text="Press to select" data-choice-selectable="">classNameic Short Sleeve Shirt</div><div id="choices--productname-field-item-choice-6" className="choices__item choices__item--choice choices__item--selectable" role="option" data-choice="" data-id="6" data-value="Funky Prints T-shirt" data-select-text="Press to select" data-choice-selectable="">Funky Prints T-shirt</div><div id="choices--productname-field-item-choice-7" className="choices__item choices__item--choice choices__item--selectable" role="option" data-choice="" data-id="7" data-value="Galaxy Watch4" data-select-text="Press to select" data-choice-selectable="">Galaxy Watch4</div><div id="choices--productname-field-item-choice-8" className="choices__item choices__item--choice choices__item--selectable" role="option" data-choice="" data-id="8" data-value="Half Sleeve T-Shirts (Blue)" data-select-text="Press to select" data-choice-selectable="">Half Sleeve T-Shirts (Blue)</div><div id="choices--productname-field-item-choice-9" className="choices__item choices__item--choice choices__item--selectable" role="option" data-choice="" data-id="9" data-value="Noise Evolve Smartwatch" data-select-text="Press to select" data-choice-selectable="">Noise Evolve Smartwatch</div><div id="choices--productname-field-item-choice-10" className="choices__item choices__item--choice choices__item--selectable" role="option" data-choice="" data-id="10" data-value="Oxford Button-Down Shirt" data-select-text="Press to select" data-choice-selectable="">Oxford Button-Down Shirt</div><div id="choices--productname-field-item-choice-12" className="choices__item choices__item--choice choices__item--selectable" role="option" data-choice="" data-id="12" data-value="Puma Tshirt" data-select-text="Press to select" data-choice-selectable="">Puma Tshirt</div><div id="choices--productname-field-item-choice-13" className="choices__item choices__item--choice choices__item--selectable" role="option" data-choice="" data-id="13" data-value="USB Flash Drive Personalized with 3D Print" data-select-text="Press to select" data-choice-selectable="">USB Flash Drive Personalized with 3D Print</div></div></div></div>
                                                         </div>
 
                                                         <div className="mb-3">
-                                                            <label for="date-field" className="form-label">Order Date</label>
-                                                            <input type="text" id="date-field" className="form-control flatpickr-input" data-provider="flatpickr" required="" data-date-format="d M, Y" data-enable-time="" placeholder="Select date" readonly="readonly">
+                                                            <label className="form-label">Order Date</label>
+                                                            <input type="text" id="date-field" className="form-control flatpickr-input" data-provider="flatpickr"  data-date-format="d M, Y" data-enable-time="" placeholder="Select date" />
                                                         </div>
 
                                                         <div className="row gy-4 mb-3">
                                                             <div className="col-md-6">
                                                                 <div>
-                                                                    <label for="amount-field" className="form-label">Amount</label>
-                                                                    <input type="text" id="amount-field" className="form-control" placeholder="Total amount" required="">
+                                                                    <label  className="form-label">Amount</label>
+                                                                    <input type="text" id="amount-field" className="form-control" placeholder="Total amount" />
                                                                 </div>
                                                             </div>
                                                             <div className="col-md-6">
                                                                 <div>
-                                                                    <label for="payment-field" className="form-label">Payment Method</label>
-                                                                    <div className="choices" data-type="select-one" tabindex="0" role="combobox" aria-autocomplete="list" aria-haspopup="true" aria-expanded="false"><div className="choices__inner"><select className="form-control choices__input" data-trigger="" name="payment-method" required="" id="payment-field" hidden="" tabindex="-1" data-choice="active"><option value="" data-custom-properties="[object Object]">Payment Method</option></select><div className="choices__list choices__list--single"><div className="choices__item choices__placeholder choices__item--selectable" data-item="" data-id="1" data-value="" data-custom-properties="[object Object]" aria-selected="true">Payment Method</div></div></div><div className="choices__list choices__list--dropdown" aria-expanded="false"><input type="search" name="search_terms" className="choices__input choices__input--cloned" autocomplete="off" autocapitalize="off" spellcheck="false" role="textbox" aria-autocomplete="list" aria-label="Payment Method" placeholder=""><div className="choices__list" role="listbox"><div id="choices--payment-field-item-choice-3" className="choices__item choices__item--choice is-selected choices__placeholder choices__item--selectable is-highlighted" role="option" data-choice="" data-id="3" data-value="" data-select-text="Press to select" data-choice-selectable="" aria-selected="true">Payment Method</div><div id="choices--payment-field-item-choice-1" className="choices__item choices__item--choice choices__item--selectable" role="option" data-choice="" data-id="1" data-value="COD" data-select-text="Press to select" data-choice-selectable="">COD</div><div id="choices--payment-field-item-choice-2" className="choices__item choices__item--choice choices__item--selectable" role="option" data-choice="" data-id="2" data-value="Mastercard" data-select-text="Press to select" data-choice-selectable="">Mastercard</div><div id="choices--payment-field-item-choice-4" className="choices__item choices__item--choice choices__item--selectable" role="option" data-choice="" data-id="4" data-value="Paypal" data-select-text="Press to select" data-choice-selectable="">Paypal</div><div id="choices--payment-field-item-choice-5" className="choices__item choices__item--choice choices__item--selectable" role="option" data-choice="" data-id="5" data-value="Visa" data-select-text="Press to select" data-choice-selectable="">Visa</div></div></div></div>
+                                                                    <label  className="form-label">Payment Method</label>
+                                                                    <div className="choices" data-type="select-one" role="combobox" aria-autocomplete="list" aria-haspopup="true" aria-expanded="false"><div className="choices__inner">
+                                                                        <select className="form-control choices__input" data-trigger="" name="payment-method"  id="payment-field"  data-choice="active">
+                                                                            <option value="" data-custom-properties="[object Object]">Payment Method</option>
+                                                                            </select>
+                                                                            <div className="choices__list choices__list--single">
+                                                                                <div className="choices__item choices__placeholder choices__item--selectable" data-item="" data-id="1" data-value="" data-custom-properties="[object Object]" aria-selected="true">Payment Method</div>
+                                                                                </div></div>
+                                                                                <div className="choices__list choices__list--dropdown" aria-expanded="false">
+                                                                                    <input type="search" name="search_terms" className="choices__input choices__input--cloned" autocomplete="off" autocapitalize="off" spellcheck="false" role="textbox" aria-autocomplete="list" aria-label="Payment Method" placeholder=""><div className="choices__list" role="listbox"><div id="choices--payment-field-item-choice-3" className="choices__item choices__item--choice is-selected choices__placeholder choices__item--selectable is-highlighted" role="option" data-choice="" data-id="3" data-value="" data-select-text="Press to select" data-choice-selectable="" aria-selected="true">Payment Method</div><div id="choices--payment-field-item-choice-1" className="choices__item choices__item--choice choices__item--selectable" role="option" data-choice="" data-id="1" data-value="COD" data-select-text="Press to select" data-choice-selectable="">COD</div><div id="choices--payment-field-item-choice-2" className="choices__item choices__item--choice choices__item--selectable" role="option" data-choice="" data-id="2" data-value="Mastercard" data-select-text="Press to select" data-choice-selectable="">Mastercard</div><div id="choices--payment-field-item-choice-4" className="choices__item choices__item--choice choices__item--selectable" role="option" data-choice="" data-id="4" data-value="Paypal" data-select-text="Press to select" data-choice-selectable="">Paypal</div><div id="choices--payment-field-item-choice-5" className="choices__item choices__item--choice choices__item--selectable" role="option" data-choice="" data-id="5" data-value="Visa" data-select-text="Press to select" data-choice-selectable="">Visa</div></div></div></div>
                                                                 </div>
                                                             </div>
                                                         </div>
