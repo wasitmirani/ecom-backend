@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\backend\api\order\OrderController;
 use App\Http\Controllers\backend\product\ProductController;
 use App\Http\Controllers\backend\product\CategoryController;
 
@@ -36,6 +37,8 @@ Route::prefix('/app')->group(function () {
 
     Route::resource('product', ProductController::class);
     Route::get('/categories-list', [CategoryController::class,'categoriesList']);
+    Route::get('/orders',[OrderController::class,'orders']);
+    Route::get('/order')
 
 });
 
