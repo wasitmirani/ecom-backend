@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('thumbnail')->default('default_profile.png');
             $table->string('token')->nullable();
             $table->rememberToken();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

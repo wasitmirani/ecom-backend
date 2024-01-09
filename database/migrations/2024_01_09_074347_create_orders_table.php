@@ -27,7 +27,7 @@ return new class extends Migration
             $table->double('subtotal')->nullable();
             $table->double('total')->nullable();
             $table->double('total_discount')->nullable();
-            $table->enum('status', ['new', 'process','deliverd'])->default('new'); //
+            $table->enum('status', ['new', 'pickup','deliverd','return','cancelled'])->default('new'); //
             $table->softDeletes();
             $table->timestamps();
         });
