@@ -63,9 +63,9 @@
                     <div class="p-lg-5 p-4">
                         <div>
                             <h5 class="text-primary">Welcome Back !</h5>
-                            <p class="text-muted">Sign in to continue to {{config('app.name')}}.</p>
+                            <p class="text-muted">Sign in to continue to {{ config('app.name') }}.</p>
                         </div>
-                       
+
                         @if ($errors->any())
                         @foreach ($errors->all() as $error)
                             <div class="text-danger">{{$error}}</div>
@@ -93,7 +93,7 @@
                                     <div class="position-relative auth-pass-inputgroup mb-3">
                                         <input type="password" name="password" class="form-control pe-5 password-input" placeholder="Enter password" id="password-input">
                                         <button class="btn btn-link position-absolute end-0 top-0 text-decoration-none shadow-none text-muted password-addon" type="button" id="password-addon"><i class="ri-eye-fill align-middle"></i></button>
-                                   
+
                                     </div>
                                     @error('password')
                                     <span class="invalid-feedback" role="alert">
@@ -113,17 +113,22 @@
 
                                 <div class="mt-4 text-center">
                                     <div class="signin-other-title">
-                                        {{-- <h5 class="fs-13 mb-4 title">Sign In with</h5> --}}
+
                                     </div>
 
-                                   
+                                    <div>
+
+
+                                    </div>
                                 </div>
 
                             </form>
                         </div>
 
                         <div class="mt-5 text-center">
-                            <p class="mb-0">Don't have an account ? <a href="#" class="fw-semibold text-primary text-decoration-underline"> Signup</a> </p>
+                            <p class="mb-0">
+
+                             </p>
                         </div>
                     </div>
                 </div>

@@ -4,6 +4,7 @@ import Dashboard from "@/pages/dashboard/Dashboard";
 import Products from "@/pages/catalog/product/Products"
 import Helpers  from "@/utils/helpers";
 import CreateProduct from "@/pages/catalog/product/CreateProduct";
+import Orders from "@/pages/order/Order";
 const helper = new Helpers();
 
 const generateRoute=(name:string,page:any,title:string,permission?: string)=>{
@@ -31,6 +32,7 @@ generateRoute('/home',Home,'Home'),
 generateRoute('/dashboard',Dashboard,'Dashboard'),
 generateRoute('/products',Products,'Products'),
 generateRoute('/create-product',CreateProduct,'create-product'),
+generateRoute('/orders',Orders,'orders'),
 //   { path: "*", element: <Home /> }
 ];
 
@@ -62,7 +64,7 @@ export {routes};
 //             title: 'Tutorial'
 //         }
 //     },
-   
+
 // ];
 
 // export {routes};

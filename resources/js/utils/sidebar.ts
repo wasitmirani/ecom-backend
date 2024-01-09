@@ -47,43 +47,43 @@ class Sidebar {
             ),
             this.setMultiMenu('Reports', 'fa-solid fa-chart-line', 'reports-views',
                 [
-                 
-              
+
+
                     this.setSubMenu('Sales Order', '/reports/sales-order', 'somePermission'),
                     this.setSubMenu('Customers', '/reports/customers', 'somePermission'),
-                  
+
 
                     // Add more sub-menu items as needed
                 ],
             ),
-  
+
             this.setHeadingMenu('Ecommerce'),
             this.setMultiMenu('Catalog', 'fa-solid fa-layer-group', 'catalog-views',
                 [
-                
+
                     this.setSubMenu('Products ', '/products', 'somePermission'),
 
-                 
-               
+
+
 
                 ],
             ),
-          
-           
-           
-           
+            this.setSingleMenu('Orders', 'fa-solid fa-shopping-basket', '/orders'),
+            this.setSingleMenu('Customers', 'fa-solid fa-users', '/customer'),
+
+
           this.setHeadingMenu('Tools & Sessions'),
           this.setMultiMenu('Settings', 'fa-solid fa-gear', 'Settings',
           [
               this.setSubMenu('Account ', '/settings/account', 'somePermission'),
-          
+
               this.setSubMenu('Users', '/settings/users', 'somePermission'),
               this.setSubMenu('roles', '/settings/roles', 'somePermission'),
-             
-  
+
+
           ]
         ),
-     
+
         this.setSingleMenu('Log out', 'fa-solid fa-power-off', '/logout'),
 
 

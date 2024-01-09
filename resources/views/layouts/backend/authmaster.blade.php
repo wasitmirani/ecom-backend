@@ -47,7 +47,7 @@
                     <div class="col-lg-12">
                         <div class="text-center">
                             <p class="mb-0">&copy;
-                                <script>document.write(new Date().getFullYear())</script> {{config('app.name')}}
+                                <script>document.write(new Date().getFullYear())</script> {{ config('app.name') }}
                             </p>
                         </div>
                     </div>
