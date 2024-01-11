@@ -11,7 +11,7 @@ const Products: React.FC = ()=>{
     const [products, setProducts] = useState<any>([]);
 
     const getProducts=()=>{
-        toast("Wow so easy!");
+      
         axios_request.get('/product').then((res)=>{
             setProducts(res.data.results.products);
 
@@ -92,9 +92,12 @@ const Products: React.FC = ()=>{
                                                     <tr>
                                                         {/*  style="width: 42px;" */}
                                                       
-                                                        <th scope="col">Title</th>
+                                                        <th scope="col">Name</th>
+                                                        <th scope="col">Category</th>
                                                         <th scope="col">SKU</th>
                                                         <th scope="col">Price</th>
+                                                        <th scope="col">Discount</th>
+                                                        <th scope="col">Type</th>
                                                         <th scope="col">Created</th>
                                                         <th scope="col">Action</th>
                                                     </tr>
@@ -105,12 +108,27 @@ const Products: React.FC = ()=>{
                                                      
                                                           <td><Link to="#" className="fw-medium">
                                                             {product.name}</Link></td>
+                                                            <td>{product?.category?.name ?? 'N/A'}</td>
                                                           <td>{product.sku ?? 'N/A'}</td>
                                                           <td>Rs.{product.price ?? 0}</td>
-                                                          <td>{product.created_at ?? 'N/A'}</td>
+                                                          <td>Rs.{product.discount ?? 0}</td>
+                                                          <td>{product.type}</td>
+                                                          <td>{helper.timeformat(product.created_at) ?? 'N/A'}</td>
                                                           <td>
-                                                             
-                                                          </td>
+                                                            <ul className="list-inline hstack gap-2 mb-0">
+                                                               
+                                                                <li className="list-inline-item edit" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Edit">
+                                                                    <a href="#showModal" data-bs-toggle="modal" className="text-primary d-inline-block edit-item-btn">
+                                                                        <i className="ri-pencil-fill fs-16"></i>
+                                                                    </a>
+                                                                </li> |
+                                                                <li className="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Remove">
+                                                                    <a className="text-danger d-inline-block remove-item-btn" data-bs-toggle="modal" href="#deleteOrder">
+                                                                        <i className="ri-delete-bin-5-fill fs-16"></i>
+                                                                    </a>
+                                                                </li>
+                                                            </ul>
+                                                        </td>
                                                          
                                                       </tr>
                                                   ))}

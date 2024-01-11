@@ -1,6 +1,7 @@
 import { axios_request } from "@/bootstrap";
 import { BreadcrumbComponent } from "@/components/BreadCrumbComponent";
 import React, { useEffect, useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import { toast } from "react-toastify";
 
 const CreateProduct: React.FC = ()=>{
@@ -9,14 +10,19 @@ const CreateProduct: React.FC = ()=>{
     const [productPrice, setProductPrice] = useState("");
     const [productSKU, setProductSKU] = useState("");
     const [productCategory, setProductCategory] = useState("");
+    const [productType, setProductType] = useState("");
     const [productDescription, setProductDescription] = useState("")
+    const [productDiscount,setProductDiscount] = useState<any>([]);
     const [productImages, setProductImages] = useState<File[]>([]);
     const [categories,setCategories] = useState<any>([]);
-
+ 
+    
+    const navigate = useNavigate();
 
     const getCategories= (()=>{
         axios_request.get('/categories-list').then((res)=>{
             setCategories(res.data.results.categories);
+
         });
     })
     const handleSubmit = (e: React.FormEvent) => {
@@ -29,6 +35,8 @@ const CreateProduct: React.FC = ()=>{
         form_data.append('sku',productSKU);
         form_data.append('category_id',productCategory);
         form_data.append('description',productDescription);
+        form_data.append('discount',productDiscount)
+        form_data.append('type',productType)
          // Append image files
        
           for (var x = 0; x < productImages.length; x++) {
@@ -47,6 +55,8 @@ const CreateProduct: React.FC = ()=>{
                 progress: undefined,
                 theme: "light",
                 });
+
+                navigate('/app/products');
         }).catch((err)=>{
             console.log(err.response.data.message);
             toast.error(err.response.data.message, {
@@ -77,23 +87,29 @@ const CreateProduct: React.FC = ()=>{
                                 <div className="card">
                                     <div className="card-body">
                                         <div className="mb-3">
-                                            <label className="form-label" >Product Title</label>
+                                            <label className="form-label" >Product Name</label>
                                             <input type="text"   value={productTitle}
                                                                  onChange={(e) => setProductTitle(e.target.value)} 
                                                                  className="form-control" id="product-title-input"  
-                                                                 placeholder="Enter product title" required/>
+                                                                 placeholder="Enter product name" required/>
                                            
                                         </div>
                                         <div>
                                             <div className="row">
                                            
-                                                <div className="col">
+                                                <div className="col-md-4">
                                                 <label>Product Price</label>
-                                                <input type="number"  value={productPrice}
+                                                <input type="number" min={1} value={productPrice}
                                                                  onChange={(e) => setProductPrice(e.target.value)}  className="form-control" id="product-title-input"  placeholder="Enter product price" required/>
 
                                                 </div>
-                                                <div className="col">
+                                                <div className="col-md-4">
+                                                <label>Product Discount</label>
+                                                <input type="number" min={1}  value={productDiscount}
+                                                                 onChange={(e) => setProductDiscount(e.target.value)}  className="form-control" id="product-title-input"  placeholder="Enter product discount" />
+
+                                                </div>
+                                                <div className="col-md-4">
                                                 <label>Product SKU</label>
                                                 <input type="text"   value={productSKU}
                                                                  onChange={(e) => setProductSKU(e.target.value)} className="form-control" id="product-title-input"  placeholder="Enter product sku" required/>
@@ -151,6 +167,7 @@ const CreateProduct: React.FC = ()=>{
                                         <h5 className="card-title mb-0">Product Categories</h5>
                                     </div>
                                     <div className="card-body">
+                                        <div className="row">
                                         <p className="text-muted mb-2"> Select product category</p>
                                         <select className="form-select" value={productCategory}
                                                                  onChange={(e) => setProductCategory(e.target.value)} id="choices-category-input" name="choices-category-input" data-choices data-choices-search-false>
@@ -161,6 +178,19 @@ const CreateProduct: React.FC = ()=>{
                                             
                                             
                                         </select>
+                                        </div>
+                                        <div className="row mt-2">
+                                        <p className="text-muted mb-2"> Select product type</p>
+                                        <select className="form-select" value={productType}
+                                                                 onChange={(e) => setProductType(e.target.value)} id="choices-category-input" name="choices-category-input" data-choices data-choices-search-false>
+                                        <option value="" disabled>Select Type</option>
+                                        <option value="digital" >Digital</option>
+                                        <option value="physical" >Physical</option>
+                                        <option value="service" >Service</option>
+                                            
+                                        </select>
+                                        </div>
+                                       
                                     </div>
                                
                                 </div>

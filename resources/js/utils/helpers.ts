@@ -1,3 +1,5 @@
+import moment from "moment";
+
 class Helper {
     public prefix_url: string;
 
@@ -6,7 +8,15 @@ class Helper {
       this.prefix_url = "/app";
      
     }
-
+    
+    timeformat = (value:string): any =>{
+      if (value) {
+        return moment
+            .utc(String(value))
+            .local()
+            .format('LLLL');
+    }
+    }
     static loadHomeScripts = (): void => {
       const scriptList = [
         '/assets/js/app.js',

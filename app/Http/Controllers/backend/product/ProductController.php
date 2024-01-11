@@ -46,20 +46,29 @@ class ProductController extends Controller
 
         $request->validate([
             'category_id' => 'nullable|exists:categories,id',
-            'name' => 'required|string',
+            'name' => 'required|min:5|max:150|string',
             'sku'=>'required|unique:products',
-            'description' => 'nullable|string',
+            'description' => 'nullable|min:20|max:200|string',
             'type' => 'in:digital,physical,service',
             'price' => 'required|numeric',
             'discount' => 'numeric',
         ]);
-  
+        $images=array();
+        if($files=$request->file('images')){
+            foreach($files as $file){
+                $name=genUUID().'-.'. $file->getClientOriginalExtension();
+                $file->move('product/images',$name);
+                $images[]=$name;
+            }
+        }
         $product = Product::create([
             'uuid' => genUUID(),
             'category_id'=>$request->category_id,
             'user_id'=>$request->user()->id,
+            'type'=>$request->type ?? 'physical',
             'slug'=>setSlug($request->name),
             'sku'=>$request->sku,
+            'images'=>$images,
             'description' =>$request->description,
             'price' =>$request->price,
             'name'=>$request->name,
