@@ -6,6 +6,7 @@ import { BreadcrumbComponent } from '@/components/BreadCrumbComponent';
 import { axios_request } from "@/bootstrap";
 import { toast } from 'react-toastify';
 import LoadingComponent from '@/components/LoadingComponent';
+import Swal from 'sweetalert2';
 const helper = new Helper();
 
 const Products: React.FC = () => {
@@ -21,6 +22,42 @@ const Products: React.FC = () => {
 
         });
         setLoading(false);
+    }
+
+    const deleteProduct = (uuid:string) => {
+        console.log(uuid);
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+          }).then((result) => {
+            if (result.isConfirmed) {
+              axios_request.delete(`/product/${uuid}`).then((response)=>{
+                Swal.fire({
+                    title: "Deleted!",
+                    text: "Your product has been deleted.",
+                    icon: "success"
+                  });
+                getProducts();
+              }).catch((err)=>{
+                toast.error(err.response.data.message, {
+                    position: "top-right",
+                    autoClose: 1500,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                    });  
+              });
+              
+            }
+          });
     }
 
     const handleSearch = (event: any) => {
@@ -159,10 +196,15 @@ const Products: React.FC = () => {
                                                                             </a>
                                                                         </li> |
                                                                         <li className="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Remove">
-                                                                            <a className="text-danger d-inline-block remove-item-btn" data-bs-toggle="modal" href="#deleteOrder">
-                                                                                <i className="ri-delete-bin-5-fill fs-16"></i>
-                                                                            </a>
-                                                                        </li>
+                                                    <a
+                                                        onClick={() => deleteProduct(product.uuid)}
+                                                        className="text-danger d-inline-block remove-item-btn"
+                                                        data-bs-toggle="modal"
+                                                        href="#deleteOrder"
+                                                    >
+                                                        <i className="ri-delete-bin-5-fill fs-16"></i>
+                                                    </a>
+                                                                            </li>
                                                                     </ul>
                                                                 </td>
 
@@ -175,7 +217,7 @@ const Products: React.FC = () => {
                                                     </tfoot>
                                                 </table>
                                                 {/* Pagination */}
-                                                { products.data.length > 0 &&
+                                                { products?.data?.length > 0 &&
                                                     (
                                                 <div className='row mt-4'>
 
