@@ -16,9 +16,12 @@ class ProductController extends Controller
     {
         
         $query = request('query');
+   
         $products = Product::latest();
-        if (empty($query)) {
-            $products = $products->where('name', 'like', '%' . $query . '%');
+        if (!empty($query)) {
+       
+            $products = $products->where('sku', 'like', '%' . $query . '%')
+                                 ->orWhere('name', 'like', '%' . $query . '%');
         }
         $products = $products
             ->with([ 'category', 'user'])
