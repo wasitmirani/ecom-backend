@@ -2,16 +2,10 @@
 
 namespace App\Http\Controllers\backend\user;
 
-use App\Models\User;
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
-use Illuminate\Validation\Rules;
-use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Auth\Events\Registered;
+use Illuminate\Http\Request;
 
-class UserConroller extends Controller
+class UserController extends Controller
 {
     //
     private $user;
@@ -19,6 +13,23 @@ class UserConroller extends Controller
     {
         $this->user = new User();
     }
+    public function customers(Request $request){
+
+        $customers =User::latest()->where('user_type','customer')->;
+        $query = request('query');
+        $users = User::latest();
+        if (empty($query)) {
+            $users = $users->where('phone', 'like', '%' . $query . '%');
+        }
+        if(!empty($request->status)) {
+            $users = $users->where('status', $request->status);
+        }
+        $users = $users->paginate(perPage());
+
+        return response()->json(['$users' => $users]);
+    }
+
+   
     /**
      * Display a listing of the resource.
      *
@@ -108,7 +119,6 @@ class UserConroller extends Controller
             'email' => $request->email,
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
-            'client_id' => $client_id,
             'slug' => $this->mapFirstNameLastSlug($request),
             'phone' => $request->phone,
             'thumbnail' => isset($request->thumbnail['name']) ? $request->thumbnail['name'] : "default.png",
@@ -158,5 +168,5 @@ class UserConroller extends Controller
             return response()->json(['message' => 'Password did not match'], 422);
         }
     }
-
+    
 }
