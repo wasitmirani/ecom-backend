@@ -44,6 +44,7 @@ Route::prefix('/app')->middleware('auth:sanctum')->group(function () {
     Route::get('/categories-list', [CategoryController::class,'categoriesList']);
     Route::get('/orders',[OrderController::class,'index']);
     Route::get('/order/{uuid}',[OrderController::class,'orderDetails']);
+    Route::get('/order-status/{uuid}',[OrderController::class,'updateStatus']);
 
 });
 

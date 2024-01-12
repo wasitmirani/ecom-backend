@@ -15,6 +15,9 @@ class OrderController extends Controller
         if (empty($query)) {
             $orders = $orders->where('reference_number', 'like', '%' . $query . '%');
         }
+        if(!empty($request->status)) {
+            $orders = $orders->where('status', $request->status);
+        }
         $orders = $orders->with([ 'items', 'user'])->paginate(perPage());
 
         return response()->json(['orders' => $orders]);
@@ -25,6 +28,13 @@ class OrderController extends Controller
 
         return response()->json(['order' => $order]);
 
+    }
+
+    public function updateStatus(Request $request){
+
+        $order=Order::where('uuid',$request->uuid)->update(['status'=>'pickup']);
+
+        return response()->json(['message' => 'order status has been updated']);
     }
 
 

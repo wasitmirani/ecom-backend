@@ -1,19 +1,67 @@
 import { axios_request } from '@/bootstrap';
+import LoadingComponent from '@/components/LoadingComponent';
 import Helper from '@/utils/helpers';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const Order: React.FC = (() => {
 
     const [orders, setOrders] = useState<any>([]);
-    
+    const [loading, setLoading] = useState(false);
+    const [searchQuery, setSearchQuery] = useState('');
+    const [currentPage, setCurrentPage] = useState(1);
     const helper = new Helper();
-    const getOrders = () => {
-        axios_request.get('/orders').then((res) => {
+    const getOrders = (status?:string | null) => {
+        setOrders([]);
+        setLoading(true);
+        status = status == null ? '' : status;
+        axios_request.get(`/orders?status=${status}&page=${currentPage}`).then((res) => {
             setOrders(res.data.orders);
         });
-    }
 
+        setTimeout(() => {
+            setLoading(false);
+        }, 300);
+    }
+    const handleSearch = (event: any) => {
+        setLoading(true);
+        const query = event.target.value;
+        setSearchQuery(query);
+        if (query.length > 2) {
+            setTimeout(() => {
+                // Filter products based on the search query
+                setCurrentPage(1);
+                axios_request.get(`/orders?page=${currentPage}&query=${searchQuery}`).then((res) => {
+                    setOrders(res.data.orders);
+
+                });
+            }, 1500);
+        }
+        else {
+            getOrders();
+        }
+
+
+
+        setLoading(false);
+    };
+    const updateStatus= (uuid:string) => {
+        axios_request.get('/order-status/'+uuid).then((res) => {
+            toast.success(res.data.message, {
+                position: "top-right",
+                autoClose: 1500,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                });
+
+                getOrders();
+        })
+    };
     useEffect(() => {
         getOrders();
     },[]);
@@ -39,7 +87,8 @@ const Order: React.FC = (() => {
                             <div className="row g-3">
                                 <div className="col-xxl-5 col-sm-6">
                                     <div className="search-box">
-                                        <input type="text" className="form-control search" placeholder="Search for order ID, customer, order status or something..." />
+                                        <input type="search" value={searchQuery}
+                                                    onChange={handleSearch}  className="form-control search" placeholder="Search for order ID, customer, order status or something..." />
                                         <i className="ri-search-line search-icon"></i>
                                     </div>
                                 </div>
@@ -70,27 +119,28 @@ const Order: React.FC = (() => {
                         <div>
                             <ul className="nav nav-tabs nav-tabs-custom nav-success mb-3" role="tablist">
                                 <li className="nav-item" role="presentation">
-                                    <Link className="nav-link active All py-3" data-bs-toggle="tab" id="All" to="#home1" role="tab" aria-selected="true">
+                                    <Link onClick={()=>getOrders()} className="nav-link active All py-3" data-bs-toggle="tab" id="All" to="#home1" role="tab" aria-selected="true">
                                         <i className="ri-store-2-fill me-1 align-bottom"></i> All Orders
                                     </Link>
                                 </li>
                                 <li className="nav-item" role="presentation">
-                                    <Link className="nav-link py-3 Delivered" data-bs-toggle="tab" id="Delivered" to="#delivered" role="tab" aria-selected="false" >
+                                    <Link  onClick={()=>getOrders('delivered')}   className="nav-link py-3 Delivered" data-bs-toggle="tab" id="Delivered" to="#delivered" role="tab" aria-selected="false" >
                                         <i className="ri-checkbox-circle-line me-1 align-bottom"></i> Delivered
                                     </Link>
                                 </li>
                                 <li className="nav-item" role="presentation">
-                                    <Link className="nav-link py-3 Pickups" data-bs-toggle="tab" id="Pickups" to="#pickups" role="tab" aria-selected="false" >
-                                        <i className="ri-truck-line me-1 align-bottom"></i> Pickups <span className="badge bg-danger align-middle ms-1">2</span>
+                                    <Link  onClick={()=>getOrders('pickup')} className="nav-link py-3 Pickups" data-bs-toggle="tab" id="Pickups" to="#pickups" role="tab" aria-selected="false" >
+                                        <i className="ri-truck-line me-1 align-bottom"></i> Pickups 
+                                        {/* <span className="badge bg-danger align-middle ms-1">2</span> */}
                                     </Link>
                                 </li>
                                 <li className="nav-item" role="presentation">
-                                    <Link className="nav-link py-3 Returns" data-bs-toggle="tab" id="Returns" to="#returns" role="tab" aria-selected="false" >
+                                    <Link  onClick={()=>getOrders('return')} className="nav-link py-3 Returns" data-bs-toggle="tab" id="Returns" to="#returns" role="tab" aria-selected="false" >
                                         <i className="ri-arrow-left-right-fill me-1 align-bottom"></i> Returns
                                     </Link>
                                 </li>
                                 <li className="nav-item" role="presentation">
-                                    <Link className="nav-link py-3 Cancelled" data-bs-toggle="tab" id="Cancelled" to="#cancelled" role="tab" aria-selected="false" >
+                                    <Link  onClick={()=>getOrders('cancelled')}  className="nav-link py-3 Cancelled" data-bs-toggle="tab" id="Cancelled" to="#cancelled" role="tab" aria-selected="false" >
                                         <i className="ri-close-circle-line me-1 align-bottom"></i> Cancelled
                                     </Link>
                                 </li>
@@ -115,7 +165,16 @@ const Order: React.FC = (() => {
                                         </tr>
                                     </thead>
                                     <tbody className="list form-check-all">
-                                        
+                                    {loading &&
+                                                            (
+                                                                <tr >
+                                                                    <td colSpan={8} style={{ textAlign: 'center' }}>
+                                                                        <LoadingComponent />
+                                                                    </td>
+
+                                                                </tr>
+
+                                                            )}
                                         {
                                             orders?.data?.map((order: any) => (
                                                 <tr>
@@ -134,22 +193,22 @@ const Order: React.FC = (() => {
                                                 <td className="status"><span className="badge bg-primary-subtle text-primary text-uppercase">{order.status}</span></td>
                                                 <td>
                                                     <ul className="list-inline hstack gap-2 mb-0">
-                                                    <li className="list-inline-item edit" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Approved">
-                                                            <a href="#showModal" data-bs-toggle="modal" className="text-primary d-inline-block edit-item-btn">
+
+                                                        {order.status == "new" && (
+                                                            <li className="list-inline-item edit" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Approved">
+                                                            <a href="#showModal" onClick={()=>updateStatus(order.uuid)} data-bs-toggle="modal" className="text-primary d-inline-block edit-item-btn">
                                                                 <i className="ri-check-fill fs-16"></i>
                                                             </a>
                                                         </li> 
+                                                        )}
+                                                    
                                                         <li className="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="View">
                                                             <a href="apps-ecommerce-order-details.html" className="text-primary d-inline-block">
                                                                 <i className="ri-eye-fill fs-16"></i>
                                                             </a>
                                                         </li> 
                                                        
-                                                        <li className="list-inline-item edit" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Edit">
-                                                            <a href="#showModal" data-bs-toggle="modal" className="text-primary d-inline-block edit-item-btn">
-                                                                <i className="ri-pencil-fill fs-16"></i>
-                                                            </a>
-                                                        </li> 
+                                                       
                                                         <li className="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Remove">
                                                             <a className="text-danger d-inline-block remove-item-btn" data-bs-toggle="modal" href="#deleteOrder">
                                                                 <i className="ri-delete-bin-5-fill fs-16"></i>
