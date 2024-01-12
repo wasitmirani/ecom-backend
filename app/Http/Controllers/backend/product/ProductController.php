@@ -85,9 +85,10 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $uuid)
     {
         //
+        return Product::where('uuid', $uuid)->with('category')->first();
     }
 
     /**
@@ -101,7 +102,7 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $uuid)
     {
         //
          $request->validate([
@@ -112,7 +113,7 @@ class ProductController extends Controller
             'price' => 'required|numeric',
             'discount' => 'numeric',
         ]);
-        $product = Product::where('id',$id)->update([
+        $product = Product::where('uuid',$uuid)->update([
             'category_id'=>$request->category_id,
             'description' =>$request->description,
             'price' =>$request->price,

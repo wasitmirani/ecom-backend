@@ -42,7 +42,7 @@ Route::prefix('/app')->middleware('auth:sanctum')->group(function () {
     
     Route::resource('product', ProductController::class);
     Route::get('/categories-list', [CategoryController::class,'categoriesList']);
-    Route::get('/orders',[OrderController::class,'orders']);
+    Route::get('/orders',[OrderController::class,'index']);
     Route::get('/order/{uuid}',[OrderController::class,'orderDetails']);
 
 });

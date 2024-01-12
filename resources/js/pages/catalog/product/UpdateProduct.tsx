@@ -1,10 +1,14 @@
 import { axios_request } from "@/bootstrap";
 import { BreadcrumbComponent } from "@/components/BreadCrumbComponent";
 import React, { useEffect, useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,useParams } from 'react-router-dom';
+
 import { toast } from "react-toastify";
 
-const CreateProduct: React.FC = ()=>{
+const UpdateProduct: React.FC = ()=>{
+    const { uuid } = useParams<any>();
+
+    console.log(uuid);
      // State for form fields
     const [productTitle, setProductTitle] = useState("");
     const [productPrice, setProductPrice] = useState("");
@@ -18,7 +22,20 @@ const CreateProduct: React.FC = ()=>{
  
     
     const navigate = useNavigate();
+    const getProduct=(()=>{
+        axios_request.get(`/product/${uuid}`).then((res)=>{
+            console.log(res.data);
+            const product=res.data;
+            setProductSKU(product.sku);
+            setProductCategory(product.category_id);
+            setProductDescription(product.description);
+            setProductDiscount(product.discount);
+            setProductPrice(product.price);
+            setProductTitle(product.name);
+            setProductType(product.type);
 
+        });
+    })
     const getCategories= (()=>{
         axios_request.get('/categories-list').then((res)=>{
             setCategories(res.data.results.categories);
@@ -29,23 +46,17 @@ const CreateProduct: React.FC = ()=>{
         e.preventDefault();
         // Here you can perform any additional validation or API calls before submitting
         
-        let form_data= new FormData();
-        form_data.append('name',productTitle);
-        form_data.append('price',productPrice);
-        form_data.append('sku',productSKU);
-        form_data.append('category_id',productCategory);
-        form_data.append('description',productDescription);
-        form_data.append('discount',productDiscount)
-        form_data.append('type',productType)
+      
          // Append image files
-       
-          for (var x = 0; x < productImages.length; x++) {
-            form_data.append("images[]", productImages[x]);
-        }
-        // Example: Log the form data
-        axios_request.post('/product',form_data).then((res)=>{
 
-            toast.success(res.data.message, {
+        let data={'name':productTitle,'price':productPrice,'sku':productSKU,'category_id':productCategory,
+        'description':productDescription,'discount':productDiscount,'type':productType};
+       
+        
+        // Example: Log the form data
+        axios_request.put(`/product/${uuid}`,data).then((res)=>{
+
+            toast.info(res.data.message, {
                 position: "top-right",
                 autoClose: 1500,
                 hideProgressBar: false,
@@ -74,11 +85,12 @@ const CreateProduct: React.FC = ()=>{
         // You can add logic here to send data to your server or perform any other actions
       };
       useEffect(()=>{
-            getCategories();
+        getProduct();
+                getCategories();
       },[]);
     return (
         <>
-            <BreadcrumbComponent active_name="Create Product" links={[{name:"Products",link:"/products"}]}/>
+            <BreadcrumbComponent active_name="Update Product" links={[{name:"Products",link:"/products"}]}/>
 
 
             <form id="createproduct-form" className="needs-validation" onSubmit={handleSubmit}>
@@ -105,7 +117,7 @@ const CreateProduct: React.FC = ()=>{
                                                 </div>
                                                 <div className="col-md-4">
                                                 <label>Product Discount</label>
-                                                <input type="number" min={1}  value={productDiscount}
+                                                <input type="number" min={0}  value={productDiscount}
                                                                  onChange={(e) => setProductDiscount(e.target.value)}  className="form-control" id="product-title-input"  placeholder="Enter product discount" />
 
                                                 </div>
@@ -123,7 +135,7 @@ const CreateProduct: React.FC = ()=>{
                                 </div>
                             
 
-                                <div className="card">
+                                {/* <div className="card">
                                     <div className="card-header">
                                         <h5 className="card-title mb-0">Product Gallery</h5>
                                     </div>
@@ -145,13 +157,13 @@ const CreateProduct: React.FC = ()=>{
                                         </div>
                                        
                                     </div>
-                                </div>
+                                </div> */}
                                
 
                              
                     
                                 <div className="text-end mb-3">
-                                    <button type="submit" className="btn btn-success w-sm">Submit</button>
+                                    <button type="submit" className="btn btn-success w-sm">Update</button>
                                 </div>
                             </div>
                             
@@ -172,9 +184,11 @@ const CreateProduct: React.FC = ()=>{
                                         <select className="form-select" value={productCategory}
                                                                  onChange={(e) => setProductCategory(e.target.value)} id="choices-category-input" name="choices-category-input" data-choices data-choices-search-false>
                                         <option value="" disabled>Select Category</option>
-                                           {categories.map((category:any) =>
-                                            <option value={category.id}>{category?.name}</option>
-                                           )}
+                                        {categories.map((category: any) => (
+                                            <option key={category.id} value={category.id} selected={productCategory === category.id}>
+                                                {category?.name}
+                                            </option>
+                                            ))}
                                             
                                             
                                         </select>
@@ -220,4 +234,4 @@ const CreateProduct: React.FC = ()=>{
     );
 }
 
-export default CreateProduct;
+export default UpdateProduct;

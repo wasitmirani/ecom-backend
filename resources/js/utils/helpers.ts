@@ -14,7 +14,7 @@ class Helper {
         return moment
             .utc(String(value))
             .local()
-            .format('LLLL');
+            .format('lll');
     }
     }
     static loadHomeScripts = (): void => {

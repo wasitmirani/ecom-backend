@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Helper from '@/utils/helpers';
 import { BreadcrumbComponent } from '@/components/BreadCrumbComponent';
 import { axios_request } from "@/bootstrap";
@@ -14,6 +14,7 @@ const Products: React.FC = () => {
     const [searchQuery, setSearchQuery] = useState('');
     const [loading, setLoading] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
+    const navigate = useNavigate();
 
     const getProducts = () => {
         setLoading(true);
@@ -23,7 +24,10 @@ const Products: React.FC = () => {
         });
         setLoading(false);
     }
-
+    const updateProduct = (uuid:string) => {
+        console.log('updating product',uuid);
+        navigate('/app/catalog/update-product/'+uuid);
+    }
     const deleteProduct = (uuid:string) => {
         console.log(uuid);
         Swal.fire({
@@ -103,7 +107,7 @@ const Products: React.FC = () => {
                                 <div className="row g-4">
                                     <div className="col-sm-auto">
                                         <div>
-                                            <Link to={helper.prefix_url + `/create-product`}
+                                            <Link to={helper.prefix_url + `/catalog/create-product`}
                                                 className="btn btn-success" id="addproduct-btn">
                                                 <i className="ri-add-line align-bottom me-1"></i>
                                                 Add Product</Link>
@@ -191,7 +195,7 @@ const Products: React.FC = () => {
                                                                     <ul className="list-inline hstack gap-2 mb-0">
 
                                                                         <li className="list-inline-item edit" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Edit">
-                                                                            <a href="#showModal" data-bs-toggle="modal" className="text-primary d-inline-block edit-item-btn">
+                                                                            <a  href="#UpdateOrder" onClick={() => updateProduct(product.uuid)} data-bs-toggle="modal" className="text-primary d-inline-block edit-item-btn">
                                                                                 <i className="ri-pencil-fill fs-16"></i>
                                                                             </a>
                                                                         </li> |

@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\backend\api\order;
 
-use App\Http\Controllers\Controller;
+use App\Models\Order;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class OrderController extends Controller
 {
@@ -12,7 +13,7 @@ class OrderController extends Controller
         $query = request('query');
         $orders = Order::latest();
         if (empty($query)) {
-            $orders = $orders->where('name', 'like', '%' . $query . '%');
+            $orders = $orders->where('reference_number', 'like', '%' . $query . '%');
         }
         $orders = $orders->with([ 'items', 'user'])->paginate(perPage());
 

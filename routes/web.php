@@ -23,5 +23,7 @@ require __DIR__.'/auth.php';
 Route::get('/{any?}',fn()=> redirect('/app/home'));
 
 
-Route::get('/app/{any?}',[BackendController::class,'index'])->middleware('auth')->name('backend.index');
-
+Route::get('/app/{any?}', [BackendController::class, 'index'])
+    ->where('any', '.*')
+    ->middleware('auth')
+    ->name('backend.index');

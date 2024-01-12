@@ -4,6 +4,8 @@ import Dashboard from "@/pages/dashboard/Dashboard";
 import Products from "@/pages/catalog/product/Products"
 import Helpers  from "@/utils/helpers";
 import CreateProduct from "@/pages/catalog/product/CreateProduct";
+import UpdateProduct from "@/pages/catalog/product/UpdateProduct";
+
 import Orders from "@/pages/order/Order";
 const helper = new Helpers();
 
@@ -30,8 +32,9 @@ const routes= [
 // { path: "/", element: <Home /> },
 generateRoute('/home',Home,'Home'),
 generateRoute('/dashboard',Dashboard,'Dashboard'),
-generateRoute('/products',Products,'Products'),
-generateRoute('/create-product',CreateProduct,'create-product'),
+generateRoute('/catalog/products',Products,'Products'),
+generateRoute('/catalog/create-product',CreateProduct,'create-product'),
+generateRoute('/catalog/update-product/:uuid',UpdateProduct,'create-product'),
 generateRoute('/orders',Orders,'orders'),
 //   { path: "*", element: <Home /> }
 ];

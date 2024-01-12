@@ -1,11 +1,13 @@
 import { axios_request } from '@/bootstrap';
+import Helper from '@/utils/helpers';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const Order: React.FC = (() => {
 
-    const [orders, setOrders] = useState({});
-
+    const [orders, setOrders] = useState<any>([]);
+    
+    const helper = new Helper();
     const getOrders = () => {
         axios_request.get('/orders').then((res) => {
             setOrders(res.data.orders);
@@ -14,7 +16,7 @@ const Order: React.FC = (() => {
 
     useEffect(() => {
         getOrders();
-    });
+    },[]);
     return (
 
         <div className="row">
@@ -99,50 +101,65 @@ const Order: React.FC = (() => {
                                     <thead className="text-muted table-light">
                                         <tr className="text-uppercase">
                                             {/* style="width: 25px;" */}
-
+                                            <th  >Order Date</th>
                                             <th  >Order ID</th>
                                             <th  >Customer</th>
                                             <th  >City</th>
-                                            <th  >Products</th>
-                                            <th  >Order Date</th>
-                                            <th  >Amount</th>
-                                            <th  >Payment Method</th>
-                                            <th  >Delivery Status</th>
+                                            <th  >Items</th>
+                                        
+                                            <th  >Sub Total</th>
+                                            <th  >Discount</th>
+                                            <th  >Total</th>
+                                            <th  >Status</th>
                                             <th >Action</th>
                                         </tr>
                                     </thead>
-                                    <tbody className="list form-check-all"><tr>
-
-                                        <td className="id">
-                                            <a href="apps-ecommerce-order-details.html" className="fw-medium link-primary">
-                                                #VZ12</a></td>
-                                        <td className="customer_name">Alexis Clarke</td>
-                                        <td className="product_name">Noise Evolve Smartwatch</td>
-                                        <td className="date">20 Apr,2022 <small className="text-muted">4:05 PM</small></td>
-                                        <td className="amount">$1021</td>
-                                        <td className="payment">Mastercard</td>
-                                        <td className="payment">Mastercard</td>
-                                        <td className="status"><span className="badge bg-danger-subtle text-danger text-uppercase">Cancelled</span></td>
-                                        <td>
-                                            <ul className="list-inline hstack gap-2 mb-0">
-                                                <li className="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="View">
-                                                    <a href="apps-ecommerce-order-details.html" className="text-primary d-inline-block">
-                                                        <i className="ri-eye-fill fs-16"></i>
-                                                    </a>
-                                                </li>
-                                                <li className="list-inline-item edit" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Edit">
-                                                    <a href="#showModal" data-bs-toggle="modal" className="text-primary d-inline-block edit-item-btn">
-                                                        <i className="ri-pencil-fill fs-16"></i>
-                                                    </a>
-                                                </li>
-                                                <li className="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Remove">
-                                                    <a className="text-danger d-inline-block remove-item-btn" data-bs-toggle="modal" href="#deleteOrder">
-                                                        <i className="ri-delete-bin-5-fill fs-16"></i>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </td>
-                                    </tr></tbody>
+                                    <tbody className="list form-check-all">
+                                        
+                                        {
+                                            orders?.data?.map((order: any) => (
+                                                <tr>
+                                                     <td className="date">{helper.timeformat(order.created_at)}</td>
+                                                <td className="id">
+                                                    <a href="apps-ecommerce-order-details.html" className="fw-medium link-primary">
+                                                        #{order.reference_number}</a></td>
+                                                <td className="customer_name">{order.customer_name}</td>
+                                                <td className="product_name">{order.customer_city}</td>
+                                                <td className="date">{order.items.length}</td>
+                                           
+                                                <td className="amount">Rs.{order.subtotal}</td>
+                                                <td className="amount">Rs.{order.total_discount}</td>
+                                                <td className="amount">Rs.{order.total}</td>
+                                         
+                                                <td className="status"><span className="badge bg-primary-subtle text-primary text-uppercase">{order.status}</span></td>
+                                                <td>
+                                                    <ul className="list-inline hstack gap-2 mb-0">
+                                                    <li className="list-inline-item edit" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Approved">
+                                                            <a href="#showModal" data-bs-toggle="modal" className="text-primary d-inline-block edit-item-btn">
+                                                                <i className="ri-check-fill fs-16"></i>
+                                                            </a>
+                                                        </li> 
+                                                        <li className="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="View">
+                                                            <a href="apps-ecommerce-order-details.html" className="text-primary d-inline-block">
+                                                                <i className="ri-eye-fill fs-16"></i>
+                                                            </a>
+                                                        </li> 
+                                                       
+                                                        <li className="list-inline-item edit" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Edit">
+                                                            <a href="#showModal" data-bs-toggle="modal" className="text-primary d-inline-block edit-item-btn">
+                                                                <i className="ri-pencil-fill fs-16"></i>
+                                                            </a>
+                                                        </li> 
+                                                        <li className="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Remove">
+                                                            <a className="text-danger d-inline-block remove-item-btn" data-bs-toggle="modal" href="#deleteOrder">
+                                                                <i className="ri-delete-bin-5-fill fs-16"></i>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                        ))}
+                                      </tbody>
                                 </table>
                                 {/* <div className="noresult" >
                                     <div className="text-center">
