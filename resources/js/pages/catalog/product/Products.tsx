@@ -22,7 +22,9 @@ const Products: React.FC = () => {
             setProducts(res.data.results.products);
 
         });
-        setLoading(false);
+        setTimeout(() => {
+            setLoading(false);
+        }, 300);
     }
     const updateProduct = (uuid:string) => {
         console.log('updating product',uuid);
@@ -83,8 +85,9 @@ const Products: React.FC = () => {
         }
 
 
-
-        setLoading(false);
+        setTimeout(() => {
+            setLoading(false);
+        }, 300);
     };
 
     useEffect(() => {

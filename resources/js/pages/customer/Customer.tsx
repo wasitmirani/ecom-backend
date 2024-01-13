@@ -51,7 +51,7 @@ const Customer: React.FC = ()=>{
 
                                                     <div className="col-sm-4">
                                                         <div>
-                                                            <button type="button" className="btn btn-primary w-100" onclick="SearchData();"> <i className="ri-equalizer-fill me-2 align-bottom"></i>Filters</button>
+                                                            <button type="button" className="btn btn-primary w-100"> <i className="ri-equalizer-fill me-2 align-bottom"></i>Filters</button>
                                                         </div>
                                                     </div>
                                                     
