@@ -69,7 +69,7 @@ class Sidebar {
                 ],
             ),
             this.setSingleMenu('Orders', 'fa-solid fa-shopping-basket', '/orders'),
-            this.setSingleMenu('Customers', 'fa-solid fa-users', '/customer'),
+            this.setSingleMenu('Customers', 'fa-solid fa-users', '/customers'),
 
 
           this.setHeadingMenu('Tools & Sessions'),

@@ -5,6 +5,7 @@ import Products from "@/pages/catalog/product/Products"
 import Helpers  from "@/utils/helpers";
 import CreateProduct from "@/pages/catalog/product/CreateProduct";
 import UpdateProduct from "@/pages/catalog/product/UpdateProduct";
+import Customer from "@/pages/customer/Customer";
 
 import Orders from "@/pages/order/Order";
 const helper = new Helpers();
@@ -36,6 +37,7 @@ generateRoute('/catalog/products',Products,'Products'),
 generateRoute('/catalog/create-product',CreateProduct,'create-product'),
 generateRoute('/catalog/update-product/:uuid',UpdateProduct,'create-product'),
 generateRoute('/orders',Orders,'orders'),
+generateRoute('/customers',Customer,'customers'),
 //   { path: "*", element: <Home /> }
 ];
 
