@@ -5,6 +5,8 @@ import Helper from "@/utils/helpers";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
+import PaginationComponent from "@/components/PaginationComponent";
+import LoadingComponent from "@/components/LoadingComponent";
 
 
 const Customer: React.FC = ()=>{
@@ -14,9 +16,10 @@ const Customer: React.FC = ()=>{
     const [searchTerm, setSearchTerm] = useState("");
     const [selectedDate, setSelectedDate] = useState("");
     const [selectedStatus, setSelectedStatus] = useState("");
+    const [currentPage, setCurrentPage] = useState(1);
 
      // Define your API endpoint with filter parameters
-     const apiUrl = `/customers?query=${searchTerm}&date=${selectedDate}&status=${selectedStatus}`;
+     const apiUrl = `/customers?page=${currentPage}&query=${searchTerm}&date=${selectedDate}&status=${selectedStatus}`;
    const getCustomer=async ()=>{
         setLoading(true);
         await axios_request.get(apiUrl).then((res)=>{
@@ -28,6 +31,9 @@ const Customer: React.FC = ()=>{
         }, 300);
        
     }
+    const handlePageChange = (newPage: number) => {
+        setCurrentPage(newPage);
+      };
 
     const handleToggleStatus =  (id:string) => {
         Swal.fire({
@@ -81,7 +87,7 @@ const Customer: React.FC = ()=>{
    
     useEffect(()=>{
         getCustomer();
-    },[]);
+    }, [currentPage]);
     return (
         <>
         <div className="row">
@@ -167,7 +173,17 @@ const Customer: React.FC = ()=>{
                                                     </tr>
                                                 </thead>
                                                 <tbody className="list form-check-all">
-                                                    
+                                                {loading ?
+                                                            (
+                                                                <tr >
+                                                                    <td colSpan={7} style={{ textAlign: 'center' }}>
+                                                                        <LoadingComponent />
+                                                                    </td>
+
+                                                                </tr>
+
+                                                            ) : (
+                                                                <>
                                                     {customers?.data?.map((customer:any) =>(
                                                           <tr>
                                                         
@@ -207,6 +223,8 @@ const Customer: React.FC = ()=>{
                                                           </td>
                                                       </tr>
                                                     ))}
+                                                    </>
+                                                            ) }
                                                   
                                                    </tbody>
                                             </table>
@@ -218,18 +236,15 @@ const Customer: React.FC = ()=>{
 
                                            
                                         </div>
-                                        <div className="d-flex justify-content-end">
-                                            {/* style="display: flex;" */}
-                                            <div className="pagination-wrap hstack gap-2" >
-                                                <a className="page-item pagination-prev disabled" href="#">
-                                                    Previous
-                                                </a>
-                                                <ul className="pagination listjs-pagination mb-0"><li className="active"><a className="page" href="#" data-i="1" data-page="8">1</a></li><li><a className="page" href="#" data-i="2" data-page="8">2</a></li></ul>
-                                                <a className="page-item pagination-next" href="#">
-                                                    Next
-                                                </a>
-                                            </div>
-                                        </div>
+                                                
+                                                 {/* Pagination */}
+                                                 { customers?.data?.length > 0 &&
+                                                    ( <PaginationComponent items={customers} 
+                                                        currentPage={currentPage} onPageChange={handlePageChange}
+                                                    />
+                                               
+                                                    )
+                                                }
                                     </div>
                                     {/* style="display: none;" */}
                                   

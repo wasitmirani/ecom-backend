@@ -176,16 +176,17 @@ const Products: React.FC = () => {
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        {loading &&
+                                                    {loading ?
                                                             (
                                                                 <tr >
-                                                                    <td colSpan={8} style={{ textAlign: 'center' }}>
+                                                                    <td colSpan={7} style={{ textAlign: 'center' }}>
                                                                         <LoadingComponent />
                                                                     </td>
 
                                                                 </tr>
 
-                                                            )}
+                                                            ) : (
+                                                                <>
 
                                                         {products?.data?.map((product: any) => (
                                                             <tr key={product.id}>
@@ -221,7 +222,8 @@ const Products: React.FC = () => {
 
                                                             </tr>
                                                         ))}
-
+                                                        </>
+                                                            )}
                                                     </tbody>
                                                     <tfoot className="table-light">
 
