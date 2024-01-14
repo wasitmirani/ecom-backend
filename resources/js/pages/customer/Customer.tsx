@@ -58,23 +58,21 @@ const Customer: React.FC = ()=>{
                                                 <div className="row g-3">
                                                     <div className="col-sm-4">
                                                         <div className="">
-                                                            <input type="text" className="form-control flatpickr-input" id="datepicker-range" data-provider="flatpickr" data-date-format="d M, Y" data-range-date="true" placeholder="Select date" />
+                                                            <input type="date" className="form-control flatpickr-input" placeholder="Select date" />
                                                         </div>
                                                     </div>
                                            
                                                     <div className="col-sm-4">
                                                         <div>
-                                                            <div className="choices" data-type="select-one"
-                                                              role="listbox" aria-haspopup="true" aria-expanded="false">
-                                                                <div className="choices__inner">
-                                                                    <select className="form-control choices__input" 
-                                                             
-                                                                name="choices-single-default" id="idStatus"  
-                                                               >
-                                                                    <option value="all" 
-                                                                    data-custom-properties="[object Object]">All</option>
-                                                                    </select><div className="choices__list choices__list--single"><div className="choices__item choices__item--selectable" data-item="" data-id="1" data-value="all" data-custom-properties="[object Object]" aria-selected="true">All</div></div></div><div className="choices__list choices__list--dropdown" aria-expanded="false"><div className="choices__list" role="listbox"><div id="choices--idStatus-item-choice-4" className="choices__item choices__item--choice choices__placeholder choices__item--selectable is-highlighted" role="option" data-choice="" data-id="4" data-value="" data-select-text="Press to select" data-choice-selectable="" aria-selected="true">Status</div><div id="choices--idStatus-item-choice-1" className="choices__item choices__item--choice choices__item--selectable" role="option" data-choice="" data-id="1" data-value="Active" data-select-text="Press to select" data-choice-selectable="">Active</div><div id="choices--idStatus-item-choice-2" className="choices__item choices__item--choice is-selected choices__item--selectable" role="option" data-choice="" data-id="2" data-value="all" data-select-text="Press to select" data-choice-selectable="">All</div><div id="choices--idStatus-item-choice-3" className="choices__item choices__item--choice choices__item--selectable" role="option" data-choice="" data-id="3" data-value="Block" data-select-text="Press to select" data-choice-selectable="">Block</div></div></div></div>
-                                                        </div>
+                                                           
+                                                                <select className="form-select" aria-label="Default select example">
+                                                                    <option selected>Select Status</option>
+                                                                    <option value="">All</option>
+                                                                    <option value="1">Active</option>
+                                                                    <option value="0">InActive</option>
+                                                                    </select>
+                                                                </div>
+                                                        
                                                     </div>
                                             
 
@@ -148,7 +146,10 @@ const Customer: React.FC = ()=>{
                                                    </tbody>
                                             </table>
                                             {/* style="display: none" */}
-                                           <EmptyDataComponent/>
+                                            {customers.total < 1 && (
+                                                  <EmptyDataComponent/>
+                                            )}
+                                         
 
                                            
                                         </div>
