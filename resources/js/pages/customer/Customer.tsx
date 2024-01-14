@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 import PaginationComponent from "@/components/PaginationComponent";
 import LoadingComponent from "@/components/LoadingComponent";
+import { BreadcrumbComponent } from "@/components/BreadCrumbComponent";
 
 
 const Customer: React.FC = ()=>{
@@ -93,6 +94,7 @@ const Customer: React.FC = ()=>{
     }, [currentPage]);
     return (
         <>
+          <BreadcrumbComponent active_name="Customers"  />
         <div className="row">
                         <div className="col-lg-12">
                             <div className="card" id="customerList">

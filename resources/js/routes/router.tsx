@@ -8,6 +8,7 @@ import UpdateProduct from "@/pages/catalog/product/UpdateProduct";
 import Customer from "@/pages/customer/Customer";
 
 import Orders from "@/pages/order/Order";
+import { OrderDetails } from "@/pages/order/OrderDetails";
 const helper = new Helpers();
 
 const generateRoute=(name:string,page:any,title:string,permission?: string)=>{
@@ -37,6 +38,7 @@ generateRoute('/catalog/products',Products,'Products'),
 generateRoute('/catalog/create-product',CreateProduct,'create-product'),
 generateRoute('/catalog/update-product/:uuid',UpdateProduct,'create-product'),
 generateRoute('/orders',Orders,'orders'),
+generateRoute('/order-details/:uuid',OrderDetails,'orders'),
 generateRoute('/customers',Customer,'customers'),
 //   { path: "*", element: <Home /> }
 ];

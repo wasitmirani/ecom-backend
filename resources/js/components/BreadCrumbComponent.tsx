@@ -17,7 +17,7 @@ export const BreadcrumbComponent: React.FC<Breadcrumb> = (props) => {
           <div className="page-title-right">
             <ol className="breadcrumb m-0">
               <li className="breadcrumb-item">
-                <Link to="/">Home</Link>
+                <Link to="/app/home">Home</Link>
               </li>
               
               {links.map((link:any, index) => (

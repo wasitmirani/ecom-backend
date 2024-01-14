@@ -1,9 +1,11 @@
 import { axios_request } from '@/bootstrap';
+import { BreadcrumbComponent } from '@/components/BreadCrumbComponent';
 import LoadingComponent from '@/components/LoadingComponent';
 import Helper from '@/utils/helpers';
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+
 
 const Order: React.FC = (() => {
 
@@ -11,6 +13,7 @@ const Order: React.FC = (() => {
     const [loading, setLoading] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
+    const navigate = useNavigate();
     const helper = new Helper();
     const getOrders = (status?:string | null) => {
         setOrders([]);
@@ -46,6 +49,10 @@ const Order: React.FC = (() => {
 
         setLoading(false);
     };
+    const getDetails=(uuid:string) => {
+        console.log("/app/order-details/"+uuid);
+        // navigate('/app/order-details/'+uuid);
+    }
     const updateStatus= (uuid:string) => {
         axios_request.get('/order-status/'+uuid).then((res) => {
             toast.success(res.data.message, {
@@ -66,7 +73,9 @@ const Order: React.FC = (() => {
         getOrders();
     },[]);
     return (
-
+        <>
+     
+        <BreadcrumbComponent active_name="Orders"  />
         <div className="row">
             <div className="col-lg-12">
                 <div className="card" id="orderList">
@@ -196,14 +205,14 @@ const Order: React.FC = (() => {
 
                                                         {order.status == "new" && (
                                                             <li className="list-inline-item edit" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Approved">
-                                                            <a href="#showModal" onClick={()=>updateStatus(order.uuid)} data-bs-toggle="modal" className="text-primary d-inline-block edit-item-btn">
+                                                            <a href="#showModal2" onClick={()=>updateStatus(order.uuid)} data-bs-toggle="modal" className="text-primary d-inline-block edit-item-btn">
                                                                 <i className="ri-check-fill fs-16"></i>
                                                             </a>
                                                         </li> 
                                                         )}
                                                     
                                                         <li className="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="View">
-                                                            <a href="apps-ecommerce-order-details.html" className="text-primary d-inline-block">
+                                                            <a role='button'  onClick={()=>getDetails(order.uuid)} className="text-primary d-inline-block">
                                                                 <i className="ri-eye-fill fs-16"></i>
                                                             </a>
                                                         </li> 
@@ -238,7 +247,7 @@ const Order: React.FC = (() => {
             </div>
 
         </div>
-
+        </>
     );
 })
 
