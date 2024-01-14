@@ -2,6 +2,9 @@ import React, { useEffect, useState }  from "react";
 import EmptyDataComponent from "@/components/EmptyDataComponent";
 import { axios_request } from "@/bootstrap";
 import Helper from "@/utils/helpers";
+import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 
 
 const Customer: React.FC = ()=>{
@@ -11,11 +14,12 @@ const Customer: React.FC = ()=>{
     const [searchTerm, setSearchTerm] = useState("");
     const [selectedDate, setSelectedDate] = useState("");
     const [selectedStatus, setSelectedStatus] = useState("");
+
      // Define your API endpoint with filter parameters
      const apiUrl = `/customers?query=${searchTerm}&date=${selectedDate}&status=${selectedStatus}`;
-   const getCustomer= ()=>{
+   const getCustomer=async ()=>{
         setLoading(true);
-        axios_request.get(apiUrl).then((res)=>{
+        await axios_request.get(apiUrl).then((res)=>{
             setCustomers(res.data.customers);
         });
 
@@ -24,6 +28,56 @@ const Customer: React.FC = ()=>{
         }, 300);
        
     }
+
+    const handleToggleStatus =  (id:string) => {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes"
+          }).then((result) => {
+            if (result.isConfirmed) {
+                try {
+                     axios_request.put(`/customer/${id}/toggle-status`).then((res) => {
+         
+                     toast.success(res.data.message, {
+                         position: "top-right",
+                         autoClose: 1500,
+                         hideProgressBar: false,
+                         closeOnClick: true,
+                         pauseOnHover: true,
+                         draggable: true,
+                         progress: undefined,
+                         theme: "light",
+                         });
+                         getCustomer();
+                         
+                   }).catch((err) => {
+                     toast.error(err.response.data.message, {
+                         position: "top-right",
+                         autoClose: 1500,
+                         hideProgressBar: false,
+                         closeOnClick: true,
+                         pauseOnHover: true,
+                         draggable: true,
+                         progress: undefined,
+                         theme: "light",
+                         });  
+                   });
+                  
+                 } catch (error) {
+                  
+                 }
+             
+            }
+          });
+       
+     
+      };
+    
    
     useEffect(()=>{
         getCustomer();
@@ -136,16 +190,19 @@ const Customer: React.FC = ()=>{
                                                           </td>
                                                           <td>
                                                               <ul className="list-inline hstack gap-2 mb-0">
+                                                              {customer.deleted_at  ? (
                                                                   <li className="list-inline-item edit" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" aria-label="Edit" data-bs-original-title="Edit">
-                                                                      <a href="#showModal" data-bs-toggle="modal" className="text-primary d-inline-block edit-item-btn">
-                                                                          <i className="ri-pencil-fill fs-16"></i>
-                                                                      </a>
+                                                                      <Link  onClick={() => handleToggleStatus(customer.id)} to="#showModal" data-bs-toggle="modal" className="text-primary d-inline-block edit-item-btn">
+                                                                      <i className="fa-solid fa-user-check"></i>
+                                                                      </Link>
                                                                   </li>
+                                                              ) : (
                                                                   <li className="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" aria-label="Remove" data-bs-original-title="Remove">
-                                                                      <a className="text-danger d-inline-block remove-item-btn" data-bs-toggle="modal" href="#deleteRecordModal">
-                                                                          <i className="ri-delete-bin-5-fill fs-16"></i>
-                                                                      </a>
+                                                                     <Link  onClick={() => handleToggleStatus(customer.id)}  className="text-danger d-inline-block remove-item-btn" data-bs-toggle="modal" href="#deleteRecordModal">
+                                                                      <i className="fa-solid fa-user-lock"></i>
+                                                                      </Link>
                                                                   </li>
+                                                              ) }
                                                               </ul>
                                                           </td>
                                                       </tr>

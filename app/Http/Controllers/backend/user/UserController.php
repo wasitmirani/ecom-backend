@@ -50,6 +50,24 @@ class UserController extends Controller
         return response()->json(['customers' => $customers]);
     }
 
+    public function toggleUserStatus($id)
+    {
+        $user = User::where('id',$id)->withTrashed()->first();
+   
+        if (!$user) {
+            return response()->json(['message' => 'User not found'], 404);
+        }
+
+        if ($user->deleted_at) {
+            // If the user is soft-deleted, restore the user
+            $user->restore();
+            return response()->json(['message' => 'Customer restored successfully']);
+        } else {
+            // If the user is not soft-deleted, soft delete the user
+            $user->delete();
+            return response()->json(['message' => 'Customer has been blocked successfully']);
+        }
+    }
    
     /**
      * Display a listing of the resource.
