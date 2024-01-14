@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Auth\Events\Registered;
 
 class UserController extends Controller
 {
@@ -20,12 +21,29 @@ class UserController extends Controller
 
        
         $query = request('query');
-        $customers =User::latest()->where('user_type','customer')->withTrashed();
+        $customers =User::latest()->where('user_type','customer');
+        
         if (!empty($query)) {
-            $customers= $customers->where('phone', 'like', '%' . $query . '%');
+            $customers= $customers->where('phone', 'like', '%' . $query . '%')
+                                 ->orWhere('email', 'like', '%' . $query . '%');
         }
-        if(!empty($request->status)) {
-            $customers = $customers->where('status', $request->status);
+
+     
+        if(isset($request->status)) {
+
+            if($request->status == "0"){
+                $customers = $customers->onlyTrashed();
+              
+            }
+             
+        }
+        else {
+            $customers = $customers->withTrashed();
+        }
+
+        if(isset($request->date)){
+
+            $customers= $customers->whereDate('created_at', $request->date);
         }
         $customers = $customers->paginate(perPage());
 

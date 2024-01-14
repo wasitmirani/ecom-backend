@@ -8,9 +8,14 @@ const Customer: React.FC = ()=>{
     const helper = new Helper();
     const [customers ,setCustomers] =useState<any>([]);
     const [loading, setLoading] = useState(false);
+    const [searchTerm, setSearchTerm] = useState("");
+    const [selectedDate, setSelectedDate] = useState("");
+    const [selectedStatus, setSelectedStatus] = useState("");
+     // Define your API endpoint with filter parameters
+     const apiUrl = `/customers?query=${searchTerm}&date=${selectedDate}&status=${selectedStatus}`;
    const getCustomer= ()=>{
         setLoading(true);
-        axios_request.get('/customers').then((res)=>{
+        axios_request.get(apiUrl).then((res)=>{
             setCustomers(res.data.customers);
         });
 
@@ -49,7 +54,8 @@ const Customer: React.FC = ()=>{
                                         <div className="row g-3">
                                             <div className="col-xl-6">
                                                 <div className="search-box">
-                                                    <input type="text" className="form-control search" placeholder="Search for customer, email, phone, status or something..."/>
+                                                    <input type="search" value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)} className="form-control search" placeholder="Search for customer, email, phone, status or something..."/>
                                                     <i className="ri-search-line search-icon"></i>
                                                 </div>
                                             </div>
@@ -58,14 +64,16 @@ const Customer: React.FC = ()=>{
                                                 <div className="row g-3">
                                                     <div className="col-sm-4">
                                                         <div className="">
-                                                            <input type="date" className="form-control flatpickr-input" placeholder="Select date" />
+                                                            <input type="date"  value={selectedDate}
+                onChange={(e) => setSelectedDate(e.target.value)} className="form-control flatpickr-input" placeholder="Select date" />
                                                         </div>
                                                     </div>
                                            
                                                     <div className="col-sm-4">
                                                         <div>
                                                            
-                                                                <select className="form-select" aria-label="Default select example">
+                                                                <select value={selectedStatus}
+                                                                 onChange={(e) => setSelectedStatus(e.target.value)} className="form-select" aria-label="Default select example">
                                                                     <option selected>Select Status</option>
                                                                     <option value="">All</option>
                                                                     <option value="1">Active</option>
@@ -78,7 +86,7 @@ const Customer: React.FC = ()=>{
 
                                                     <div className="col-sm-4">
                                                         <div>
-                                                            <button type="button" className="btn btn-primary w-100"> <i className="ri-equalizer-fill me-2 align-bottom"></i>Filters</button>
+                                                            <button type="button"  onClick={getCustomer} className="btn btn-primary w-100"> <i className="ri-equalizer-fill me-2 align-bottom"></i>Filters</button>
                                                         </div>
                                                     </div>
                                                     
