@@ -20,8 +20,11 @@ const Customer: React.FC = ()=>{
 
      // Define your API endpoint with filter parameters
      const apiUrl = `/customers?page=${currentPage}&query=${searchTerm}&date=${selectedDate}&status=${selectedStatus}`;
-   const getCustomer=async ()=>{
+   const getCustomer=async (page?:string)=>{
         setLoading(true);
+        if(page){
+            setCurrentPage(1);
+        }
         await axios_request.get(apiUrl).then((res)=>{
             setCustomers(res.data.customers);
         });
@@ -134,7 +137,7 @@ const Customer: React.FC = ()=>{
                                                            
                                                                 <select value={selectedStatus}
                                                                  onChange={(e) => setSelectedStatus(e.target.value)} className="form-select" aria-label="Default select example">
-                                                                    <option selected>Select Status</option>
+                                                                    <option selected disabled >Select Status</option>
                                                                     <option value="">All</option>
                                                                     <option value="1">Active</option>
                                                                     <option value="0">InActive</option>
@@ -146,7 +149,7 @@ const Customer: React.FC = ()=>{
 
                                                     <div className="col-sm-4">
                                                         <div>
-                                                            <button type="button"  onClick={getCustomer} className="btn btn-primary w-100"> <i className="ri-equalizer-fill me-2 align-bottom"></i>Filters</button>
+                                                            <button type="button"  onClick={()=>getCustomer("1")} className="btn btn-primary w-100"> <i className="ri-equalizer-fill me-2 align-bottom"></i>Filters</button>
                                                         </div>
                                                     </div>
                                                     
