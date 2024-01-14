@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\backend\user;
 
-use App\Http\Controllers\Controller;
+use App\Models\User;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -15,18 +18,18 @@ class UserController extends Controller
     }
     public function customers(Request $request){
 
-        $customers =User::latest()->where('user_type','customer')->;
+       
         $query = request('query');
-        $users = User::latest();
-        if (empty($query)) {
-            $users = $users->where('phone', 'like', '%' . $query . '%');
+        $customers =User::latest()->where('user_type','customer');
+        if (!empty($query)) {
+            $customers= $customers->where('phone', 'like', '%' . $query . '%');
         }
         if(!empty($request->status)) {
-            $users = $users->where('status', $request->status);
+            $customers = $customers->where('status', $request->status);
         }
-        $users = $users->paginate(perPage());
+        $customers = $customers->paginate(perPage());
 
-        return response()->json(['$users' => $users]);
+        return response()->json(['customers' => $customers]);
     }
 
    
@@ -74,7 +77,7 @@ class UserController extends Controller
             'email' => $request->email,
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
-            'client_id' => $client_id,
+
             'slug' => $this->mapFirstNameLastSlug($request),
             'password' => Hash::make($request->password),
             'phone' => $request->phone,

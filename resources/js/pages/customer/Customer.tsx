@@ -1,4 +1,4 @@
-import React, { useState }  from "react";
+import React, { useEffect, useState }  from "react";
 import EmptyDataComponent from "@/components/EmptyDataComponent";
 import { axios_request } from "@/bootstrap";
 import Helper from "@/utils/helpers";
@@ -8,9 +8,21 @@ const Customer: React.FC = ()=>{
     const helper = new Helper();
     const [customers ,setCustomers] =useState<any>([]);
     const [loading, setLoading] = useState(false);
-    axios_request.get('/customers').then((res)=>{
-        setCustomers(res.data.customers);
-    });
+   const getCustomer= ()=>{
+        setLoading(true);
+        axios_request.get('/customers').then((res)=>{
+            setCustomers(res.data.customers);
+        });
+
+        setTimeout(() => {
+            setLoading(false);
+        }, 300);
+       
+    }
+   
+    useEffect(()=>{
+        getCustomer();
+    },[]);
     return (
         <>
         <div className="row">
