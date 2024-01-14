@@ -119,12 +119,12 @@ const Customer: React.FC = ()=>{
                                                           <td className="date">{helper.timeformat(customer.created_at)}</td>
                                                           <td className="status">
 
-                                                            {customer.deleted_at ? (
+                                                            {customer.deleted_at != null ? (
 
-                                                                <span className="badge bg-success-subtle text-success text-uppercase">Active
+                                                                <span className="badge bg-danger-subtle text-danger text-uppercase">InActive
                                                                 </span>
                                                             )  : (
-                                                                <span className="badge bg-success-subtle text-success text-uppercase">InActive
+                                                                <span className="badge bg-success-subtle text-success text-uppercase">Active
                                                                 </span>
                                                             )}
                                                           </td>

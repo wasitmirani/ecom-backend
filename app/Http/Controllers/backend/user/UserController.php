@@ -20,7 +20,7 @@ class UserController extends Controller
 
        
         $query = request('query');
-        $customers =User::latest()->where('user_type','customer');
+        $customers =User::latest()->where('user_type','customer')->withTrashed();
         if (!empty($query)) {
             $customers= $customers->where('phone', 'like', '%' . $query . '%');
         }

@@ -6,7 +6,7 @@ use Illuminate\Support\Str;
 
 function perPage(){
 
-    return 4;
+    return 20;
 }
 
 function responseJsonSuccess($msg="success",$data=[]){ 
