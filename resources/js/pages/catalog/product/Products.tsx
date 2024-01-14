@@ -6,6 +6,7 @@ import { BreadcrumbComponent } from '@/components/BreadCrumbComponent';
 import { axios_request } from "@/bootstrap";
 import { toast } from 'react-toastify';
 import LoadingComponent from '@/components/LoadingComponent';
+import PaginationComponent from '@/components/PaginationComponent';
 import Swal from 'sweetalert2';
 const helper = new Helper();
 
@@ -26,6 +27,9 @@ const Products: React.FC = () => {
             setLoading(false);
         }, 300);
     }
+    const handlePageChange = (newPage: number) => {
+        setCurrentPage(newPage);
+      };
     const updateProduct = (uuid:string) => {
         console.log('updating product',uuid);
         navigate('/app/catalog/update-product/'+uuid);
@@ -225,51 +229,10 @@ const Products: React.FC = () => {
                                                 </table>
                                                 {/* Pagination */}
                                                 { products?.data?.length > 0 &&
-                                                    (
-                                                <div className='row mt-4'>
-
-
-                                                    <nav aria-label="Page navigation ">
-                                                        <ul className="pagination">
-                                                            <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
-                                                                <button
-                                                                    className="page-link"
-                                                                    onClick={() => setCurrentPage((prevPage) => prevPage - 1)}
-                                                                    aria-label="Previous"
-                                                                >
-                                                                    <span aria-hidden="true">&laquo;</span>
-                                                                </button>
-                                                            </li>
-
-                                                            {/* Render pagination items based on the total number of pages */}
-                                                            {[...Array(products.last_page).keys()].map((page) => (
-                                                                <li
-                                                                    key={page + 1}
-                                                                    className={`page-item ${currentPage === page + 1 ? 'active' : ''}`}
-                                                                >
-                                                                    <button
-                                                                        className="page-link"
-                                                                        onClick={() => setCurrentPage(page + 1)}
-                                                                    >
-                                                                        {page + 1}
-                                                                    </button>
-                                                                </li>
-                                                            ))}
-
-                                                            <li
-                                                                className={`page-item ${currentPage === products.last_page ? 'disabled' : ''}`}
-                                                            >
-                                                                <button
-                                                                    className="page-link"
-                                                                    onClick={() => setCurrentPage((prevPage) => prevPage + 1)}
-                                                                    aria-label="Next"
-                                                                >
-                                                                    <span aria-hidden="true">&raquo;</span>
-                                                                </button>
-                                                            </li>
-                                                        </ul>
-                                                    </nav>
-                                                </div>
+                                                    ( <PaginationComponent items={products} 
+                                                        currentPage={currentPage} onPageChange={handlePageChange}
+                                                    />
+                                               
                                                     )
                                                 }
                                             </div>
