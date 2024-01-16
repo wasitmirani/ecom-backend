@@ -1,16 +1,27 @@
 import { axios_request } from '@/bootstrap';
+import Helper from '@/utils/helpers';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 export const OrderDetails: React.FC = () => {
     const { uuid } = useParams<any>();
+    const helper = new Helper();
     const [order,setOrder] =useState<any>([]);
    const getOrderDetails= ()=>{
-        axios_request.get('/order-details/').then((res)=>{
-            setOrder(res.data.Order);
+        axios_request.get(`/order-details/${uuid}`).then((res)=>{
+            setOrder(res.data.order);
         });
     }
+
+    useEffect(() => {
+      
+    
+    
+        getOrderDetails();
+      
+    }, [uuid])
+    
     return (
         <>
             <div className="row">
@@ -18,10 +29,8 @@ export const OrderDetails: React.FC = () => {
                     <div className="card">
                         <div className="card-header">
                             <div className="d-flex align-items-center">
-                                <h5 className="card-title flex-grow-1 mb-0">Order #VL2667</h5>
-                                <div className="flex-shrink-0">
-                                    <a href="apps-invoices-details.html" className="btn btn-success btn-sm"><i className="ri-download-2-fill align-middle me-1"></i> Invoice</a>
-                                </div>
+                                <h5 className="card-title flex-grow-1 mb-0">Order #{order.reference_number}</h5>
+                             
                             </div>
                         </div>
                         <div className="card-body">
@@ -32,112 +41,36 @@ export const OrderDetails: React.FC = () => {
                                             <th scope="col">Product Details</th>
                                             <th scope="col">Item Price</th>
                                             <th scope="col">Quantity</th>
-                                            <th scope="col">Rating</th>
+                                     
                                             <th scope="col" className="text-end">Total Amount</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>
-                                                <div className="d-flex">
-                                                    <div className="flex-shrink-0 avatar-md bg-light rounded p-1">
-                                                        <img src="assets/images/products/img-8.png" alt="" className="img-fluid d-block" />
-                                                    </div>
-                                                    <div className="flex-grow-1 ms-3">
-                                                        <h5 className="fs-15"><a href="apps-ecommerce-product-details.html" className="link-primary">Sweatshirt for Men (Pink)</a></h5>
-                                                        <p className="text-muted mb-0">Color: <span className="fw-medium">Pink</span></p>
-                                                        <p className="text-muted mb-0">Size: <span className="fw-medium">M</span></p>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>$119.99</td>
-                                            <td>02</td>
-                                            <td>
-                                                <div className="text-warning fs-15">
-                                                    <i className="ri-star-fill"></i><i className="ri-star-fill"></i><i className="ri-star-fill"></i><i className="ri-star-fill"></i><i className="ri-star-half-fill"></i>
-                                                </div>
-                                            </td>
-                                            <td className="fw-medium text-end">
-                                                $239.98
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div className="d-flex">
-                                                    <div className="flex-shrink-0 avatar-md bg-light rounded p-1">
-                                                        <img src="assets/images/products/img-7.png" alt="" className="img-fluid d-block" />
-                                                    </div>
-                                                    <div className="flex-grow-1 ms-3">
-                                                        <h5 className="fs-15"><a href="apps-ecommerce-product-details.html" className="link-primary">Noise NoiseFit Endure Smart Watch</a></h5>
-                                                        <p className="text-muted mb-0">Color: <span className="fw-medium">Black</span></p>
-                                                        <p className="text-muted mb-0">Size: <span className="fw-medium">32.5mm</span></p>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>$94.99</td>
-                                            <td>01</td>
-                                            <td>
-                                                <div className="text-warning fs-15">
-                                                    <i className="ri-star-fill"></i><i className="ri-star-fill"></i><i className="ri-star-fill"></i><i className="ri-star-fill"></i><i className="ri-star-half-fill"></i>
-                                                </div>
-                                            </td>
-                                            <td className="fw-medium text-end">
-                                                $94.99
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div className="d-flex">
-                                                    <div className="flex-shrink-0 avatar-md bg-light rounded p-1">
-                                                        <img src="assets/images/products/img-3.png" alt="" className="img-fluid d-block" />
-                                                    </div>
-                                                    <div className="flex-grow-1 ms-3">
-                                                        <h5 className="fs-15"><a href="apps-ecommerce-product-details.html" className="link-primary">350 ml Glass Grocery Container</a></h5>
-                                                        <p className="text-muted mb-0">Color: <span className="fw-medium">White</span></p>
-                                                        <p className="text-muted mb-0">Size: <span className="fw-medium">350 ml</span></p>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>$24.99</td>
-                                            <td>01</td>
-                                            <td>
-                                                <div className="text-warning fs-15">
-                                                    <i className="ri-star-fill"></i><i className="ri-star-fill"></i><i className="ri-star-half-fill"></i><i className="ri-star-line"></i><i className="ri-star-line"></i>
-                                                </div>
-                                            </td>
-                                            <td className="fw-medium text-end">
-                                                $24.99
-                                            </td>
-                                        </tr>
-                                        <tr className="border-top border-top-dashed">
-                                            <td colSpan={3}></td>
-                                            <td colSpan={2} className="fw-medium p-0">
-                                                <table className="table table-borderless mb-0">
-                                                    <tbody>
-                                                        <tr>
-                                                            <td>Sub Total :</td>
-                                                            <td className="text-end">$359.96</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Discount <span className="text-muted">(VELZON15)</span> : :</td>
-                                                            <td className="text-end">-$53.99</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Shipping Charge :</td>
-                                                            <td className="text-end">$65.00</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Estimated Tax :</td>
-                                                            <td className="text-end">$44.99</td>
-                                                        </tr>
-                                                        <tr className="border-top border-top-dashed">
-                                                            <th scope="row">Total (USD) :</th>
-                                                            <th className="text-end">$415.96</th>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </td>
-                                        </tr>
+                                        
+                                        {order?.items?.map((item:any)=>(
+                                             <tr>
+                                             <td>
+                                                 <div className="d-flex">
+                                                  
+                                                     <div className="flex-grow-1 ms-3">
+                                                         <h5 className="fs-15">
+                                                            <a role='button' className="link-primary">{item.name}</a></h5>
+                                                         
+                                                     </div>
+                                                 </div>
+                                             </td>
+                                             <td>  Rs.{item.unit_price}</td>
+                                             <td>{item.qty}</td>
+                                             
+                                             <td className="fw-medium text-end">
+                                               Rs.{item.unit_price * item.qty}
+                                             </td>
+                                         </tr>
+                                        ))}
+                                       
+                                       
+                                      
+                                        
                                     </tbody>
                                 </table>
                             </div>
@@ -167,7 +100,7 @@ export const OrderDetails: React.FC = () => {
                                                         </div>
                                                     </div>
                                                     <div className="flex-grow-1 ms-3">
-                                                        <h6 className="fs-15 mb-0 fw-semibold">Order Placed - <span className="fw-normal">Wed, 15 Dec 2021</span></h6>
+                                                        <h6 className="fs-15 mb-0 fw-semibold">Order Placed - <span className="fw-normal">{helper.timeformat(order.created_at)}</span></h6>
                                                     </div>
                                                 </div>
                                             </a>
@@ -175,90 +108,13 @@ export const OrderDetails: React.FC = () => {
                                         <div id="collapseOne" className="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                                             <div className="accordion-body ms-2 ps-5 pt-0">
                                                 <h6 className="mb-1">An order has been placed.</h6>
-                                                <p className="text-muted">Wed, 15 Dec 2021 - 05:34PM</p>
+                                                <p className="text-muted">{helper.timeformat(order.created_at)}</p>
 
-                                                <h6 className="mb-1">Seller has processed your order.</h6>
-                                                <p className="text-muted mb-0">Thu, 16 Dec 2021 - 5:48AM</p>
+                                               
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="accordion-item border-0">
-                                        <div className="accordion-header" id="headingTwo">
-                                            <a className="accordion-button p-2 shadow-none" data-bs-toggle="collapse" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                                <div className="d-flex align-items-center">
-                                                    <div className="flex-shrink-0 avatar-xs">
-                                                        <div className="avatar-title bg-success rounded-circle material-shadow">
-                                                            <i className="mdi mdi-gift-outline"></i>
-                                                        </div>
-                                                    </div>
-                                                    <div className="flex-grow-1 ms-3">
-                                                        <h6 className="fs-15 mb-1 fw-semibold">Packed - <span className="fw-normal">Thu, 16 Dec 2021</span></h6>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        </div>
-                                        <div id="collapseTwo" className="accordion-collapse collapse show" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-                                            <div className="accordion-body ms-2 ps-5 pt-0">
-                                                <h6 className="mb-1">Your Item has been picked up by courier partner</h6>
-                                                <p className="text-muted mb-0">Fri, 17 Dec 2021 - 9:45AM</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="accordion-item border-0">
-                                        <div className="accordion-header" id="headingThree">
-                                            <a className="accordion-button p-2 shadow-none" data-bs-toggle="collapse" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                                <div className="d-flex align-items-center">
-                                                    <div className="flex-shrink-0 avatar-xs">
-                                                        <div className="avatar-title bg-success rounded-circle material-shadow">
-                                                            <i className="ri-truck-line"></i>
-                                                        </div>
-                                                    </div>
-                                                    <div className="flex-grow-1 ms-3">
-                                                        <h6 className="fs-15 mb-1 fw-semibold">Shipping - <span className="fw-normal">Thu, 16 Dec 2021</span></h6>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        </div>
-                                        <div id="collapseThree" className="accordion-collapse collapse show" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
-                                            <div className="accordion-body ms-2 ps-5 pt-0">
-                                                <h6 className="fs-14">RQK Logistics - MFDS1400457854</h6>
-                                                <h6 className="mb-1">Your item has been shipped.</h6>
-                                                <p className="text-muted mb-0">Sat, 18 Dec 2021 - 4.54PM</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="accordion-item border-0">
-                                        <div className="accordion-header" id="headingFour">
-                                            <a className="accordion-button p-2 shadow-none" data-bs-toggle="collapse" href="#collapseFour" aria-expanded="false">
-                                                <div className="d-flex align-items-center">
-                                                    <div className="flex-shrink-0 avatar-xs">
-                                                        <div className="avatar-title bg-light text-success rounded-circle material-shadow">
-                                                            <i className="ri-takeaway-fill"></i>
-                                                        </div>
-                                                    </div>
-                                                    <div className="flex-grow-1 ms-3">
-                                                        <h6 className="fs-14 mb-0 fw-semibold">Out For Delivery</h6>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div className="accordion-item border-0">
-                                        <div className="accordion-header" id="headingFive">
-                                            <a className="accordion-button p-2 shadow-none" data-bs-toggle="collapse" href="#collapseFile" aria-expanded="false">
-                                                <div className="d-flex align-items-center">
-                                                    <div className="flex-shrink-0 avatar-xs">
-                                                        <div className="avatar-title bg-light text-success rounded-circle material-shadow">
-                                                            <i className="mdi mdi-package-variant"></i>
-                                                        </div>
-                                                    </div>
-                                                    <div className="flex-grow-1 ms-3">
-                                                        <h6 className="fs-14 mb-0 fw-semibold">Delivered</h6>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    </div>
+                                
                                 </div>
 
                             </div>
@@ -271,18 +127,18 @@ export const OrderDetails: React.FC = () => {
                     <div className="card">
                         <div className="card-header">
                             <div className="d-flex">
-                                <h5 className="card-title flex-grow-1 mb-0"><i className="mdi mdi-truck-fast-outline align-middle me-1 text-muted"></i> Logistics Details</h5>
+                                <h5 className="card-title flex-grow-1 mb-0"><i className="mdi mdi-truck-fast-outline align-middle me-1 text-muted"></i> Order Summary</h5>
                                 <div className="flex-shrink-0">
-                                    <a href="javascript:void(0);" className="badge bg-primary-subtle text-primary fs-11">Track Order</a>
+                                    <a href="javascript:void(0);" className="badge bg-primary-subtle text-primary fs-11">{order.customer_city}</a>
                                 </div>
                             </div>
                         </div>
                         <div className="card-body">
-                            <div className="text-center">
+                            <div className="">
 
-                                <h5 className="fs-16 mt-2">RQK Logistics</h5>
-                                <p className="text-muted mb-0">ID: MFDS1400457854</p>
-                                <p className="text-muted mb-0">Payment Mode : Debit Card</p>
+                                <p className="text-muted mb-0">Sub Total: Rs.{order.subtotal}</p>
+                                <p className="text-muted mb-0">Discount : Rs.{order.total_discount}</p>
+                                <p className="text-muted mb-0">Total : Rs.{order.total}</p>
                             </div>
                         </div>
                     </div>
@@ -290,9 +146,7 @@ export const OrderDetails: React.FC = () => {
                         <div className="card-header">
                             <div className="d-flex">
                                 <h5 className="card-title flex-grow-1 mb-0">Customer Details</h5>
-                                <div className="flex-shrink-0">
-                                    <a href="javascript:void(0);" className="link-secondary">View Profile</a>
-                                </div>
+                                
                             </div>
                         </div>
                         <div className="card-body">
@@ -300,16 +154,16 @@ export const OrderDetails: React.FC = () => {
                                 <li>
                                     <div className="d-flex align-items-center">
                                         <div className="flex-shrink-0">
-                                            <img src="assets/images/users/avatar-3.jpg" alt="" className="avatar-sm rounded material-shadow" />
+                                            <img src="/assets/images/users/user-dummy-img.jpg" alt="" className="avatar-sm rounded material-shadow" />
                                         </div>
                                         <div className="flex-grow-1 ms-3">
-                                            <h6 className="fs-14 mb-1">Joseph Parkers</h6>
+                                            <h6 className="fs-14 mb-1">{order.customer_name}</h6>
                                             <p className="text-muted mb-0">Customer</p>
                                         </div>
                                     </div>
                                 </li>
-                                <li><i className="ri-mail-line me-2 align-middle text-muted fs-16"></i>josephparker@gmail.com</li>
-                                <li><i className="ri-phone-line me-2 align-middle text-muted fs-16"></i>+(256) 245451 441</li>
+                                <li><i className="ri-mail-line me-2 align-middle text-muted fs-16"></i>{order.customer_email}</li>
+                                <li><i className="ri-phone-line me-2 align-middle text-muted fs-16"></i>{order.customer_phone}</li>
                             </ul>
                         </div>
                     </div>
