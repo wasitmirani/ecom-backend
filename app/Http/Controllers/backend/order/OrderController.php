@@ -36,7 +36,23 @@ class OrderController extends Controller
 
 
     }
+    public function cancelOrder(Request $request){
+        $order=order::where('uuid',$request->uuid)->update(['status'=>'cancelled']);
 
+        return response()->json(['message'=>'order has been cancelled successfully']);
+
+    }
+
+    public function updateAddress(Request $request){
+        $order=order::where('uuid',$request->uuid)
+
+        ->update(['customer_area'=>$request->area,
+                 'customer_address'=>$request->address,
+                 'customer_city'=>$request->city,
+                ]);
+
+        return response()->json(['message'=>'order has been updated successfully']);
+    }
     public function updateStatus(Request $request){
 
         $order=Order::where('uuid',$request->uuid)->update(['status'=>'pickup']);

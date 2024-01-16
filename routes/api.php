@@ -45,20 +45,22 @@ Route::prefix('users')->group(function () {
 
 Route::prefix('/app')->middleware('auth:sanctum')->group(function () {
 
-    // auth 
+    // auth
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
     ->name('logout');
-    
+
     Route::resource('product', ProductController::class);
     Route::get('/categories-list', [CategoryController::class,'categoriesList']);
     Route::get('/orders',[OrderController::class,'index']);
     Route::get('/order/{uuid}',[OrderController::class,'orderDetails']);
     Route::get('/order-status/{uuid}',[OrderController::class,'updateStatus']);
+    Route::post('/order-cancel/{uuid}',[OrderController::class,'cancelOrder']);
     Route::get('/order-details/{uuid}', [OrderController::class, 'orderDetails']);
+    Route::put('/update-address/{uuid}', [OrderController::class, 'updateAddress']);
     Route::get('/customers',[UserController::class,'customers']);
     Route::put('/customer/{id}/toggle-status', [UserController::class, 'toggleUserStatus']);
 
-   
+
 
     Route::get('register', [RegisteredUserController::class, 'create'])
     ->name('register');
