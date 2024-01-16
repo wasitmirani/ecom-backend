@@ -12,8 +12,10 @@ class OrderController extends Controller
     public function index(Request $request){
         $query = request('query');
         $orders = Order::latest();
-        if (empty($query)) {
-            $orders = $orders->where('reference_number', 'like', '%' . $query . '%');
+        if (!empty($query)) {
+            $orders = $orders->where('reference_number', 'like', '%' . $query . '%')
+                            ->orWhere('customer_area','like', '%' . $query . '%')
+                            ->orWhere('customer_phone','like', '%' . $query . '%');
         }
         if(!empty($request->status)) {
             $orders = $orders->where('status', $request->status);
@@ -27,6 +29,7 @@ class OrderController extends Controller
         $order=Order::where('uuid',$request->uuid)->with('user','items')->first();
 
         return response()->json(['order' => $order]);
+
 
     }
 

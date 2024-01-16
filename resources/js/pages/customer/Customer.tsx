@@ -213,13 +213,13 @@ const Customer: React.FC = ()=>{
                                                               <ul className="list-inline hstack gap-2 mb-0">
                                                               {customer.deleted_at  ? (
                                                                   <li className="list-inline-item edit" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" aria-label="Edit" data-bs-original-title="Edit">
-                                                                      <Link  onClick={() => handleToggleStatus(customer.id)} to="#showModal" data-bs-toggle="modal" className="text-primary d-inline-block edit-item-btn">
+                                                                      <Link  onClick={() => handleToggleStatus(customer.id)} to="#showModal" data-bs-toggle="modal"  data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Restore" className="text-primary d-inline-block edit-item-btn">
                                                                       <i className="fa-solid fa-user-check"></i>
                                                                       </Link>
                                                                   </li>
                                                               ) : (
                                                                   <li className="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" aria-label="Remove" data-bs-original-title="Remove">
-                                                                     <Link  onClick={() => handleToggleStatus(customer.id)}  className="text-danger d-inline-block remove-item-btn" data-bs-toggle="modal" href="#deleteRecordModal">
+                                                                     <Link  onClick={() => handleToggleStatus(customer.id)} data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Block"  className="text-danger d-inline-block remove-item-btn" data-bs-toggle="modal" to="#deleteRecordModal">
                                                                       <i className="fa-solid fa-user-lock"></i>
                                                                       </Link>
                                                                   </li>

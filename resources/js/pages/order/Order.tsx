@@ -1,6 +1,7 @@
 import { axios_request } from '@/bootstrap';
 import { BreadcrumbComponent } from '@/components/BreadCrumbComponent';
 import LoadingComponent from '@/components/LoadingComponent';
+import PaginationComponent from "@/components/PaginationComponent";
 import Helper from '@/utils/helpers';
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
@@ -15,6 +16,7 @@ const Order: React.FC = (() => {
     const [currentPage, setCurrentPage] = useState(1);
     const navigate = useNavigate();
     const helper = new Helper();
+
     const getOrders = (status?:string | null) => {
         setOrders([]);
         setLoading(true);
@@ -28,8 +30,10 @@ const Order: React.FC = (() => {
         }, 300);
     }
     const handleSearch = (event: any) => {
+
         setLoading(true);
         const query = event.target.value;
+        console.log(query);
         setSearchQuery(query);
         if (query.length > 2) {
             setTimeout(() => {
@@ -39,9 +43,11 @@ const Order: React.FC = (() => {
                     setOrders(res.data.orders);
 
                 });
-            }, 1500);
+            }, 1800);
+            setLoading(false);
+            return true;
         }
-        else {
+        if(query.length==0) {
             getOrders();
         }
 
@@ -49,6 +55,11 @@ const Order: React.FC = (() => {
 
         setLoading(false);
     };
+    const handlePageChange = (newPage: number) => {
+    
+        setCurrentPage(newPage);
+      };
+
     const getDetails=(uuid:string) => {
         
         navigate('/app/order-details/'+uuid);
@@ -71,7 +82,7 @@ const Order: React.FC = (() => {
     };
     useEffect(() => {
         getOrders();
-    },[]);
+    }, [currentPage]);
     return (
         <>
      
@@ -163,6 +174,7 @@ const Order: React.FC = (() => {
                                             <th  >Order Date</th>
                                             <th  >Order ID</th>
                                             <th  >Customer</th>
+                                            <th  >Area</th>
                                             <th  >City</th>
                                             <th  >Items</th>
                                         
@@ -192,6 +204,7 @@ const Order: React.FC = (() => {
                                                     <a href="apps-ecommerce-order-details.html" className="fw-medium link-primary">
                                                         #{order.reference_number}</a></td>
                                                 <td className="customer_name">{order.customer_name}</td>
+                                                <td className="product_name">{order.customer_area}</td>
                                                 <td className="product_name">{order.customer_city}</td>
                                                 <td className="date">{order.items.length}</td>
                                            
@@ -235,6 +248,14 @@ const Order: React.FC = (() => {
                                         <p className="text-muted">We've searched more than 150+ Orders We did not find any orders for you search.</p>
                                     </div>
                                 </div> */}
+                                  {/* Pagination */}
+                                  { orders?.data?.length > 0 &&
+                                                    ( <PaginationComponent items={orders} 
+                                                        currentPage={currentPage} onPageChange={handlePageChange}
+                                                    />
+                                               
+                                                    )
+                                                }
                             </div>
 
                         </div>

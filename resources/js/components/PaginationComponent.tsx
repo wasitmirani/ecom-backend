@@ -8,10 +8,10 @@ const PaginationComponent: React.FC<any>=(({
  
     return (
         <>
-        <div className="d-flex justify-content-end mt-3 mb-2">
+        <div className="d-flex justify-content-start mt-3 mb-2 mr-4">
                                         
-                                            <div className="pagination-wrap hstack gap-2" >
-                                                <a className={`page-item pagination-prev  ${currentPage === 1 ? 'disabled' : ''}`}
+                                        <div className="pagination-wrap hstack gap-2 "  style={{ marginLeft: '20px'}}>
+                                                <a className={`page-item pagination-prev  ml-4  ${currentPage === 1 ? 'disabled' : ''}`}
                                                     onClick={() => onPageChange(Math.max(1, currentPage - 1))}
                                                 >
                                                     Previous

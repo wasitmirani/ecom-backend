@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             //
+            $table->enum('user_type', ['customer', 'admin'])->default('customer'); //
+            $table->string('first_name')->nullable();
+            $table->string('last_name')->nullable();
         });
     }
 
@@ -23,9 +26,7 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             //
-            $table->enum('user_type', ['customer', 'admin'])->default('customer'); //
-            $table->string('first_name')->nullable();
-            $table->string('last_name')->nullable();
+          
 
         });
     }

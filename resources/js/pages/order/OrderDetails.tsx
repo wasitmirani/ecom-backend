@@ -5,9 +5,11 @@ import { useParams } from 'react-router-dom';
 
 export const OrderDetails: React.FC = () => {
     const { uuid } = useParams<any>();
-    const [order,setOrders] =useState<any>([]);
+    const [order,setOrder] =useState<any>([]);
    const getOrderDetails= ()=>{
-        axios_request
+        axios_request.get('/order-details/').then((res)=>{
+            setOrder(res.data.Order);
+        });
     }
     return (
         <>
