@@ -50,8 +50,8 @@ const Order: React.FC = (() => {
         setLoading(false);
     };
     const getDetails=(uuid:string) => {
-        console.log("/app/order-details/"+uuid);
-        // navigate('/app/order-details/'+uuid);
+        
+        navigate('/app/order-details/'+uuid);
     }
     const updateStatus= (uuid:string) => {
         axios_request.get('/order-status/'+uuid).then((res) => {

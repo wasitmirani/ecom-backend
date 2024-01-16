@@ -1,7 +1,14 @@
-import React from 'react';
+import { axios_request } from '@/bootstrap';
+
+import React, { useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 export const OrderDetails: React.FC = () => {
-
+    const { uuid } = useParams<any>();
+    const [order,setOrders] =useState<any>([]);
+   const getOrderDetails= ()=>{
+        axios_request
+    }
     return (
         <>
             <div className="row">
