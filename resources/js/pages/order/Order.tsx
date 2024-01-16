@@ -14,6 +14,7 @@ const Order: React.FC = (() => {
     const [loading, setLoading] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
+    const [selectedDate, setSelectedDate] = useState("");
     const navigate = useNavigate();
     const helper = new Helper();
 
@@ -21,7 +22,11 @@ const Order: React.FC = (() => {
         setOrders([]);
         setLoading(true);
         status = status == null ? '' : status;
-        axios_request.get(`/orders?status=${status}&page=${currentPage}`).then((res) => {
+        if(status=="1"){
+            setCurrentPage(1);
+        }
+  
+        axios_request.get(`/orders?status=${status}&date=${selectedDate}&page=${currentPage}`).then((res) => {
             setOrders(res.data.orders);
         });
 
@@ -39,7 +44,7 @@ const Order: React.FC = (() => {
             setTimeout(() => {
                 // Filter products based on the search query
                 setCurrentPage(1);
-                axios_request.get(`/orders?page=${currentPage}&query=${searchQuery}`).then((res) => {
+                axios_request.get(`/orders?page=${currentPage}&date=${selectedDate}&query=${searchQuery}`).then((res) => {
                     setOrders(res.data.orders);
 
                 });
@@ -115,7 +120,8 @@ const Order: React.FC = (() => {
 
                                 <div className="col-xxl-2 col-sm-6">
                                     <div>
-                                        <input type="date" className="form-control flatpickr-input" data-provider="flatpickr" data-date-format="d M, Y" data-range-date="true" id="demo-datepicker" placeholder="Select date" />
+                                        <input type="date"  value={selectedDate}
+                onChange={(e) => setSelectedDate(e.target.value)} className="form-control flatpickr-input" data-provider="flatpickr" data-date-format="d M, Y" data-range-date="true" id="demo-datepicker" placeholder="Select date" />
                                     </div>
                                 </div>
 
@@ -125,7 +131,7 @@ const Order: React.FC = (() => {
 
                                 <div className="col-xxl-2 col-sm-4">
                                     <div>
-                                        <button type="button" className="btn btn-primary w-100" > <i className="ri-equalizer-fill me-1 align-bottom"></i>
+                                        <button onClick={()=>getOrders('1')} type="button" className="btn btn-primary w-100" > <i className="ri-equalizer-fill me-1 align-bottom"></i>
                                             Filters
                                         </button>
                                     </div>
