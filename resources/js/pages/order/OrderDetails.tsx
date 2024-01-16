@@ -1,4 +1,5 @@
 import { axios_request } from '@/bootstrap';
+import { BreadcrumbComponent } from '@/components/BreadCrumbComponent';
 import Helper from '@/utils/helpers';
 
 import React, { useEffect, useState } from 'react';
@@ -80,6 +81,8 @@ export const OrderDetails: React.FC = () => {
 
     return (
         <>
+                    <BreadcrumbComponent active_name="Order Details" links={[{name:"Orders",link:"/orders"}]}/>
+
             <div className="row">
                 <div className="col-xl-9">
                     <div className="card">
