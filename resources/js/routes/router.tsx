@@ -6,6 +6,7 @@ import Helpers  from "@/utils/helpers";
 import CreateProduct from "@/pages/catalog/product/CreateProduct";
 import UpdateProduct from "@/pages/catalog/product/UpdateProduct";
 import Customer from "@/pages/customer/Customer";
+import Users from "@/pages/user/Users";
 
 import Orders from "@/pages/order/Order";
 import { OrderDetails } from "@/pages/order/OrderDetails";
@@ -40,6 +41,7 @@ generateRoute('/catalog/update-product/:uuid',UpdateProduct,'create-product'),
 generateRoute('/orders',Orders,'orders'),
 generateRoute('/order-details/:uuid',OrderDetails,'orders'),
 generateRoute('/customers',Customer,'customers'),
+generateRoute('/settings/users',Users,'customers'),
 //   { path: "*", element: <Home /> }
 ];
 

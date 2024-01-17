@@ -24,8 +24,9 @@ const Order: React.FC = (() => {
         status = status == null ? '' : status;
         if(status=="1"){
             setCurrentPage(1);
+            status = '';
         }
-  
+
         axios_request.get(`/orders?status=${status}&date=${selectedDate}&page=${currentPage}`).then((res) => {
             setOrders(res.data.orders);
         });
@@ -61,12 +62,12 @@ const Order: React.FC = (() => {
         setLoading(false);
     };
     const handlePageChange = (newPage: number) => {
-    
+
         setCurrentPage(newPage);
       };
 
     const getDetails=(uuid:string) => {
-        
+
         navigate('/app/order-details/'+uuid);
     }
     const updateStatus= (uuid:string) => {
@@ -90,7 +91,7 @@ const Order: React.FC = (() => {
     }, [currentPage]);
     return (
         <>
-     
+
         <BreadcrumbComponent active_name="Orders"  />
         <div className="row">
             <div className="col-lg-12">
@@ -156,7 +157,7 @@ const Order: React.FC = (() => {
                                 </li>
                                 <li className="nav-item" role="presentation">
                                     <Link  onClick={()=>getOrders('pickup')} className="nav-link py-3 Pickups" data-bs-toggle="tab" id="Pickups" to="#pickups" role="tab" aria-selected="false" >
-                                        <i className="ri-truck-line me-1 align-bottom"></i> Pickups 
+                                        <i className="ri-truck-line me-1 align-bottom"></i> Pickups
                                         {/* <span className="badge bg-danger align-middle ms-1">2</span> */}
                                     </Link>
                                 </li>
@@ -183,7 +184,7 @@ const Order: React.FC = (() => {
                                             <th  >Area</th>
                                             <th  >City</th>
                                             <th  >Items</th>
-                                        
+
                                             <th  >Sub Total</th>
                                             <th  >Discount</th>
                                             <th  >Total</th>
@@ -213,11 +214,11 @@ const Order: React.FC = (() => {
                                                 <td className="product_name">{order.customer_area}</td>
                                                 <td className="product_name">{order.customer_city}</td>
                                                 <td className="date">{order.items.length}</td>
-                                           
+
                                                 <td className="amount">Rs.{order.subtotal}</td>
                                                 <td className="amount">Rs.{order.total_discount}</td>
                                                 <td className="amount">Rs.{order.total}</td>
-                                         
+
                                                 <td className="status"><span className="badge bg-primary-subtle text-primary text-uppercase">{order.status}</span></td>
                                                 <td>
                                                     <ul className="list-inline hstack gap-2 mb-0">
@@ -227,16 +228,16 @@ const Order: React.FC = (() => {
                                                             <a href="#showModal2" onClick={()=>updateStatus(order.uuid)} data-bs-toggle="modal" className="text-primary d-inline-block edit-item-btn">
                                                                 <i className="ri-check-fill fs-16"></i>
                                                             </a>
-                                                        </li> 
+                                                        </li>
                                                         )}
-                                                    
+
                                                         <li className="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="View">
                                                             <a role='button'  onClick={()=>getDetails(order.uuid)} className="text-primary d-inline-block">
                                                                 <i className="ri-eye-fill fs-16"></i>
                                                             </a>
-                                                        </li> 
-                                                       
-                                                       
+                                                        </li>
+
+
                                                         <li className="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Remove">
                                                             <a className="text-danger d-inline-block remove-item-btn" data-bs-toggle="modal" href="#deleteOrder">
                                                                 <i className="ri-delete-bin-5-fill fs-16"></i>
@@ -256,10 +257,10 @@ const Order: React.FC = (() => {
                                 </div> */}
                                   {/* Pagination */}
                                   { orders?.data?.length > 0 &&
-                                                    ( <PaginationComponent items={orders} 
+                                                    ( <PaginationComponent items={orders}
                                                         currentPage={currentPage} onPageChange={handlePageChange}
                                                     />
-                                               
+
                                                     )
                                                 }
                             </div>

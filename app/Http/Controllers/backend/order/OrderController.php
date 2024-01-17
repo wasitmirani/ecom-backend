@@ -20,7 +20,7 @@ class OrderController extends Controller
         if(!empty($request->status)) {
             $orders = $orders->where('status', $request->status);
         }
-        if(isset($request->date)){
+        if(!empty($request->date)){
 
             $orders= $orders->whereDate('created_at', $request->date);
         }

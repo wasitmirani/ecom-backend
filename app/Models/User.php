@@ -72,7 +72,7 @@ class User extends Authenticatable
     public function getUsers($request,$is_paginate=true){
         $query=request('query');
         $users= User::latest();
-        $users= $users->with('client','roles','permissions')->withTrashed();
+        $users= $users->with('roles','permissions');
 
         if(!empty( $query)){
             $users= $users->where('email', 'like', '%'.$query. '%');
