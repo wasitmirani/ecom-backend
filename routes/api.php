@@ -60,7 +60,7 @@ Route::prefix('/app')->middleware('auth:sanctum')->group(function () {
     Route::get('/customers',[UserController::class,'customers']);
     Route::put('/customer/{id}/toggle-status', [UserController::class, 'toggleUserStatus']);
     Route::get('/users', [UserController::class, 'index']);
-    Route::delete('/user/{id}/delete', [UserController::class, 'deleteUser']);
+    Route::delete('/user/{id}/delete', [UserController::class, 'destroy']);
 
 
 

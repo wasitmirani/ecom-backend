@@ -262,6 +262,67 @@ const Users: React.FC = ()=>{
                         </div>
 
                     </div>
+
+
+            <div className="modal fade zoomIn" id="showModal"  aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div className="modal-dialog modal-dialog-centered modal-lg">
+                            <div className="modal-content border-0">
+                                <div className="modal-header p-3 bg-info-subtle">
+                                    <h5 className="modal-title" id="exampleModalLabel"></h5>
+                                    <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                                </div>
+                                {/*  onSubmit={updateAddress} */}
+                                <form className="tablelist-form" >
+                                    <div className="modal-body">
+                                        <div className="row g-3">
+                                            <div className="col-lg-12">
+                                                <div id="modal-id">
+                                                    <label for="orderId" className="form-label">Order Reference Number</label>
+                                                    <input type="text" id="orderId" className="form-control" placeholder="ID"  readonly />
+                                                </div>
+                                            </div>
+                                            <div className="col-lg-12">
+                                                <div>
+                                                    <label for="tasksTitle-field" className="form-label">Address</label>
+                                                    <input type="text"
+                                                    //   value={orderAddress}
+                                                    //   onChange={(e) => setOrderAddress(e.target.value)}
+                                                    id="tasksTitle-field" className="form-control" placeholder="Address"  required />
+                                                </div>
+                                            </div>
+                                            <div className="col-lg-6">
+                                                <div>
+                                                    <label for="client_nameName-field" className="form-label">Area</label>
+                                                    <input type="text"
+                                                    //  value={orderArea}
+                                                    //  onChange={(e) => setOrderArea(e.target.value)}
+                                                    id="client_nameName-field" className="form-control" placeholder="Area/Town"  />
+                                                </div>
+                                            </div>
+                                            <div className="col-lg-6">
+                                                <div>
+                                                    <label for="assignedtoName-field" className="form-label">City</label>
+                                                    <input type="text" id="assignedtoName-field"
+                                                    //   value={orderCity}
+                                                    //   onChange={(e) => setOrderCity(e.target.value)}
+                                                    className="form-control" placeholder="City"  required />
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+
+                                    </div>
+                                    <div className="modal-footer">
+                                        <div className="hstack gap-2 justify-content-end">
+                                            <button type="button" className="btn btn-light" data-bs-dismiss="modal">Close</button>
+                                            <button type="submit" className="btn btn-success" id="add-btn">Update</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+        </div>
         </>
     );
 }

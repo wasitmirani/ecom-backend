@@ -335,7 +335,7 @@ export const OrderDetails: React.FC = () => {
                                 </form>
                             </div>
                         </div>
-                    </div>
+        </div>
         </>
     );
 }
