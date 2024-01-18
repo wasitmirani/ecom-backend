@@ -92,6 +92,7 @@ const Users: React.FC = ()=>{
 
     const EditUser = (user:any)=>{
         setEditMode(true);
+        setEditUser(user);
         console.log(user);
     }
     useEffect(()=>{
@@ -110,6 +111,8 @@ const Users: React.FC = ()=>{
                                             <div>
                                                 <h5 className="card-title mb-0">Users List</h5>
                                             </div>
+                                            <button onClick={() => EditUser(user)}  to="javascript:void(0);"   data-bs-toggle="modal" data-bs-target="#showModal"  title="Edit" type="button"   className="btn btn-primary w-100"> <i className="ri-equalizer-fill me-2 align-bottom"></i>Filters</button>
+
                                         </div>
                                         <div className="col-sm-auto">
                                             <div className="d-flex flex-wrap align-items-start gap-2">
@@ -218,13 +221,13 @@ const Users: React.FC = ()=>{
                                                               <ul className="list-inline hstack gap-2 mb-0">
 
                                                                   <li className="list-inline-item edit" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" aria-label="Edit" data-bs-original-title="Edit">
-                                                                      <Link  onClick={() => EditUser(user)}to="javascript:void(0);"   data-bs-toggle="modal" data-bs-target="#showModal"  title="Edit" className="text-primary d-inline-block edit-item-btn">
+                                                                      <Link  onClick={() => EditUser(user)} to="javascript:void(0);"   data-bs-toggle="modal" data-bs-target="#showModal"  title="Edit" className="text-primary d-inline-block edit-item-btn">
                                                                       <i className="fa-solid fa-edit"></i>
                                                                       </Link>
                                                                   </li>
 
                                                                   <li className="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" aria-label="Remove" data-bs-original-title="Remove">
-                                                                     <Link  onClick={() => deleteUser(user.id)} data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Block"  className="text-danger d-inline-block remove-item-btn" data-bs-toggle="modal" to="#deleteRecordModal">
+                                                                     <Link  onClick={() => deleteUser(user.id)} data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Block"  className="text-danger d-inline-block remove-item-btn" to="#deleteRecordModal">
                                                                      <i className="ri-delete-bin-5-fill fs-16"></i>
                                                                       </Link>
                                                                   </li>
