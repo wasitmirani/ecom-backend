@@ -20,6 +20,14 @@ const Users: React.FC = ()=>{
     const [currentPage, setCurrentPage] = useState(1);
     const [edit_user ,setEditUser] = useState([]);
     const [edit_mode, setEditMode] = useState(false);
+    const [formData, setFormData] = useState<any>({
+        firstName: '',
+        lastName: '',
+        email: '',
+        phone: '',
+        password: '',
+        password_confirmation: '',
+      });
 
      // Define your API endpoint with filter parameters
      const apiUrl = `/users?page=${currentPage}&query=${searchTerm}&date=${selectedDate}&status=${selectedStatus}`;
@@ -40,7 +48,47 @@ const Users: React.FC = ()=>{
     const handlePageChange = (newPage: number) => {
         setCurrentPage(newPage);
       };
+      const handleChange = (e: any) => {
+        const { name, value } = e.target;
+        console.log(name, value);
+        setFormData((prevData:any) => ({ ...prevData, [name]: value }));
 
+      };
+
+      const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        // Handle form submission logic here
+        console.log('Form submitted:', formData);
+        axios_request.post('/user',formData).then((res)=>{
+
+            toast.success(res.data.message, {
+                position: "top-right",
+                autoClose: 1500,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                });
+
+
+        }).catch((err)=>{
+            console.log(err.response.data.message);
+            toast.error(err.response.data.message, {
+                position: "top-right",
+                autoClose: 1500,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                });
+        });
+
+
+      };
     const deleteUser =  (id:string) => {
         Swal.fire({
             title: "Are you sure?",
@@ -99,6 +147,8 @@ const Users: React.FC = ()=>{
         setEditMode(false);
         setEditUser([]);
     }
+
+
     useEffect(()=>{
         getuser();
     }, [currentPage]);
@@ -114,9 +164,21 @@ const Users: React.FC = ()=>{
                                         <div className="col-sm">
                                             <div>
                                                 <h5 className="card-title mb-0">Users List</h5>
-                                            </div>
-                                            <button onClick={() => createUser()}  to="javascript:void(0);"   data-bs-toggle="modal" data-bs-target="#showModal"  title="Edit" type="button"   className="btn btn-primary w-100"> <i className="ri-equalizer-fill me-2 align-bottom"></i>Filters</button>
 
+
+                                            </div>
+
+                                        </div>
+                                        <div className="col-2">
+                                        <button onClick={() => createUser()}
+                                                to="javascript:void(0);"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#showModal"
+                                                title="Edit" type="button"
+                                                 className="btn btn-primary w-100 ">
+
+
+                                                 Create</button>
                                         </div>
                                         <div className="col-sm-auto">
                                             <div className="d-flex flex-wrap align-items-start gap-2">
@@ -280,60 +342,128 @@ const Users: React.FC = ()=>{
                         <div className="modal-dialog modal-dialog-centered modal-lg">
                             <div className="modal-content border-0">
                                 <div className="modal-header p-3 bg-info-subtle">
-                                    <h5 className="modal-title" id="exampleModalLabel"></h5>
+                                    <h5 className="modal-title" id="exampleModalLabel">Create User</h5>
                                     <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
                                 </div>
                                 {/*  onSubmit={updateAddress} */}
-                                <form className="tablelist-form" >
-                                    <div className="modal-body">
-                                        <div className="row g-3">
-                                            <div className="col-lg-12">
-                                                <div id="modal-id">
-                                                    <label for="orderId" className="form-label">Order Reference Number</label>
-                                                    <input type="text" id="orderId" className="form-control" placeholder="ID"  readonly />
-                                                </div>
-                                            </div>
-                                            <div className="col-lg-12">
-                                                <div>
-                                                    <label for="tasksTitle-field" className="form-label">Address</label>
-                                                    <input type="text"
-                                                    //   value={orderAddress}
-                                                    //   onChange={(e) => setOrderAddress(e.target.value)}
-                                                    id="tasksTitle-field" className="form-control" placeholder="Address"  required />
-                                                </div>
-                                            </div>
-                                            <div className="col-lg-6">
-                                                <div>
-                                                    <label for="client_nameName-field" className="form-label">Area</label>
-                                                    <input type="text"
-                                                    //  value={orderArea}
-                                                    //  onChange={(e) => setOrderArea(e.target.value)}
-                                                    id="client_nameName-field" className="form-control" placeholder="Area/Town"  />
-                                                </div>
-                                            </div>
-                                            <div className="col-lg-6">
-                                                <div>
-                                                    <label for="assignedtoName-field" className="form-label">City</label>
-                                                    <input type="text" id="assignedtoName-field"
-                                                    //   value={orderCity}
-                                                    //   onChange={(e) => setOrderCity(e.target.value)}
-                                                    className="form-control" placeholder="City"  required />
-                                                </div>
-                                            </div>
-
-
-                                        </div>
-
-                                    </div>
-                                    <div className="modal-footer">
-                                        <div className="hstack gap-2 justify-content-end">
-                                            <button type="button" className="btn btn-light" data-bs-dismiss="modal">Close</button>
-                                            <button type="submit" className="btn btn-success" id="add-btn">
-                                                {edit_mode == true ? "Update" : "Submit"}
-                                                </button>
-                                        </div>
-                                    </div>
-                                </form>
+                                <form className="tablelist-form" onSubmit={handleSubmit}>
+      <div className="modal-body">
+        <div className="row g-3">
+          <div className="col-lg-6">
+            <div>
+              <label htmlFor="firstName" className="form-label">
+                First Name
+              </label>
+              <input
+                type="text"
+                id="firstName"
+                name="firstName"
+                className="form-control"
+                placeholder="First Name"
+                value={formData.firstName}
+                onChange={handleChange}
+                required
+              />
+            </div>
+          </div>
+          <div className="col-lg-6">
+            <div>
+              <label htmlFor="lastName" className="form-label">
+                Last Name
+              </label>
+              <input
+                type="text"
+                id="lastName"
+                name="lastName"
+                className="form-control"
+                placeholder="Last Name"
+                value={formData.lastName}
+                onChange={handleChange}
+                required
+              />
+            </div>
+          </div>
+          <div className="col-lg-6">
+            <div>
+              <label htmlFor="email" className="form-label">
+                Email
+              </label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                className="form-control"
+                placeholder="Email"
+                value={formData.email}
+                onChange={handleChange}
+                required
+              />
+            </div>
+          </div>
+          <div className="col-lg-6">
+            <div>
+              <label htmlFor="phone" className="form-label">
+                Phone
+              </label>
+              <input
+                type="tel"
+                id="phone"
+                name="phone"
+                className="form-control"
+                placeholder="Phone"
+                value={formData.phone}
+                onChange={handleChange}
+                required
+              />
+            </div>
+          </div>
+          <div className="col-lg-6">
+            <div>
+              <label htmlFor="password" className="form-label">
+                Password
+              </label>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                className="form-control"
+                placeholder="Password"
+                value={formData.password}
+                onChange={handleChange}
+                required
+              />
+            </div>
+          </div>
+          <div className="col-lg-6">
+            <div>
+              <label htmlFor="password_confirmation" className="form-label">
+                Confirm Password
+              </label>
+              <input
+                type="password"
+                id="password_confirmation"
+                name="password_confirmation"
+                className="form-control"
+                placeholder="Confirm Password"
+                value={formData.password_confirmation}
+                onChange={handleChange}
+                required
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="modal-footer">
+        <div className="hstack gap-2 justify-content-end">
+          <button type="button" className="btn btn-light" data-bs-dismiss="modal">
+            Close
+          </button>
+          <button type="submit" className="btn btn-success" id="add-btn">
+            Submit
+          </button>
+        </div>
+      </div>
+    </form>
                             </div>
                         </div>
         </div>

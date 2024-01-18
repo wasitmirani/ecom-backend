@@ -33,7 +33,7 @@ const Customer: React.FC = ()=>{
         setTimeout(() => {
             setLoading(false);
         }, 300);
-       
+
     }
     const handlePageChange = (newPage: number) => {
         setCurrentPage(newPage);
@@ -52,7 +52,7 @@ const Customer: React.FC = ()=>{
             if (result.isConfirmed) {
                 try {
                      axios_request.put(`/customer/${id}/toggle-status`).then((res) => {
-         
+
                      toast.success(res.data.message, {
                          position: "top-right",
                          autoClose: 1500,
@@ -64,7 +64,7 @@ const Customer: React.FC = ()=>{
                          theme: "light",
                          });
                          getCustomer();
-                         
+
                    }).catch((err) => {
                      toast.error(err.response.data.message, {
                          position: "top-right",
@@ -75,20 +75,20 @@ const Customer: React.FC = ()=>{
                          draggable: true,
                          progress: undefined,
                          theme: "light",
-                         });  
+                         });
                    });
-                  
+
                  } catch (error) {
-                  
+
                  }
-             
+
             }
           });
-       
-     
+
+
       };
-    
-   
+
+
     useEffect(()=>{
         getCustomer();
     }, [currentPage]);
@@ -108,8 +108,8 @@ const Customer: React.FC = ()=>{
                                         </div>
                                         <div className="col-sm-auto">
                                             <div className="d-flex flex-wrap align-items-start gap-2">
-                                           
-                            
+
+
                                             </div>
                                         </div>
                                     </div>
@@ -124,7 +124,7 @@ const Customer: React.FC = ()=>{
                                                     <i className="ri-search-line search-icon"></i>
                                                 </div>
                                             </div>
-                                       
+
                                             <div className="col-xl-6">
                                                 <div className="row g-3">
                                                     <div className="col-sm-4">
@@ -133,10 +133,10 @@ const Customer: React.FC = ()=>{
                 onChange={(e) => setSelectedDate(e.target.value)} className="form-control flatpickr-input" placeholder="Select date" />
                                                         </div>
                                                     </div>
-                                           
+
                                                     <div className="col-sm-4">
                                                         <div>
-                                                           
+
                                                                 <select value={selectedStatus}
                                                                  onChange={(e) => setSelectedStatus(e.target.value)} className="form-select" aria-label="Default select example">
                                                                     <option selected disabled >Select Status</option>
@@ -145,20 +145,20 @@ const Customer: React.FC = ()=>{
                                                                     <option value="0">InActive</option>
                                                                     </select>
                                                                 </div>
-                                                        
+
                                                     </div>
-                                            
+
 
                                                     <div className="col-sm-4">
                                                         <div>
                                                             <button type="button"  onClick={()=>getCustomer("1")} className="btn btn-primary w-100"> <i className="ri-equalizer-fill me-2 align-bottom"></i>Filters</button>
                                                         </div>
                                                     </div>
-                                                    
+
                                                 </div>
                                             </div>
                                         </div>
-                                   
+
                                     </form>
                                 </div>
                                 <div className="card-body">
@@ -167,7 +167,7 @@ const Customer: React.FC = ()=>{
                                             <table className="table align-middle" id="customerTable">
                                                 <thead className="table-light text-muted">
                                                     <tr>
-                                                      
+
 
                                                         <th className="sort" data-sort="customer_name">Customer</th>
                                                         <th className="sort" data-sort="email">Email</th>
@@ -191,9 +191,9 @@ const Customer: React.FC = ()=>{
                                                                 <>
                                                     {customers?.data?.map((customer:any) =>(
                                                           <tr>
-                                                        
+
                                                           {/* style="display:none;" */}
-                                                     
+
                                                           <td className="customer_name">{customer.name}</td>
                                                           <td className="email">{customer.email}</td>
                                                           <td className="phone">{customer.phone}</td>
@@ -213,13 +213,13 @@ const Customer: React.FC = ()=>{
                                                               <ul className="list-inline hstack gap-2 mb-0">
                                                               {customer.deleted_at  ? (
                                                                   <li className="list-inline-item edit" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" aria-label="Edit" data-bs-original-title="Edit">
-                                                                      <Link  onClick={() => handleToggleStatus(customer.id)} to="#showModal" data-bs-toggle="modal"  data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Restore" className="text-primary d-inline-block edit-item-btn">
+                                                                      <Link  onClick={() => handleToggleStatus(customer.id)} to="#showModal" data-bs-toggle="modal"  data-bs-trigger="hover" data-bs-placement="top" title="Restore" className="text-primary d-inline-block edit-item-btn">
                                                                       <i className="fa-solid fa-user-check"></i>
                                                                       </Link>
                                                                   </li>
                                                               ) : (
                                                                   <li className="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" aria-label="Remove" data-bs-original-title="Remove">
-                                                                     <Link  onClick={() => handleToggleStatus(customer.id)} data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Block"  className="text-danger d-inline-block remove-item-btn" data-bs-toggle="modal" to="#deleteRecordModal">
+                                                                     <Link  onClick={() => handleToggleStatus(customer.id)}  data-bs-trigger="hover" data-bs-placement="top" title="Block"  className="text-danger d-inline-block remove-item-btn" data-bs-toggle="modal" to="#deleteRecordModal">
                                                                       <i className="fa-solid fa-user-lock"></i>
                                                                       </Link>
                                                                   </li>
@@ -230,37 +230,37 @@ const Customer: React.FC = ()=>{
                                                     ))}
                                                     </>
                                                             ) }
-                                                  
+
                                                    </tbody>
                                             </table>
                                             {/* style="display: none" */}
                                             {customers.total < 1 && (
                                                   <EmptyDataComponent/>
                                             )}
-                                         
 
-                                           
+
+
                                         </div>
-                                                
+
                                                  {/* Pagination */}
                                                  { customers?.data?.length > 0 &&
-                                                    ( <PaginationComponent items={customers} 
+                                                    ( <PaginationComponent items={customers}
                                                         currentPage={currentPage} onPageChange={handlePageChange}
                                                     />
-                                               
+
                                                     )
                                                 }
                                     </div>
                                     {/* style="display: none;" */}
-                                  
-                 
-                              
-                                    
+
+
+
+
                                 </div>
                             </div>
 
                         </div>
-     
+
                     </div>
         </>
     );

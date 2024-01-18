@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules;
 use Illuminate\Auth\Events\Registered;
 
 class UserController extends Controller
@@ -19,23 +20,23 @@ class UserController extends Controller
     }
     public function customers(Request $request){
 
-       
+
         $query = request('query');
         $customers =User::latest()->where('user_type','customer');
-        
+
         if (!empty($query)) {
             $customers= $customers->where('phone', 'like', '%' . $query . '%')
                                  ->orWhere('email', 'like', '%' . $query . '%');
         }
 
-     
+
         if(isset($request->status)) {
 
             if($request->status == "0"){
                 $customers = $customers->onlyTrashed();
-              
+
             }
-             
+
         }
         else {
             $customers = $customers->withTrashed();
@@ -53,7 +54,7 @@ class UserController extends Controller
     public function toggleUserStatus($id)
     {
         $user = User::where('id',$id)->withTrashed()->first();
-   
+
         if (!$user) {
             return response()->json(['message' => 'User not found'], 404);
         }
@@ -68,7 +69,7 @@ class UserController extends Controller
             return response()->json(['message' => 'Customer has been blocked successfully']);
         }
     }
-   
+
     /**
      * Display a listing of the resource.
      *
@@ -93,12 +94,11 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'first_name' => ['required', 'string', 'max:255'],
-            'last_name' => ['required', 'string', 'max:255'],
+            'firstName' => ['required', 'string', 'max:255'],
+            'lastName' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'phone' => ['required', 'string', 'max:255', 'unique:users'],
             'user_name' => ['string', 'max:255', 'unique:users'],
-            'roles'=>['required'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
@@ -108,11 +108,11 @@ class UserController extends Controller
 
 
         $user = $this->user->create([
-            'name' => $request->first_name." ".$request->last_name,
+            'name' => $request->firstName." ".$request->lastName,
             'uid'=>(string) Str::uuid(),
             'email' => $request->email,
-            'first_name' => $request->first_name,
-            'last_name' => $request->last_name,
+            'first_name' => $request->firstName,
+            'last_name' => $request->lastName,
 
             'slug' => $this->mapFirstNameLastSlug($request),
             'password' => Hash::make($request->password),
@@ -121,8 +121,8 @@ class UserController extends Controller
             'thumbnail' => isset($request->thumbnail['name']) ? $request->thumbnail['name'] : "default.png",
 
         ]);
-        $role = Role::where('id', $request->roles['id'])->first();
-        $user->assignRole($role);
+        // $role = Role::where('id', $request->roles['id'])->first();
+        // $user->assignRole($role);
 
         event(new Registered($user));
 
@@ -207,5 +207,5 @@ class UserController extends Controller
             return response()->json(['message' => 'Password did not match'], 422);
         }
     }
-    
+
 }

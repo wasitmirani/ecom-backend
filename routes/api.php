@@ -61,6 +61,7 @@ Route::prefix('/app')->middleware('auth:sanctum')->group(function () {
     Route::put('/customer/{id}/toggle-status', [UserController::class, 'toggleUserStatus']);
     Route::get('/users', [UserController::class, 'index']);
     Route::delete('/user/{id}/delete', [UserController::class, 'destroy']);
+    Route::post('/user', [UserController::class,'store']);
 
 
 
