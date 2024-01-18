@@ -239,7 +239,7 @@ const Users: React.FC = ()=>{
                                                                     </select>
                                                                 </div>
 
-                                                    </div> */}http://ecom-backend.test/app/orders
+                                                    </div> */}
 
 
                                                     <div className="col-sm-4">
