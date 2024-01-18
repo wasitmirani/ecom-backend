@@ -50,8 +50,9 @@ const Users: React.FC = ()=>{
       };
       const handleChange = (e: any) => {
         const { name, value } = e.target;
-        console.log(name, value);
+
         setFormData((prevData:any) => ({ ...prevData, [name]: value }));
+        console.log(formData,"formData");
 
       };
 
@@ -141,11 +142,29 @@ const Users: React.FC = ()=>{
     const EditUser = (user:any)=>{
         setEditMode(true);
         setEditUser(user);
-        console.log(user);
+        console.log(edit_user,"edit_user");
+        let data={
+            firstName: user.first_name,
+            lastName: user.last_name,
+            email: user.email,
+            phone: user.phone,
+          };
+        setFormData(data);
+        console.log(edit_mode);
     }
     const createUser = ()=>{
         setEditMode(false);
         setEditUser([]);
+        setFormData(
+            {
+                firstName: '',
+                lastName: '',
+                email: '',
+                phone: '',
+                password: '',
+                password_confirmation: '',
+              }
+        );
     }
 
 
@@ -220,7 +239,7 @@ const Users: React.FC = ()=>{
                                                                     </select>
                                                                 </div>
 
-                                                    </div> */}
+                                                    </div> */}http://ecom-backend.test/app/orders
 
 
                                                     <div className="col-sm-4">
@@ -342,7 +361,7 @@ const Users: React.FC = ()=>{
                         <div className="modal-dialog modal-dialog-centered modal-lg">
                             <div className="modal-content border-0">
                                 <div className="modal-header p-3 bg-info-subtle">
-                                    <h5 className="modal-title" id="exampleModalLabel">Create User</h5>
+                                    <h5 className="modal-title" id="exampleModalLabel">{edit_mode == true ? ' Update User' :' Create User' }</h5>
                                     <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
                                 </div>
                                 {/*  onSubmit={updateAddress} */}
@@ -430,7 +449,9 @@ const Users: React.FC = ()=>{
                 placeholder="Password"
                 value={formData.password}
                 onChange={handleChange}
-                required
+
+                required={!edit_mode}
+
               />
             </div>
           </div>
@@ -447,7 +468,7 @@ const Users: React.FC = ()=>{
                 placeholder="Confirm Password"
                 value={formData.password_confirmation}
                 onChange={handleChange}
-                required
+                required={!edit_mode}
               />
             </div>
           </div>
@@ -459,7 +480,7 @@ const Users: React.FC = ()=>{
             Close
           </button>
           <button type="submit" className="btn btn-success" id="add-btn">
-            Submit
+          {edit_mode == true ?  'Update' : 'Submit'}
           </button>
         </div>
       </div>
