@@ -18,6 +18,8 @@ const Users: React.FC = ()=>{
     const [selectedDate, setSelectedDate] = useState("");
     const [selectedStatus, setSelectedStatus] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
+    const [edit_user ,setEditUser] = useState([]);
+    const [edit_mode, setEditMode] = useState(false);
 
      // Define your API endpoint with filter parameters
      const apiUrl = `/users?page=${currentPage}&query=${searchTerm}&date=${selectedDate}&status=${selectedStatus}`;
@@ -88,7 +90,10 @@ const Users: React.FC = ()=>{
 
       };
 
-
+    const EditUser = (user:any)=>{
+        setEditMode(true);
+        console.log(user);
+    }
     useEffect(()=>{
         getuser();
     }, [currentPage]);
@@ -213,7 +218,7 @@ const Users: React.FC = ()=>{
                                                               <ul className="list-inline hstack gap-2 mb-0">
 
                                                                   <li className="list-inline-item edit" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" aria-label="Edit" data-bs-original-title="Edit">
-                                                                      <Link  onClick={() => handleToggleStatus(user.id)} to="#showModal" data-bs-toggle="modal"  data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Restore" className="text-primary d-inline-block edit-item-btn">
+                                                                      <Link  onClick={() => EditUser(user)}to="javascript:void(0);"   data-bs-toggle="modal" data-bs-target="#showModal"  title="Edit" className="text-primary d-inline-block edit-item-btn">
                                                                       <i className="fa-solid fa-edit"></i>
                                                                       </Link>
                                                                   </li>
@@ -316,7 +321,9 @@ const Users: React.FC = ()=>{
                                     <div className="modal-footer">
                                         <div className="hstack gap-2 justify-content-end">
                                             <button type="button" className="btn btn-light" data-bs-dismiss="modal">Close</button>
-                                            <button type="submit" className="btn btn-success" id="add-btn">Update</button>
+                                            <button type="submit" className="btn btn-success" id="add-btn">
+                                                {edit_mode == true ? "Update" : "Submit"}
+                                                </button>
                                         </div>
                                     </div>
                                 </form>
