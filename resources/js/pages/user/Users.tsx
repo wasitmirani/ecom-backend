@@ -95,6 +95,10 @@ const Users: React.FC = ()=>{
         setEditUser(user);
         console.log(user);
     }
+    const createUser = ()=>{
+        setEditMode(false);
+        setEditUser([]);
+    }
     useEffect(()=>{
         getuser();
     }, [currentPage]);
@@ -111,7 +115,7 @@ const Users: React.FC = ()=>{
                                             <div>
                                                 <h5 className="card-title mb-0">Users List</h5>
                                             </div>
-                                            <button onClick={() => EditUser(user)}  to="javascript:void(0);"   data-bs-toggle="modal" data-bs-target="#showModal"  title="Edit" type="button"   className="btn btn-primary w-100"> <i className="ri-equalizer-fill me-2 align-bottom"></i>Filters</button>
+                                            <button onClick={() => createUser()}  to="javascript:void(0);"   data-bs-toggle="modal" data-bs-target="#showModal"  title="Edit" type="button"   className="btn btn-primary w-100"> <i className="ri-equalizer-fill me-2 align-bottom"></i>Filters</button>
 
                                         </div>
                                         <div className="col-sm-auto">
