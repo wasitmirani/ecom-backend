@@ -113,7 +113,7 @@ class UserController extends Controller
 
         $user = $this->user->create([
             'name' => $request->firstName." ".$request->lastName,
-            'uid'=>(string) Str::uuid(),
+            'uuid'=>(string) Str::uuid(),
             'email' => $request->email,
             'first_name' => $request->firstName,
             'last_name' => $request->lastName,

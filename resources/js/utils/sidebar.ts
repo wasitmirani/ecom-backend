@@ -45,17 +45,17 @@ class Sidebar {
                     // Add more sub-menu items as needed
                 ],
             ),
-            this.setMultiMenu('Reports', 'fa-solid fa-chart-line', 'reports-views',
-                [
+            // this.setMultiMenu('Reports', 'fa-solid fa-chart-line', 'reports-views',
+            //     [
 
 
-                    this.setSubMenu('Sales Order', '/reports/sales-order', 'somePermission'),
-                    this.setSubMenu('Customers', '/reports/customers', 'somePermission'),
+            //         this.setSubMenu('Sales Order', '/reports/sales-order', 'somePermission'),
+            //         this.setSubMenu('Customers', '/reports/customers', 'somePermission'),
 
 
-                    // Add more sub-menu items as needed
-                ],
-            ),
+            //         // Add more sub-menu items as needed
+            //     ],
+            // ),
 
             this.setHeadingMenu('Ecommerce'),
             this.setMultiMenu('Catalog', 'fa-solid fa-layer-group', 'catalog-views',

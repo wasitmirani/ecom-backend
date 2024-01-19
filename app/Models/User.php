@@ -67,7 +67,7 @@ class User extends Authenticatable
 
     public function getUsers($request,$is_paginate=true){
         $query=request('query');
-        $users= User::latest();
+        $users= User::latest()->where('user_type','admin');
         $users= $users->with('roles','permissions');
 
         if(!empty( $query)){
