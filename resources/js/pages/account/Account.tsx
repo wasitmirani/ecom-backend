@@ -13,6 +13,9 @@ const Account: React.FC = () => {
         joiningDate: '',
     });
 
+    const [oldPassword, setOldPassword] = useState('');
+    const [newPassword, setNewPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
 
     const getUser = () => {
         axios_request.get('/auth-user').then((res) => {
@@ -74,6 +77,64 @@ const Account: React.FC = () => {
         console.log("User");
 
     },[]);
+
+    const updatePassword = async (e: React.FormEvent) => {
+        e.preventDefault();
+
+        // Validate form inputs (you may want to enhance this)
+        if (!oldPassword || !newPassword || newPassword !== confirmPassword) {
+
+          toast.error('Please fill in all fields and ensure the new passwords match.', {
+            position: "top-right",
+            autoClose: 1500,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+        });
+          return;
+        }
+
+        // Make API call to update password using Axios
+        try {
+          const response = await axios_request.post(
+            '/update-password',
+            {
+              current_password: oldPassword,
+              new_password: newPassword,
+              new_password_confirmation: confirmPassword,
+            },
+
+          ).then((res)=>{
+            toast.info(res.data.message, {
+                position: "top-right",
+                autoClose: 1500,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            });
+          }).catch((err) => {
+            console.log(err.response.data.message);
+            toast.error(err.response.data.message, {
+                position: "top-right",
+                autoClose: 1500,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            });
+        });
+        } catch (error) {
+          console.log(error);
+        }
+      };
     return (
         <>
             <BreadcrumbComponent active_name="Account" />
@@ -190,37 +251,44 @@ const Account: React.FC = () => {
 
                                             <div className="col-lg-12">
                                                 <div className="hstack gap-2 justify-content-end">
-                                                    <button type="submit" className="btn btn-primary">
+                                                    <button type="submit" className="btn btn-success">
                                                         Update
                                                     </button>
-                                                    <button type="button" className="btn btn-soft-success">
-                                                        Cancel
-                                                    </button>
+
                                                 </div>
                                             </div>
                                         </div>
                                     </form>
                                 </div>
                                 <div className="tab-pane " id="changePassword" role="tabpanel">
-                                    <form action="javascript:void(0);">
+                                    <form  onSubmit={updatePassword}>
                                         <div className="row g-2">
                                             <div className="col-lg-4">
                                                 <div>
                                                     <label className="form-label">Old Password*</label>
-                                                    <input type="password" className="form-control" id="oldpasswordInput" placeholder="Enter current password" />
+                                                    <input type="password" className="form-control"
+                                                        value={oldPassword}
+                                                        onChange={(e) => setOldPassword(e.target.value)}
+                                                    id="oldpasswordInput" placeholder="Enter current password" />
                                                 </div>
                                             </div>
                                             <div className="col-lg-4">
                                                 <div>
                                                     <label className="form-label">New Password*</label>
-                                                    <input type="password" className="form-control" id="newpasswordInput" placeholder="Enter new password" />
+                                                    <input type="password" className="form-control"
+                                                      value={newPassword}
+                                                      onChange={(e) => setNewPassword(e.target.value)}
+                                                    id="newpasswordInput" placeholder="Enter new password" />
                                                 </div>
                                             </div>
 
                                             <div className="col-lg-4">
                                                 <div>
                                                     <label className="form-label">Confirm Password*</label>
-                                                    <input type="password" className="form-control" id="confirmpasswordInput" placeholder="Confirm password" />
+                                                    <input type="password" className="form-control"
+                                                         value={confirmPassword}
+                                                         onChange={(e) => setConfirmPassword(e.target.value)}
+                                                    id="confirmpasswordInput" placeholder="Confirm password" />
                                                 </div>
                                             </div>
 
@@ -251,14 +319,14 @@ const Account: React.FC = () => {
 
                                                                     <div  className="row">
 
-                                                                        <div  className="col-2">
+                                                                        <div  className="col-md-3">
                                                                         <label  className="form-label">Start</label>
                                                                             <input type="time" name="starttime" id="" />
                                                                         </div>
 
 
 
-                                                                        <div  className="col-2">
+                                                                        <div  className="col-md-3">
                                                                         <label className="form-label">End</label>
                                                                         <input type="time" name="starttime" id="" />
                                                                         </div>

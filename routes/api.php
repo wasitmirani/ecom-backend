@@ -64,6 +64,8 @@ Route::prefix('/app')->middleware('auth:sanctum')->group(function () {
     Route::post('/user/{id}/update', [UserController::class, 'update']);
     Route::post('/user', [UserController::class,'store']);
     Route::get('/auth-user', [UserController::class,'authUser']);
+    Route::post('/update-password', [UserController::class,'updatePassword']);
+
 
 
 

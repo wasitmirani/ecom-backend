@@ -117,8 +117,7 @@ class UserController extends Controller
             'email' => $request->email,
             'first_name' => $request->firstName,
             'last_name' => $request->lastName,
-
-            'slug' => $this->mapFirstNameLastSlug($request),
+            'user_type'=>'admin',
             'password' => Hash::make($request->password),
             'phone' => $request->phone,
             'user_name' => $user_name,
@@ -137,6 +136,25 @@ class UserController extends Controller
     {
        $user = $this->user->with('roles','permissions')->findOrFail($id);
        return response()->json(['user' => $user]);
+    }
+    public function updatePassword(Request $request)
+    {
+        $request->validate([
+            'current_password' => 'required',
+            'new_password' => 'required|string|min:8|confirmed',
+        ]);
+
+        $user = $request->user();
+
+        if (!Hash::check($request->current_password, $user->password)) {
+            return response()->json(['error' => 'Current password does not match'], 422);
+        }
+
+        $user->update([
+            'password' => bcrypt($request->new_password),
+        ]);
+
+        return response()->json(['message' => 'Password updated successfully']);
     }
     public function update(Request $request, $id)
     {
