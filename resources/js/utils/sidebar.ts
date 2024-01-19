@@ -78,7 +78,6 @@ class Sidebar {
               this.setSubMenu('Account ', '/settings/account', 'somePermission'),
 
               this.setSubMenu('Users', '/settings/users', 'somePermission'),
-              this.setSubMenu('roles', '/settings/roles', 'somePermission'),
 
 
           ]

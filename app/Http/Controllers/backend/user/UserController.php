@@ -18,6 +18,10 @@ class UserController extends Controller
     {
         $this->user = new User();
     }
+
+    public function authUser(Request $request){
+      return response()->json(['user'=>$request->user()]);
+    }
     public function customers(Request $request){
 
 
@@ -137,12 +141,10 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'first_name' => ['required', 'string', 'max:255'],
-            'last_name' => ['required', 'string', 'max:255'],
-            'roles'=>['required'],
+            'firstName' => ['required', 'string', 'max:255'],
+            'lastName' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,' . $id],
             'phone' => ['required', 'string', 'max:255', 'unique:users,phone,' . $id],
-            'status' => ['required'],
 
         ]);
         if($request->password != ""){
@@ -154,18 +156,15 @@ class UserController extends Controller
 
 
        $update_user = User::where('id', $id)->update([
-            'name' => $request->first_name." ".$request->last_name,
+        'name' => $request->firstName." ".$request->lastName,
             'email' => $request->email,
-            'first_name' => $request->first_name,
-            'last_name' => $request->last_name,
-            'slug' => $this->mapFirstNameLastSlug($request),
+            'first_name' => $request->firstName,
+            'last_name' => $request->lastName,
+
             'phone' => $request->phone,
             'thumbnail' => isset($request->thumbnail['name']) ? $request->thumbnail['name'] : "default.png",
         ]);
-        $user=User::where('id', $id)->withTrashed()->first();
 
-        $role = Role::where('id', $request->roles['id'])->first();
-        $user->roles()->sync($role);
 
         return response()->json(['user' => $update_user, 'message' => 'user updated successfully'], 200);
     }
