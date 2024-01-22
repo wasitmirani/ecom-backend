@@ -2,19 +2,20 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SettingController;
+use App\Http\Controllers\Auth\PasswordController;
+use App\Http\Controllers\Auth\NewPasswordController;
+use App\Http\Controllers\Auth\VerifyEmailController;
 use App\Http\Controllers\backend\user\UserController;
+use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\backend\order\OrderController;
+use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\backend\product\ProductController;
+use App\Http\Controllers\Auth\ConfirmablePasswordController;
 use App\Http\Controllers\backend\product\CategoryController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
-use App\Http\Controllers\Auth\ConfirmablePasswordController;
-use App\Http\Controllers\Auth\EmailVerificationNotificationController;
 use App\Http\Controllers\Auth\EmailVerificationPromptController;
-use App\Http\Controllers\Auth\NewPasswordController;
-use App\Http\Controllers\Auth\PasswordController;
-use App\Http\Controllers\Auth\PasswordResetLinkController;
-use App\Http\Controllers\Auth\RegisteredUserController;
-use App\Http\Controllers\Auth\VerifyEmailController;
+use App\Http\Controllers\Auth\EmailVerificationNotificationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -65,6 +66,7 @@ Route::prefix('/app')->middleware('auth:sanctum')->group(function () {
     Route::post('/user', [UserController::class,'store']);
     Route::get('/auth-user', [UserController::class,'authUser']);
     Route::post('/update-password', [UserController::class,'updatePassword']);
+    Route::post('/update-timestamp',[SettingController::class,'updateTimestamp']);
 
 
 

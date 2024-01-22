@@ -3,11 +3,12 @@
 namespace App\Http\Controllers\backend\user;
 
 use App\Models\User;
+use App\Models\Setting;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rules;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules;
 use Illuminate\Auth\Events\Registered;
 
 class UserController extends Controller
@@ -20,7 +21,8 @@ class UserController extends Controller
     }
 
     public function authUser(Request $request){
-      return response()->json(['user'=>$request->user()]);
+      $setting=Setting::latest()->first();
+      return response()->json(['user'=>$request->user(),'setting'=>$setting]);
     }
     public function customers(Request $request){
 

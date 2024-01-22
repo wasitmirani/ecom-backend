@@ -17,9 +17,55 @@ const Account: React.FC = () => {
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
 
+    const [start_time, setStartTime] = useState('');
+    const [end_time, setEndTime] = useState('');
+    const updateTimestamp=async (e: React.FormEvent)=>{
+        e.preventDefault();
+         // Make API call to update password using Axios
+         try {
+            const response = await axios_request.post(
+              '/update-timestamp',
+              {
+                start_time: start_time,
+                end_time: end_time,
+        
+              },
+  
+            ).then((res)=>{
+              toast.info(res.data.message, {
+                  position: "top-right",
+                  autoClose: 1500,
+                  hideProgressBar: false,
+                  closeOnClick: true,
+                  pauseOnHover: true,
+                  draggable: true,
+                  progress: undefined,
+                  theme: "light",
+              });
+            }).catch((err) => {
+              console.log(err.response.data.message);
+              toast.error(err.response.data.message, {
+                  position: "top-right",
+                  autoClose: 1500,
+                  hideProgressBar: false,
+                  closeOnClick: true,
+                  pauseOnHover: true,
+                  draggable: true,
+                  progress: undefined,
+                  theme: "light",
+              });
+          });
+          } catch (error) {
+            console.log(error);
+          }
+    }
+
     const getUser = () => {
         axios_request.get('/auth-user').then((res) => {
             let data = res.data.user;
+            let setting= res.data.setting;
+            setStartTime(setting.start_time);
+            setEndTime(setting.end_time);
             setUser(data);
              data={
                 firstName: data.first_name,
@@ -306,7 +352,7 @@ const Account: React.FC = () => {
 
                                 </div>
                                 <div  className="tab-pane " id="experience" role="tabpanel">
-                                            <form>
+                                            <form onSubmit={updateTimestamp}>
                                                 <div id="newlink">
                                                     <div id="1">
                                                         <div  className="row">
@@ -317,18 +363,22 @@ const Account: React.FC = () => {
                                                             <div  className="col-lg-6">
                                                                 <div  className="mb-3">
 
-                                                                    <div  className="row">
+                                                                    <div  className="row  ">
 
                                                                         <div  className="col-md-3">
-                                                                        <label  className="form-label">Start</label>
-                                                                            <input type="time" name="starttime" id="" />
+                                                                        <label  className="form-label p-2">Start: </label>
+                                                                            <input type="time"  value={start_time}
+                                                         onChange={(e) => setStartTime(e.target.value)} name="starttime" id="" />
                                                                         </div>
 
 
 
                                                                         <div  className="col-md-3">
-                                                                        <label className="form-label">End</label>
-                                                                        <input type="time" name="starttime" id="" />
+                                                                        <label className="form-label p-2 ">End: </label>
+                                                                        <input className="ml-2"  
+                                                                         value={end_time}
+                                                                         onChange={(e) => setEndTime(e.target.value)} 
+                                                                        type="time" name="starttime" id="" />
                                                                         </div>
 
                                                                     </div>
