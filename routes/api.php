@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ExportController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Auth\NewPasswordController;
@@ -67,6 +68,9 @@ Route::prefix('/app')->middleware('auth:sanctum')->group(function () {
     Route::get('/auth-user', [UserController::class,'authUser']);
     Route::post('/update-password', [UserController::class,'updatePassword']);
     Route::post('/update-timestamp',[SettingController::class,'updateTimestamp']);
+
+    Route::get('/export-orders',[ExportController::class,'exportOrders']);
+    Route::get('export-by-order-items',[ExportController::class,'exportByOrderItems']);
 
 
 
