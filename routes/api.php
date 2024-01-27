@@ -54,6 +54,7 @@ Route::prefix('/app')->middleware('auth:sanctum')->group(function () {
     Route::resource('product', ProductController::class);
     Route::get('/categories-list', [CategoryController::class,'categoriesList']);
     Route::get('/orders',[OrderController::class,'index']);
+    Route::post('/order',[OrderController::class,'store']);
     Route::get('/order/{uuid}',[OrderController::class,'orderDetails']);
     Route::get('/order-status/{uuid}',[OrderController::class,'updateStatus']);
     Route::post('/order-cancel/{uuid}',[OrderController::class,'cancelOrder']);
@@ -71,6 +72,8 @@ Route::prefix('/app')->middleware('auth:sanctum')->group(function () {
 
     Route::get('/export-orders',[ExportController::class,'exportOrders']);
     Route::get('export-by-order-items',[ExportController::class,'exportByOrderItems']);
+
+
 
 
 
