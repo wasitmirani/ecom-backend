@@ -71,7 +71,7 @@ Route::prefix('/app')->middleware('auth:sanctum')->group(function () {
     Route::post('/update-timestamp',[SettingController::class,'updateTimestamp']);
 
     Route::get('/export-orders',[ExportController::class,'exportOrders']);
-    Route::get('export-by-order-items',[ExportController::class,'exportByOrderItems']);
+    Route::get('/export-by-order-items',[ExportController::class,'exportByOrderItems']);
 
 
 

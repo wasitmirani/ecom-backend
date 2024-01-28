@@ -18,6 +18,45 @@ const Order: React.FC = (() => {
     const navigate = useNavigate();
     const helper = new Helper();
 
+
+    const handleExportOrders = ()=>{
+        setLoading(true);
+
+        axios_request.get(`/export-orders?date=${selectedDate}&query=${searchQuery}`).then((res) => {
+
+
+          var fileURL = window.URL.createObjectURL(new Blob([res.data]));
+          var fileLink = document.createElement('a');
+          fileLink.href = fileURL;
+          fileLink.setAttribute('download', `orders-${Date.now()}.xlsx`);
+          document.body.appendChild(fileLink);
+
+          fileLink.click();
+        });
+
+        setTimeout(() => {
+            setLoading(false);
+        }, 300);
+    }
+    const handleExportOrdersItems = ()=>{
+        setLoading(true);
+
+        axios_request.get(`/export-by-order-items?date=${selectedDate}&query=${searchQuery}`).then((res) => {
+
+
+          var fileURL = window.URL.createObjectURL(new Blob([res.data]));
+          var fileLink = document.createElement('a');
+          fileLink.href = fileURL;
+          fileLink.setAttribute('download', `orders-by-items-${Date.now()}.xlsx`);
+          document.body.appendChild(fileLink);
+
+          fileLink.click();
+        });
+
+        setTimeout(() => {
+            setLoading(false);
+        }, 300);
+    }
     const getOrders = (status?:string | null) => {
         setOrders([]);
         setLoading(true);
@@ -93,6 +132,7 @@ const Order: React.FC = (() => {
         <>
 
         <BreadcrumbComponent active_name="Orders"  />
+
         <div className="row">
             <div className="col-lg-12">
                 <div className="card" id="orderList">
@@ -102,10 +142,12 @@ const Order: React.FC = (() => {
                                 <h5 className="card-title mb-0">Orders List</h5>
                             </div>
                             <div className="col-sm-auto">
-                                <div className="d-flex gap-1 flex-wrap">
+                                            <div className="d-flex gap-1 flex-wrap">
+                                                <button type="button" className="btn btn-success add-btn" onClick={handleExportOrdersItems}><i className="ri-file-download-line align-bottom me-1"></i> Export  By Items</button>
+                                                <button type="button" className="btn btn-info" onClick={handleExportOrders}><i className="ri-file-download-line align-bottom me-1"></i> Export Orders</button>
 
-                                </div>
-                            </div>
+                                            </div>
+                                        </div>
                         </div>
                     </div>
                     <div className="card-body border border-dashed border-end-0 border-start-0">
