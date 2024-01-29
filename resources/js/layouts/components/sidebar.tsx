@@ -7,7 +7,16 @@ import { Props } from "@/interfaces/sidebar_interface";
 
 
 const SideBarMenu : React.FC<Props>=  ({ menu }) =>{
+    const logout = (event:any) => {
+        event.preventDefault();
+        console.log(event);
+        // Logout logic
 
+        window.location.href = "/logout";
+      };
+    useEffect(()=>{
+
+    },[]);
     return (
 
         <div className="app-menu navbar-menu">
@@ -93,6 +102,11 @@ const SideBarMenu : React.FC<Props>=  ({ menu }) =>{
 						 </li>
 						) : null
 						))}
+
+<li className="nav-item" >
+<a className="nav-link menu-link" href="/logout" onClick={logout}>
+  <i className="fa-solid fa-power-off icon-dual"></i> <span>Log out</span>
+</a></li>
 
                     </ul>
                 </div>

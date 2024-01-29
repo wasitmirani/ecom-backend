@@ -51,6 +51,7 @@ Route::prefix('/app')->middleware('auth:sanctum')->group(function () {
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
     ->name('logout');
 
+
     Route::resource('product', ProductController::class);
     Route::get('/categories-list', [CategoryController::class,'categoriesList']);
     Route::get('/orders',[OrderController::class,'index']);

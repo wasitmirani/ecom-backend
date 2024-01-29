@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\backend\BackendController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,6 +23,9 @@ use App\Http\Controllers\backend\BackendController;
 
 require __DIR__.'/auth.php';
 
+
+Route::get('logout', [AuthenticatedSessionController::class, 'destroy'])
+->name('logout');
 Route::get('/{any?}',fn()=> redirect('/app/home'));
 
 

@@ -83,7 +83,7 @@ class Sidebar {
           ]
         ),
 
-        this.setSingleMenu('Log out', 'fa-solid fa-power-off', '/logout'),
+        // this.setSingleMenu('Log out', 'fa-solid fa-power-off', '/logout'),
 
 
 
