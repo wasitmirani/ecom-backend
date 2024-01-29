@@ -61,6 +61,14 @@ export const HeaderMenu : React.FC = ()=>{
                             <div className="dropdown-menu dropdown-menu-end">
 
                                 <h6 className="dropdown-header">Welcome {user.name}!</h6>
+                                <div className="dropdown-divider"></div>
+                                <Link className="dropdown-item" to="/app/settings/account">
+
+                                    <i className="mdi mdi-cog-outline text-muted fs-16 align-middle me-1"></i>
+                                     <span className="align-middle">Settings</span></Link>
+                                     <a className="dropdown-item" href="/logout">
+                                        <i className="mdi mdi-logout text-muted fs-16 align-middle me-1"></i>
+                                      <span className="align-middle" data-key="t-logout">Logout</span></a>
 
                             </div>
                         </div>
