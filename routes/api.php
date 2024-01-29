@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ExportController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\Auth\PasswordController;
@@ -79,8 +80,6 @@ Route::prefix('/app')->middleware('auth:sanctum')->group(function () {
 
 
 
-    Route::get('register', [RegisteredUserController::class, 'create'])
-    ->name('register');
 
     Route::post('register', [RegisteredUserController::class, 'store']);
 
@@ -103,8 +102,15 @@ Route::prefix('/app')->middleware('auth:sanctum')->group(function () {
 
 });
 
-// Route::get('/me', static fn () => response()->json(['user_name'=>"wasitmirani"]));
 
+Route::prefix('auth')->group(function () {
+    Route::post('/login', [AuthController::class, 'login']);
+    Route::post('/register', [AuthController::class, 'register']);
+});
+
+Route::prefix('v1')->group(function () {
+    Route::post('/order',[OrderController::class, 'store']);
+});
 
 
 
