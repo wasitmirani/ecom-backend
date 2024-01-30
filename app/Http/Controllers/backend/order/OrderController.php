@@ -32,6 +32,24 @@ class OrderController extends Controller
         return response()->json(['orders' => $orders]);
     }
 
+    public function myOrders(Request $request){
+        $query = request('query');
+        $orders = Order::latest()->where('user_id', $request->user()->id);
+        if (!empty($query)) {
+            $orders = $orders->where('reference_number', 'like', '%' . $query . '%');
+        }
+        if(!empty($request->status)) {
+            $orders = $orders->where('status', $request->status);
+        }
+        if(!empty($request->date)){
+
+            $orders= $orders->whereDate('created_at', $request->date);
+        }
+        $orders = $orders->with([ 'items', 'user'])->paginate(perPage());
+
+        return response()->json(['orders' => $orders]);
+    }
+
     public function orderDetails(Request $request){
         $order=Order::where('uuid',$request->uuid)->with('user','items')->first();
 

@@ -24,6 +24,10 @@ class UserController extends Controller
       $setting=Setting::latest()->first();
       return response()->json(['user'=>$request->user(),'setting'=>$setting]);
     }
+
+    public function currentUser(Request $request){
+        return response()->json(['user'=>$request->user()]);
+    }
     public function customers(Request $request){
 
 

@@ -110,6 +110,10 @@ Route::prefix('auth')->group(function () {
 
 Route::prefix('v1')->group(function () {
     Route::post('/order',[OrderController::class, 'store']);
+    Route::get('/orders',[OrderController::class, 'index']);
+    Route::get('/my-orders',[OrderController::class, 'myOrders']);
+    Route::get('/order/{uuid}',[OrderController::class, 'orderDetails']);
+    Route::get('/me',[UserController::class,'currentUser']);
 });
 
 
