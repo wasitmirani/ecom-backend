@@ -114,6 +114,7 @@ Route::prefix('v1')->group(function () {
     Route::get('/my-orders',[OrderController::class, 'myOrders']);
     Route::get('/order/{uuid}',[OrderController::class, 'orderDetails']);
     Route::get('/me',[UserController::class,'currentUser']);
+    Route::get('/products', [ProductController::class,'getProducts']);
 });
 
 

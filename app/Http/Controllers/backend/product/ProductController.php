@@ -12,14 +12,30 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        
+
+    public function getProducts(){
         $query = request('query');
-   
+
         $products = Product::latest();
         if (!empty($query)) {
-       
+
+            $products = $products->where('sku', 'like', '%' . $query . '%')
+                                 ->orWhere('name', 'like', '%' . $query . '%');
+        }
+        $products = $products
+            ->with([ 'category', 'user'])
+            ->paginate(perPage());
+
+       return response()->json(['products' => $products]);
+    }
+    public function index()
+    {
+
+        $query = request('query');
+
+        $products = Product::latest();
+        if (!empty($query)) {
+
             $products = $products->where('sku', 'like', '%' . $query . '%')
                                  ->orWhere('name', 'like', '%' . $query . '%');
         }
@@ -106,7 +122,7 @@ class ProductController extends Controller
     {
         //
          $request->validate([
-           
+
             'category_id' => 'nullable|exists:categories,id',
             'name' => 'required|string',
             'description' => 'nullable|string',
