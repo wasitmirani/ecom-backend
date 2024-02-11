@@ -25,22 +25,22 @@ const SideBarMenu : React.FC<Props>=  ({ menu }) =>{
 
                 <Link to="/" className="logo logo-dark">
                     <span className="logo-sm">
-						<h1>Portal</h1>
+						<h1>Vegipak</h1>
                         {/* <img src="/assets/images/logo-sm.png" alt="" height="22"/> */}
                     </span>
                     <span className="logo-lg">
-						<h1>Portal</h1>
+						<h1>Vegipak</h1>
                         {/* <img src="/assets/images/logo-dark.png" alt="" height="17"/> */}
                     </span>
                 </Link>
 
                 <Link to="/" className="logo logo-light">
                     <span className="logo-sm">
-					<h1>Portal</h1>
+					<h1>Vegipak</h1>
                         {/* <img src="/assets/images/logo-sm.png" alt="" height="22"/> */}
                     </span>
                     <span className="logo-lg">
-					<h1>Portal</h1>
+					<h1>Vegipak</h1>
                         {/* <img src="/assets/images/logo-light.png" alt="" height="17"/> */}
                     </span>
                 </Link>
