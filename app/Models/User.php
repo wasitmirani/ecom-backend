@@ -73,7 +73,10 @@ class User extends Authenticatable
         if(!empty( $query)){
             $users= $users->where('email', 'like', '%'.$query. '%');
         }
+        if(isset($request->date)){
 
+            $users= $users->whereDate('created_at', $request->date);
+        }
         if($is_paginate){
             $users=$users->paginate($request->per_page ?? (int)env('PER_PAGE'));
         }else {

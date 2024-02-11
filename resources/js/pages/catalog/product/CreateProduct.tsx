@@ -15,8 +15,8 @@ const CreateProduct: React.FC = ()=>{
     const [productDiscount,setProductDiscount] = useState<any>([]);
     const [productImages, setProductImages] = useState<File[]>([]);
     const [categories,setCategories] = useState<any>([]);
- 
-    
+
+
     const navigate = useNavigate();
 
     const getCategories= (()=>{
@@ -28,7 +28,7 @@ const CreateProduct: React.FC = ()=>{
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         // Here you can perform any additional validation or API calls before submitting
-        
+
         let form_data= new FormData();
         form_data.append('name',productTitle);
         form_data.append('price',productPrice);
@@ -38,7 +38,7 @@ const CreateProduct: React.FC = ()=>{
         form_data.append('discount',productDiscount)
         form_data.append('type',productType)
          // Append image files
-       
+
           for (var x = 0; x < productImages.length; x++) {
             form_data.append("images[]", productImages[x]);
         }
@@ -68,9 +68,9 @@ const CreateProduct: React.FC = ()=>{
                 draggable: true,
                 progress: undefined,
                 theme: "light",
-                });  
+                });
         });
-    
+
         // You can add logic here to send data to your server or perform any other actions
       };
       useEffect(()=>{
@@ -78,7 +78,7 @@ const CreateProduct: React.FC = ()=>{
       },[]);
     return (
         <>
-            <BreadcrumbComponent active_name="Create Product" links={[{name:"Products",link:"/products"}]}/>
+            <BreadcrumbComponent active_name="Create Product" links={[{name:"Products",link:"/catalog/products"}]}/>
 
 
             <form id="createproduct-form" className="needs-validation" onSubmit={handleSubmit}>
@@ -89,14 +89,14 @@ const CreateProduct: React.FC = ()=>{
                                         <div className="mb-3">
                                             <label className="form-label" >Product Name</label>
                                             <input type="text"   value={productTitle}
-                                                                 onChange={(e) => setProductTitle(e.target.value)} 
-                                                                 className="form-control" id="product-title-input"  
+                                                                 onChange={(e) => setProductTitle(e.target.value)}
+                                                                 className="form-control" id="product-title-input"
                                                                  placeholder="Enter product name" required/>
-                                           
+
                                         </div>
                                         <div>
                                             <div className="row">
-                                           
+
                                                 <div className="col-md-4">
                                                 <label>Product Price</label>
                                                 <input type="number" min={1} value={productPrice}
@@ -116,12 +116,12 @@ const CreateProduct: React.FC = ()=>{
 
                                                 </div>
                                             </div>
-                                            
+
 
                                         </div>
                                     </div>
                                 </div>
-                            
+
 
                                 <div className="card">
                                     <div className="card-header">
@@ -143,24 +143,24 @@ const CreateProduct: React.FC = ()=>{
                                             />
                                             </div>
                                         </div>
-                                       
+
                                     </div>
                                 </div>
-                               
 
-                             
-                    
+
+
+
                                 <div className="text-end mb-3">
                                     <button type="submit" className="btn btn-success w-sm">Submit</button>
                                 </div>
                             </div>
-                            
-                            <div className="col-lg-4">
-                             
-                               
 
-                             
-                               
+                            <div className="col-lg-4">
+
+
+
+
+
 
                                 <div className="card">
                                     <div className="card-header">
@@ -175,8 +175,8 @@ const CreateProduct: React.FC = ()=>{
                                            {categories.map((category:any) =>
                                             <option value={category.id}>{category?.name}</option>
                                            )}
-                                            
-                                            
+
+
                                         </select>
                                         </div>
                                         <div className="row mt-2">
@@ -187,16 +187,16 @@ const CreateProduct: React.FC = ()=>{
                                         <option value="digital" >Digital</option>
                                         <option value="physical" >Physical</option>
                                         <option value="service" >Service</option>
-                                            
+
                                         </select>
                                         </div>
-                                       
+
                                     </div>
-                               
+
                                 </div>
-                              
-                           
-                            
+
+
+
 
                                 <div className="card">
                                     <div className="card-header">
@@ -205,15 +205,15 @@ const CreateProduct: React.FC = ()=>{
                                     <div className="card-body">
                                         <p className="text-muted mb-2">Add short description for product</p>
                                         <textarea className="form-control" value={productDescription}
-                                                                 onChange={(e) => setProductDescription(e.target.value)} placeholder="Must enter minimum of a 100 characters" rows="3"></textarea>
+                                                                 onChange={(e) => setProductDescription(e.target.value)} placeholder="Must enter minimum of a 100 characters" ></textarea>
                                     </div>
-                                   
+
                                 </div>
-                              
+
                             </div>
-                           
+
                         </div>
-                       
+
 
                     </form>
         </>

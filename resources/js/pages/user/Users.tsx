@@ -190,7 +190,7 @@ const Users: React.FC = ()=>{
                                         </div>
                                         <div className="col-2">
                                         <button onClick={() => createUser()}
-                                                to="javascript:void(0);"
+                                               
                                                 data-bs-toggle="modal"
                                                 data-bs-target="#showModal"
                                                 title="Edit" type="button"

@@ -28,9 +28,9 @@ const Account: React.FC = () => {
               {
                 start_time: start_time,
                 end_time: end_time,
-        
+
               },
-  
+
             ).then((res)=>{
               toast.info(res.data.message, {
                   position: "top-right",
@@ -190,7 +190,7 @@ const Account: React.FC = () => {
                         <div className="card-header">
                             <ul className="nav nav-tabs-custom rounded card-header-tabs border-bottom-0" role="tablist">
                                 <li className="nav-item" role="presentation">
-                                    <a className="nav-link active" data-bs-toggle="tab" href="#personalDetails" role="tab" aria-selected="false" tabindex="-1">
+                                    <a className="nav-link active" data-bs-toggle="tab" href="#personalDetails" role="tab" aria-selected="false">
                                         <i className="fas fa-home"></i> Personal Details
                                     </a>
                                 </li>
@@ -201,7 +201,7 @@ const Account: React.FC = () => {
                                 </li>
                                 <li className="nav-item" role="presentation">
                                     <a className="nav-link " data-bs-toggle="tab" href="#experience" role="tab" aria-selected="true">
-                                    <i class="fa-solid fa-gear"></i> Settings
+                                    <i className="fa-solid fa-gear"></i> Settings
                                     </a>
                                 </li>
                             </ul>
@@ -375,9 +375,9 @@ const Account: React.FC = () => {
 
                                                                         <div  className="col-md-3">
                                                                         <label className="form-label p-2 ">End: </label>
-                                                                        <input className="ml-2"  
+                                                                        <input className="ml-2"
                                                                          value={end_time}
-                                                                         onChange={(e) => setEndTime(e.target.value)} 
+                                                                         onChange={(e) => setEndTime(e.target.value)}
                                                                         type="time" name="starttime" id="" />
                                                                         </div>
 

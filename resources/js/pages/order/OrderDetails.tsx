@@ -290,13 +290,13 @@ export const OrderDetails: React.FC = () => {
                                         <div className="row g-3">
                                             <div className="col-lg-12">
                                                 <div id="modal-id">
-                                                    <label for="orderId" className="form-label">Order Reference Number</label>
-                                                    <input type="text" id="orderId" className="form-control" placeholder="ID" value={'#'+order.reference_number} readonly />
+                                                    <label className="form-label">Order Reference Number</label>
+                                                    <input type="text" id="orderId" className="form-control" placeholder="ID" value={'#'+order.reference_number} disabled />
                                                 </div>
                                             </div>
                                             <div className="col-lg-12">
                                                 <div>
-                                                    <label for="tasksTitle-field" className="form-label">Address</label>
+                                                    <label  className="form-label">Address</label>
                                                     <input type="text"
                                                       value={orderAddress}
                                                       onChange={(e) => setOrderAddress(e.target.value)}
@@ -305,7 +305,7 @@ export const OrderDetails: React.FC = () => {
                                             </div>
                                             <div className="col-lg-6">
                                                 <div>
-                                                    <label for="client_nameName-field" className="form-label">Area</label>
+                                                    <label  className="form-label">Area</label>
                                                     <input type="text"
                                                      value={orderArea}
                                                      onChange={(e) => setOrderArea(e.target.value)}
@@ -314,7 +314,7 @@ export const OrderDetails: React.FC = () => {
                                             </div>
                                             <div className="col-lg-6">
                                                 <div>
-                                                    <label for="assignedtoName-field" className="form-label">City</label>
+                                                    <label  className="form-label">City</label>
                                                     <input type="text" id="assignedtoName-field"
                                                       value={orderCity}
                                                       onChange={(e) => setOrderCity(e.target.value)}
