@@ -54,6 +54,7 @@ Route::prefix('/app')->middleware('auth:sanctum')->group(function () {
 
 
     Route::resource('product', ProductController::class);
+    Route::post('/upload-products',[ProductController::class,'uploadProduct']);
     Route::get('/categories-list', [CategoryController::class,'categoriesList']);
     Route::get('/orders',[OrderController::class,'index']);
     Route::post('/order',[OrderController::class,'store']);

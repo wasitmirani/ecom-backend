@@ -6,6 +6,7 @@ use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -156,5 +157,51 @@ class ProductController extends Controller
         else {
             return response()->json(['message'=>'Product not found'],404);
         }
+    }
+
+    public function uploadProduct(Request $request){
+        $request->validate([
+            'file'=>['required','mimes:xlsx,xls'],
+       ]);
+        if($request->hasFile('file')){
+
+                 $filePath = $request->file('file')->store('/public/products');
+                $path= str_replace('public', 'storage', $filePath);
+                $items = fastexcel()->import($path );
+                foreach ($items as $key => $item) {
+                    # code...
+                    $is_product=Product::where('sku',$item['sku'])->first();
+                    if(empty($is_product)){
+                        $product = Product::create([
+                            'uuid' => genUUID(),
+                            'category_id'=>$item['category_id'] ?? null,
+                            'user_id'=>$request->user()->id,
+                            'type'=>$item['type'] ?? 'physical',
+                         'slug'=>setSlug($item['name']),
+                         'sku'=>$item['sku'],
+                            'images'=>$item['images'] ?? [],
+                            'description' =>$item['description'] ?? null,
+                            'price' =>$item['price'],
+                            'name'=>$item['name'],
+                            'discount' =>$item['discount'] ?? 0,
+
+                        ]);
+                    }
+                    else {
+                        $product=Product::where('sku',$item['sku'])->update([
+                            'description' =>$item['description']?? null,
+                            'price' =>$item['price'],
+                            'name'=>$item['name'],
+                            'slug'=>setSlug($item['name']),
+                            'discount' =>$item['discount']?? 0,
+
+                        ]);
+                    }
+
+                }
+
+            return response()->json(['message'=>'Product has been imported successfully']);
+        }
+
     }
 }

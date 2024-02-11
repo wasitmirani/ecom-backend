@@ -6,10 +6,10 @@ use Illuminate\Support\Str;
 
 function perPage(){
 
-    return 3;
+    return 20;
 }
 
-function responseJsonSuccess($msg="success",$data=[]){ 
+function responseJsonSuccess($msg="success",$data=[]){
     return response()->json(['message' =>$msg,'status'=>true,'results'=>$data],200);
 }
 

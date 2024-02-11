@@ -7,7 +7,6 @@ import { axios_request } from "@/bootstrap";
 import { toast } from 'react-toastify';
 import LoadingComponent from '@/components/LoadingComponent';
 import PaginationComponent from '@/components/PaginationComponent';
-import useFileUpload from 'react-use-file-upload';
 
 import Swal from 'sweetalert2';
 const helper = new Helper();
@@ -19,34 +18,65 @@ const Products: React.FC = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const navigate = useNavigate();
 
-        const {
-          files,
-          fileNames,
-          fileTypes,
-          totalSize,
-          totalSizeInBytes,
-          handleDragDropEvent,
-          clearAllFiles,
-          createFormData,
-          setFiles,
-          removeFile,
-        } = useFileUpload();
+    const fileInputRef = useRef<HTMLInputElement>(null);
 
-        const inputRef = useRef();
+    const uploadFile = async () => {
+        const file = fileInputRef.current?.files && fileInputRef.current.files[0];
+        toast.info('Please wait product has been imported', {
+            position: "top-right",
+            autoClose: 700,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+        });
+        if (file) {
+            const formData = new FormData();
+            formData.append('file', file);
 
-  const uploadFile = async (e:any) => {
-    e.preventDefault();
+            try {
+             await axios_request.post('/upload-products', formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                }).then((res)=>{
+                    setTimeout(() => {
+                        toast.success(res.data.message, {
+                            position: "top-right",
+                            autoClose: 1500,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                        });
+                    }, 600);
 
-    const formData = createFormData();
+                     // Reset file input after successful upload
+                    if (fileInputRef.current) {
+                        fileInputRef.current.value = '';
+                    }
+                }).catch((err)=>{
+                    console.log(err.response.data.message);
+                    toast.error(err.response.data.message, {
+                        position: "top-right",
+                        autoClose: 1500,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                        });
+                });;
 
-    try {
-        axios_request.post('https://some-api.com', formData, {
-        'content-type': 'multipart/form-data',
-      });
-    } catch (error) {
-      console.error('Failed to submit files.');
-    }
-  };
+
+            } catch (error) {
+                console.error('Error uploading file:', error);
+            }
+        }
+
+
+    };
     const getProducts = () => {
         setLoading(true);
         axios_request.get(`/product?page=${currentPage}`).then((res) => {
@@ -317,10 +347,10 @@ const Products: React.FC = () => {
 
                                         <div className='row'>
                                                 <div className='col'>
-                                                    <input type="file" name="file" placeholder='Import Products' className='form-control' />
+                                                    <input     ref={fileInputRef} type="file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" name="file" placeholder='Import Products' className='form-control' />
                                                 </div>
                                                 <div className='col'>
-                                                <a href="javascript:void(0);" className="btn btn-success">Upload</a>
+                                                <a onClick={uploadFile} className="btn btn-success">Upload</a>
                                                 </div>
                                         </div>
 
