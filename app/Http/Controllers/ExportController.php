@@ -28,10 +28,9 @@ class ExportController extends Controller
         }
         $orders = $orders->with('items')->get();
 
-
-
-     return   (new FastExcel(collect($orders)->map(function  ($item){
-            return [
+        $items=[];
+        foreach($orders as $item){
+            $items[]=[
                 'Date'=>$item->created_at->format('Y-m-d H:i:s'),
                 'Status'=>$item->status,
                 'Order Reference' => $item->reference_number,
@@ -47,7 +46,11 @@ class ExportController extends Controller
 
             ];
         }
-        )))->download(now().'order-file.xlsx');
+
+
+    
+
+     return   (new FastExcel(  $items))->download(now().'order.xlsx');
 
     }
 

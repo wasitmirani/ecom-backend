@@ -22,16 +22,20 @@ const Order: React.FC = (() => {
     const handleExportOrders = ()=>{
         setLoading(true);
 
-        axios_request.get(`/export-orders?date=${selectedDate}&query=${searchQuery}`).then((res) => {
+
+            axios_request.get(`/export-orders?date=${selectedDate}&query=${searchQuery}`, { responseType: 'arraybuffer' })
+            .then((response) => {
 
 
-          var fileURL = window.URL.createObjectURL(new Blob([res.data]));
-          var fileLink = document.createElement('a');
-          fileLink.href = fileURL;
-          fileLink.setAttribute('download', `orders-${Date.now()}.xlsx`);
-          document.body.appendChild(fileLink);
 
-          fileLink.click();
+          const blob = new Blob([response.data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+          const url = window.URL.createObjectURL(blob);
+          const link = document.createElement('a');
+          link.href = url;
+          link.setAttribute('download', `orders-${Date.now()}.xlsx`);
+          document.body.appendChild(link);
+          link.click();
+          window.URL.revokeObjectURL(url); // clean up
         });
 
         setTimeout(() => {
@@ -41,18 +45,20 @@ const Order: React.FC = (() => {
     const handleExportOrdersItems = ()=>{
         setLoading(true);
 
-        axios_request.get(`/export-by-order-items?date=${selectedDate}&query=${searchQuery}`).then((res) => {
-
-
-          var fileURL = window.URL.createObjectURL(new Blob([res.data]));
-          var fileLink = document.createElement('a');
-          fileLink.href = fileURL;
-          fileLink.setAttribute('download', `orders-by-items-${Date.now()}.xlsx`);
-          document.body.appendChild(fileLink);
-
-          fileLink.click();
+        axios_request.get(`/export-by-order-items?date=${selectedDate}&query=${searchQuery}`, { responseType: 'arraybuffer' })
+        .then((response) => {
+          const blob = new Blob([response.data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+          const url = window.URL.createObjectURL(blob);
+          const link = document.createElement('a');
+          link.href = url;
+          link.setAttribute('download', `orders-by-items-${Date.now()}.xlsx`);
+          document.body.appendChild(link);
+          link.click();
+          window.URL.revokeObjectURL(url); // clean up
+        })
+        .catch((error) => {
+          console.error('Error downloading file:', error);
         });
-
         setTimeout(() => {
             setLoading(false);
         }, 300);
