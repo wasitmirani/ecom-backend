@@ -76,7 +76,7 @@ class ProductController extends Controller
         $images=array();
         if($files=$request->file('images')){
             foreach($files as $file){
-                $name=genUUID().'-.'. $file->getClientOriginalExtension();
+                $name=genUUID().'-product.'. $file->getClientOriginalExtension();
                 $file->move('product/images',$name);
                 $images[]=$name;
             }

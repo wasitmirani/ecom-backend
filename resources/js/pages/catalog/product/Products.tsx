@@ -268,8 +268,22 @@ const Products: React.FC = () => {
                                                                                 {products?.data?.map((product: any) => (
                                                                                     <tr key={product.id}>
 
-                                                                                        <td><Link to="#" className="fw-medium">
-                                                                                            {product.name}</Link></td>
+                                                                                        <td>
+
+                                                                                        <div className="d-flex align-items-center">
+                                                                                            <div className="avatar-sm bg-light rounded p-1 me-2">
+                                                                                            <img
+                                                                                                src={`/product/images/${product.images[0]}`}
+                                                                                                alt=""
+                                                                                                className="img-fluid d-block"
+                                                                                            />                                                                                            </div>
+                                                                                            <div>
+                                                                                                <h5 className="fs-14 my-1">
+                                                                                                    <a href="#UpdateOrder" onClick={() => updateProduct(product.uuid)}  className="text-reset">{product.name}</a></h5>
+
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        </td>
                                                                                         <td>{product?.category?.name ?? 'N/A'}</td>
                                                                                         <td>{product.sku ?? 'N/A'}</td>
                                                                                         <td>Rs.{product.price ?? 0}</td>

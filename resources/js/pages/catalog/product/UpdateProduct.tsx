@@ -33,7 +33,7 @@ const UpdateProduct: React.FC = ()=>{
             setProductPrice(product.price);
             setProductTitle(product.name);
             setProductType(product.type);
-
+            setProductImages(product.images);
         });
     })
     const getCategories= (()=>{
@@ -95,6 +95,9 @@ const UpdateProduct: React.FC = ()=>{
 
             <form id="createproduct-form" className="needs-validation" onSubmit={handleSubmit}>
                         <div className="row">
+                        <div className="text-end mb-3">
+                                    <button type="submit" className="btn btn-success w-sm">Update</button>
+                                </div>
                             <div className="col-lg-8">
                                 <div className="card">
                                     <div className="card-body">
@@ -161,10 +164,20 @@ const UpdateProduct: React.FC = ()=>{
 
 
 
-
-                                <div className="text-end mb-3">
-                                    <button type="submit" className="btn btn-success w-sm">Update</button>
+                                    <div className="row">
+                            {productImages.map((image, index) => (
+                                <div key={index} className="col-md-3 mb-3"> {/* Adjust col-md-3 as needed */}
+                                <img
+                                   src={`/product/images/${image}`}
+                                    alt=""
+                                    className="img-fluid d-block"
+                                    style={{ width: '250px', height: '250px' }} // Set fixed width and height
+                                />
                                 </div>
+                            ))}
+</div>
+
+
                             </div>
 
                             <div className="col-lg-4">
