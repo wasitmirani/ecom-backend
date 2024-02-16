@@ -69,6 +69,7 @@ class Sidebar {
                 ],
             ),
             this.setSingleMenu('Orders', 'fa-solid fa-shopping-basket', '/orders'),
+            this.setSingleMenu('PickList', 'fa-solid fa-cart-shopping', '/order-pick-list'),
             this.setSingleMenu('Customers', 'fa-solid fa-users', '/customers'),
 
 

@@ -11,6 +11,7 @@ import Account from "@/pages/account/Account";
 
 import Orders from "@/pages/order/Order";
 import { OrderDetails } from "@/pages/order/OrderDetails";
+import PickList from "@/pages/picklist/PickList";
 const helper = new Helpers();
 
 const generateRoute=(name:string,page:any,title:string,permission?: string)=>{
@@ -40,7 +41,9 @@ generateRoute('/catalog/products',Products,'Products'),
 generateRoute('/catalog/create-product',CreateProduct,'create-product'),
 generateRoute('/catalog/update-product/:uuid',UpdateProduct,'create-product'),
 generateRoute('/orders',Orders,'orders'),
-generateRoute('/order-details/:uuid',OrderDetails,'orders'),
+generateRoute('/order-details/:uuid',OrderDetails,'orders-details'),
+generateRoute('/order-pick-list',PickList,'order-pick-list'),
+
 generateRoute('/customers',Customer,'customers'),
 generateRoute('/settings/users',Users,'users'),
 generateRoute('/settings/account',Account,'account'),

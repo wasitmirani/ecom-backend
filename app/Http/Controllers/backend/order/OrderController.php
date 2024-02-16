@@ -156,5 +156,29 @@ $endTime = Carbon::parse($setting->end_time);
 
     }
 
+    public function ordersPickList(Request $request){
+        $q = request('query');
+        $items = OrderItem::latest();
+        if (!empty($q)) {
+            $items = $items->whereHas('order', function ($query) use ($q) {
+                return $query->where('reference_number', 'like', '%' . $q . '%')
+                ->orWhere('customer_area', 'like', '%' . $q . '%')
+                ->orWhere('customer_phone', 'like', '%' . $q . '%');
+            });
+        }
+        if(!empty($request->date)){
+
+            $items= $items->whereDate('created_at', $request->date);
+        }
+        else {
+
+            $items= $items->whereDate('created_at', now());
+     
+        }
+        $items = $items->with('order')->paginate(perPage());
+
+        return response()->json(['items' => $items]);
+    }
+
 
 }
