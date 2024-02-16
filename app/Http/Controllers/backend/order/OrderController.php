@@ -14,8 +14,8 @@ class OrderController extends Controller
     //
 
     public function orderPrint(Request $request){
-        $uid = $request->uid;
-        $order = Order::where('uid',$uid)->with('items')->first();
+        $uuid = $request->uuid;
+        $order = Order::where('uuid',$uuid)->with('items')->first();
 
         return view('backend.pages.print',compact('order'));
     }

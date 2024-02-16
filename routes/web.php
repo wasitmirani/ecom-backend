@@ -29,7 +29,7 @@ Route::get('logout', [AuthenticatedSessionController::class, 'destroy'])
 ->name('logout');
 Route::get('/{any?}',fn()=> redirect('/app/home'));
 
-Route::get('/print/order/{uid}',[OrderController::class,'orderPrint'])->name('order.print');
+Route::get('/print/order/{uuid}',[OrderController::class,'orderPrint'])->name('order.print');
 Route::get('/app/{any?}', [BackendController::class, 'index'])
     ->where('any', '.*')
     ->middleware('auth')

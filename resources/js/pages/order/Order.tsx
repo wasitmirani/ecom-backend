@@ -273,7 +273,7 @@ const Order: React.FC = (() => {
                                                 <td className="status"><span className="badge bg-primary-subtle text-primary text-uppercase">{order.status}</span></td>
                                                 <td>
                                                     <ul className="list-inline hstack gap-2 mb-0">
-                                                    <li className="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="View">
+                                                    <li className="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Print">
                                                             <a role='button'  onClick={()=>orderPrint(order.uuid)} className="text-success d-inline-block">
                                                                 <i className="ri-printer-fill fs-16"></i>
                                                             </a>
