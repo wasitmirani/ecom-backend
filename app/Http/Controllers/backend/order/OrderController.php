@@ -4,6 +4,7 @@ namespace App\Http\Controllers\backend\order;
 
 use Carbon\Carbon;
 use App\Models\Order;
+use App\Models\Setting;
 use App\Models\OrderItem;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -173,7 +174,7 @@ $endTime = Carbon::parse($setting->end_time);
         else {
 
             $items= $items->whereDate('created_at', now());
-     
+
         }
         $items = $items->with('order')->paginate(perPage());
 
