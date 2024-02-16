@@ -115,6 +115,9 @@ const Order: React.FC = (() => {
 
         navigate('/app/order-details/'+uuid);
     }
+    const orderPrint=(uuid:string)=>{
+        window.location.href=window.origin+"/print/order/"+uuid;
+    }
     const updateStatus= (uuid:string) => {
         axios_request.get('/order-status/'+uuid).then((res) => {
             toast.success(res.data.message, {
@@ -270,7 +273,11 @@ const Order: React.FC = (() => {
                                                 <td className="status"><span className="badge bg-primary-subtle text-primary text-uppercase">{order.status}</span></td>
                                                 <td>
                                                     <ul className="list-inline hstack gap-2 mb-0">
-
+                                                    <li className="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="View">
+                                                            <a role='button'  onClick={()=>orderPrint(order.uuid)} className="text-success d-inline-block">
+                                                                <i className="ri-printer-fill fs-16"></i>
+                                                            </a>
+                                                        </li>
                                                         {order.status == "new" && (
                                                             <li className="list-inline-item edit" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Approved">
                                                             <a href="#showModal2" onClick={()=>updateStatus(order.uuid)} data-bs-toggle="modal" className="text-primary d-inline-block edit-item-btn">

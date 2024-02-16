@@ -12,6 +12,13 @@ use App\Http\Controllers\Controller;
 class OrderController extends Controller
 {
     //
+
+    public function orderPrint(Request $request){
+        $uid = $request->uid;
+        $order = Order::where('uid',$uid)->with('items')->first();
+
+        return view('backend.pages.print',compact('order'));
+    }
     public function index(Request $request){
         $query = request('query');
         $orders = Order::latest();
