@@ -143,7 +143,7 @@ $endTime = Carbon::parse($setting->end_time);
                     'sku' => $item['sku'],
                     'qty' => $item['qty'],
                     'unit_price' => $item['unit_price'],
-                    'discount' => $item['discount']?? 0,
+                    'discount_price' => $item['discount']?? 0,
                 ]);
             }
 
