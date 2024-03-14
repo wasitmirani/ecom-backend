@@ -139,6 +139,7 @@ $endTime = Carbon::parse($setting->end_time);
                 # code...
                 OrderItem::create([
                     'order_id' => $order->id,
+                    'uuid' => Str::uuid(),
                     'name' => $item['name'],
                     'sku' => $item['sku'],
                     'qty' => $item['qty'],
@@ -147,11 +148,11 @@ $endTime = Carbon::parse($setting->end_time);
                 ]);
             }
 
-            return response()->json(['message'=>'order created successfully']);
+            return response()->json(['status'=>true,'order'=>$order,'message'=>'order created successfully']);
             // Any additional logic you want to perform after creating the order
         } else {
             // Not within allowed time range, do something (e.g., return an error response)
-            return response()->json(['error' => 'Order creation not allowed at this time.'], 400);
+            return response()->json(['status'=>false,'message' => 'Order creation not allowed at this time.'], 400);
         }
 
 
