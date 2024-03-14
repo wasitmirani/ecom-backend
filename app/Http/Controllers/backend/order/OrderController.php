@@ -62,7 +62,7 @@ class OrderController extends Controller
         $order=Order::where('uuid',$request->uuid)->with('user','items')->first();
         if(empty($order)){
 
-            return response()->json(['status' =>false,'message' => 'orders not found'],404);
+            return response()->json(['status' =>false,'message' => 'order not found'],404);
         }
         return response()->json(['status'=>true,'order' => $order]);
 
