@@ -69,7 +69,7 @@ public function login(Request $request)
 
     $token = $user->createToken(Str::uuid())->plainTextToken;
 
-    return response(['status'=>true,'message'=>'user login successfuly','user' => $user, 'token' => $token]);
+    return response(['status'=>true,'message'=>'user login successful','user' => $user, 'token' => $token]);
  }
 
  public function resetPassword(Request $request){
