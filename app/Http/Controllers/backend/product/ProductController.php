@@ -29,6 +29,22 @@ class ProductController extends Controller
 
        return response()->json(['products' => $products]);
     }
+
+    public function getProductsList(){
+
+        $query = request('query');
+
+        $products = Product::latest();
+        if (!empty($query)) {
+
+            $products = $products->where('sku', 'like', '%' . $query . '%')
+                                 ->orWhere('name', 'like', '%' . $query . '%');
+        }
+        $products = $products
+            ->with([ 'category', 'user'])->get();
+            
+       return response()->json(['products' => $products]);
+    }
     public function index()
     {
 

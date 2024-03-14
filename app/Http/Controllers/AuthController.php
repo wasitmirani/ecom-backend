@@ -27,14 +27,20 @@ class AuthController extends Controller
         ]);
 
         $user = User::create([
-            'name' => $request->name,
+            'name' => $request->name ?? $request->first_name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'user_type'=>'customer',
+            'phone'=>$request->phone,
+            'first_name'=>$request->first,
+            'last_name'=>$request->last,
+
         ]);
 
         event(new Registered($user));
 
 
+        $user->sendEmailVerificationNotification();
 
         $token = $user->createToken(Str::uuid())->plainTextToken;
 
