@@ -148,7 +148,7 @@ $endTime = Carbon::parse($setting->end_time);
                 ]);
             }
 
-            return response()->json(['status'=>true,'order'=>$order,'message'=>'order created successfully']);
+            return response()->json(['status'=>true,'message'=>'order created successfully','order'=>$order]);
             // Any additional logic you want to perform after creating the order
         } else {
             // Not within allowed time range, do something (e.g., return an error response)
