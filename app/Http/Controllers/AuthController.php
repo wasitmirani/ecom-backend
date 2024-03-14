@@ -47,7 +47,7 @@ class AuthController extends Controller
 
         $token = $user->createToken(Str::uuid())->plainTextToken;
 
-        return response(['user' => $user, 'token' => $token]);
+        return response(['status'=>true,'message'=>'user has been register successfuly','user' => $user, 'token' => $token]);
     }
 
 public function login(Request $request)
@@ -69,7 +69,7 @@ public function login(Request $request)
 
     $token = $user->createToken(Str::uuid())->plainTextToken;
 
-    return response(['user' => $user, 'token' => $token]);
+    return response(['status'=>true,'message'=>'user login successfuly','user' => $user, 'token' => $token]);
  }
 
  public function resetPassword(Request $request){
@@ -120,7 +120,8 @@ public function login(Request $request)
     );
 
     if ($status == Password::RESET_LINK_SENT) {
-        return response()->json(['message'=>'We have emailed your password reset link.','status', __($status)]);
+        // 'status', __($status)
+        return response()->json(['message'=>'We have emailed your password reset link.']);
     }
 
     return response()->json(['message'=>'failed response','email' => [trans($status)]]);
