@@ -13,7 +13,7 @@
         <link rel="preconnect" href="{{asset('/build/assets/index-9c4c082a.js')}}">
         <script type="text/javascript" src="{{asset('/build/assets/index-9c4c082a.js')}}"></script>
         <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
+        {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
 
     </head>
     <body class="font-sans antialiased">
