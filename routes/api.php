@@ -63,6 +63,9 @@ Route::prefix('/app')->middleware('auth:sanctum')->group(function () {
     Route::post('/order-cancel/{uuid}',[OrderController::class,'cancelOrder']);
     Route::get('/order-details/{uuid}', [OrderController::class, 'orderDetails']);
     Route::put('/update-address/{uuid}', [OrderController::class, 'updateAddress']);
+
+    Route::get('/orders-pick-list', [OrderController::class, 'ordersPickList']);
+
     Route::get('/customers',[UserController::class,'customers']);
     Route::put('/customer/{id}/toggle-status', [UserController::class, 'toggleUserStatus']);
     Route::get('/users', [UserController::class, 'index']);

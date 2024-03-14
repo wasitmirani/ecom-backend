@@ -4,6 +4,7 @@ namespace App\Http\Controllers\backend\order;
 
 use Carbon\Carbon;
 use App\Models\Order;
+use App\Models\Setting;
 use App\Models\OrderItem;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -12,6 +13,13 @@ use App\Http\Controllers\Controller;
 class OrderController extends Controller
 {
     //
+
+    public function orderPrint(Request $request){
+        $uuid = $request->uuid;
+        $order = Order::where('uuid',$uuid)->with('items')->first();
+
+        return view('backend.pages.print',compact('order'));
+    }
     public function index(Request $request){
         $query = request('query');
         $orders = Order::latest();
@@ -147,6 +155,30 @@ $endTime = Carbon::parse($setting->end_time);
         }
 
 
+    }
+
+    public function ordersPickList(Request $request){
+        $q = request('query');
+        $items = OrderItem::latest();
+        if (!empty($q)) {
+            $items = $items->whereHas('order', function ($query) use ($q) {
+                return $query->where('reference_number', 'like', '%' . $q . '%')
+                ->orWhere('customer_area', 'like', '%' . $q . '%')
+                ->orWhere('customer_phone', 'like', '%' . $q . '%');
+            });
+        }
+        if(!empty($request->date)){
+
+            $items= $items->whereDate('created_at', $request->date);
+        }
+        else {
+
+            $items= $items->whereDate('created_at', now());
+
+        }
+        $items = $items->with('order')->paginate(perPage());
+
+        return response()->json(['items' => $items]);
     }
 
 
