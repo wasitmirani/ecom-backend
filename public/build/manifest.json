@@ -1,4 +1,9 @@
 {
+  "resources/css/app.css": {
+    "file": "assets/app-9e74402a.css",
+    "isEntry": true,
+    "src": "resources/css/app.css"
+  },
   "resources/js/index.css": {
     "file": "assets/index-93d8b085.css",
     "src": "resources/js/index.css"
@@ -7,7 +12,7 @@
     "css": [
       "assets/index-93d8b085.css"
     ],
-    "file": "assets/index-9c4c082a.js",
+    "file": "assets/index-a75afb39.js",
     "isEntry": true,
     "src": "resources/js/index.tsx"
   }

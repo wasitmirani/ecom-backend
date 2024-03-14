@@ -58,7 +58,11 @@
                   }, index * 200); // Adjust the delay as needed
                 });
               </script>
-                 <script type="text/javascript" src="{{asset('/build/assets/index-9c4c082a.js')}}"></script>
+                 {{-- <script type="text/javascript" src="{{asset('/build/assets/index-9c4c082a.js')}}"></script> --}}
+                 <link rel="stylesheet" href="{{asset('/build/assets/index-93d8b085.css')}}">
+
+                 
+                 <script type="text/javascript" src="{{asset('/build/assets/index-a75afb39.js')}}"></script>
                  @vitereactrefresh()
                   @vite(['resources/js/index.tsx'])
 
