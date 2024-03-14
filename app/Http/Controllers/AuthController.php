@@ -13,6 +13,8 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Auth\Events\Registered;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Password;
+use Illuminate\Auth\Events\PasswordReset;
+use Illuminate\Validation\ValidationException;
 
 
 class AuthController extends Controller
@@ -121,9 +123,9 @@ public function login(Request $request)
 
     if ($status == Password::RESET_LINK_SENT) {
         // 'status', __($status)
-        return response()->json(['message'=>'We have emailed your password reset link.']);
+        return response()->json(['status'=>true,'message'=>'We have emailed your password reset link.']);
     }
 
-    return response()->json(['message'=>'failed response','email' => [trans($status)]]);
+    return response()->json(['status'=>false,'message'=>'failed response','email' => [trans($status)]]);
  }
 }

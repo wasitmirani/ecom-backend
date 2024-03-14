@@ -43,7 +43,7 @@ class ProductController extends Controller
         $products = $products
             ->with([ 'category', 'user'])->get();
             
-       return response()->json(['products' => $products]);
+       return response()->json(['status'=>true,'message'=>'fetch products successfully','products' => $products]);
     }
     public function index()
     {
