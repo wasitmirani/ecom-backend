@@ -68,7 +68,11 @@ public function login(Request $request)
         ]);
     }
 
-
+    // Check if the user's email is verified
+    if (!$user->email_verified_at) {
+       
+        return response(['status'=>false,'message'=>'Your email address is not verified.'],422);
+    }
     $token = $user->createToken(Str::uuid())->plainTextToken;
 
     return response(['status'=>true,'message'=>'user login successful','user' => $user, 'token' => $token]);
